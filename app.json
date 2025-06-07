@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "dabetai",
+    "slug": "dabetai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "dabetai",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/dabetai.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.maximo2126.dabetai"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/dabetai.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "fonts": [
+      "https://fonts.googleapis.com/icon?family=Material+Icons"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fea4f0cb-b8e2-45d3-a546-a19249365add"
+      }
+    }
+  }
+}
