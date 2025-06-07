@@ -10,27 +10,37 @@ const CustomSplashScreen = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      // Ocultar splash nativa y navegar
-      SplashScreen.hideAsync();
-      router.replace('/Auth/Login'); // Cambia por tu ruta principal
-    }, 2000); // 2 segundos
+    const initializeApp = async () => {
+      try {
+        // PRIMERO: Ocultar la splash nativa inmediatamente para mostrar la personalizada
+        await SplashScreen.hideAsync();
+        
+        // SEGUNDO: Mostrar tu splash personalizada por el tiempo deseado
+        await new Promise(resolve => setTimeout(resolve, 3000)); // 3 segundos de tu splash
+        
+        // TERCERO: Navegar a la pantalla principal
+        router.replace('/Auth/Login');
+      } catch (error) {
+        console.error('Error en splash screen:', error);
+        // En caso de error, aún navegar
+        router.replace('/Auth/Login');
+      }
+    };
 
-    return () => clearTimeout(timer);
+    initializeApp();
   }, [router]);
 
   return (
     <View style={styles.container}>
-      {/* Opción 1: Solo texto */}
-      <Text style={styles.logoText}>dabetai</Text>
       
-      {/* Opción 2: Si tienes imagen, descomenta esto y comenta el texto
+      
+            
       <Image 
-        source={require('../assets/images/dabetai.png')} 
+        source={require('../assets/images/dabetai3.png')} 
         style={styles.logo}
         resizeMode="contain"
       />
-      */}
+    
     </View>
   );
 };
@@ -38,15 +48,21 @@ const CustomSplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2196F3', // Fondo azul
+    backgroundColor: '#2196F3',
     justifyContent: 'center',
     alignItems: 'center',
   },
   logoText: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#FFFFFF', // Texto blanco
-    fontFamily: 'Source Sans 3', // Tu fuente
+    color: '#FFFFFF',
+    fontFamily: 'System', // Cambiado a fuente del sistema por compatibilidad
+    marginBottom: 20,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    opacity: 0.8,
   },
   logo: {
     width: 200,
