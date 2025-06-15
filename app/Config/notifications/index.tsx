@@ -1,0 +1,1 @@
+// La pantalla con la lista de categorías: "Alertas de glucosa", "Recordatorios...", etc.

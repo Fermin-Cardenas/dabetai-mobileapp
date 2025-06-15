@@ -1,0 +1,1 @@
+// Stack anidado que controla los pasos del asistente.
