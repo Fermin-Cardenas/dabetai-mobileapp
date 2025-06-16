@@ -1,1 +1,0 @@
-// PASO 4: "Elige qué datos compartir"

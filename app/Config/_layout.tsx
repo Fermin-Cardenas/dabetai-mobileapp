@@ -1,1 +1,0 @@
-// El Stack Navigator principal para TODA la sección de Configuración.

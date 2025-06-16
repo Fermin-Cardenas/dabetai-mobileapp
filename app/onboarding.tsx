@@ -1,5 +1,9 @@
-// Todas las pantallas del onboarding deben estar en este archivo
+import { View, Text } from 'react-native';
 
-// src/features/onboarding/components/OnboardingFlow.tsx. Este componente es el encargado de manejar el flujo del onboarding
-
-// La pantalla app/onboarding.tsx será muy simple. Solo renderizará el componente <OnboardingFlow />.
+export default function OnboardingScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Onboarding Screen</Text>
+    </View>
+  );
+}

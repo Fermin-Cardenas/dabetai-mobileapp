@@ -1,1 +1,0 @@
-// Un Stack anidado solo para la navegación DENTRO de las notificaciones.

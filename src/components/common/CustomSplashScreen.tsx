@@ -1,16 +1,22 @@
-// Crea este archivo si no lo tienes:
 // src/components/common/CustomSplashScreen.tsx
 
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Text } from "react-native";
 
 export const CustomSplashScreen = () => {
+  console.log("🚀 CustomSplashScreen se está renderizando");
+  
   return (
     <View style={styles.container}>
+      {/* Agrega texto temporal para confirmar que aparece */}
+    
+      
       <Image
-        source={require("../assets/images/dabetai3.png")}
+        source={require("../../assets/images/dabetai3.png")}
         style={styles.logo}
         resizeMode="contain"
+        onError={(error) => console.log("❌ Error cargando imagen:", error)}
+        onLoad={() => console.log("✅ Imagen cargada correctamente")}
       />
     </View>
   );
@@ -23,17 +29,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  logoText: {
-    fontSize: 48,
+  text: {
+    fontSize: 20,
     fontWeight: "bold",
     color: "#FFFFFF",
-    fontFamily: "System", // Cambiado a fuente del sistema por compatibilidad
     marginBottom: 20,
-  },
-  loadingText: {
-    fontSize: 16,
-    color: "#FFFFFF",
-    opacity: 0.8,
   },
   logo: {
     width: 200,
