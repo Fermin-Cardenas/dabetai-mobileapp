@@ -29,7 +29,7 @@ export const TermsText = ({
           Política de privacidad
         </Text>
       </TouchableOpacity>
-      <Text className="text-gray-500">.</Text>
+      <Text className="text-gray-500"></Text>
     </Text>
   );
 };

@@ -5,7 +5,7 @@ import { TouchableOpacity, Text, TouchableOpacityProps } from 'react-native';
 interface SecondaryButtonProps extends TouchableOpacityProps {
   title: string;
   onPress: () => void;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'customGreenLarge' | 'customRedLarge';
 }
 
 export function SecondaryButton({ 
@@ -15,22 +15,33 @@ export function SecondaryButton({
   ...props 
 }: SecondaryButtonProps) {
   const getButtonClasses = () => {
-    let baseClasses = "justify-center items-center rounded-full bg-gray-100 border border-blue-500";
-    
-    // Size classes
+    const base = "justify-center items-center rounded-full bg-transparent border-2";
+
     switch (size) {
       case 'small':
-        baseClasses += " h-8 px-4";
-        break;
+        return `${base} h-8 px-4 border-[#2196F3]`;
       case 'medium':
-        baseClasses += " h-10 px-6";
-        break;
+        return `${base} h-10 px-6 border-[#2196F3]`;
       case 'large':
-        baseClasses += " h-11 w-[343px]";
-        break;
+        return `${base} h-11 w-[343px] border-[#2196F3]`;
+      case 'customGreenLarge':
+        return `${base} h-11 w-[343px] border-[#009688]`;
+      case 'customRedLarge':  // Nueva variante roja
+        return `${base} h-11 w-[343px] border-[#EF4444]`;
+      default:
+        return `${base} h-11 w-[343px] border-[#2196F3]`;
     }
-    
-    return baseClasses;
+  };
+
+  const getTextColor = () => {
+    switch (size) {
+      case 'customGreenLarge':
+        return 'text-[#009688]';
+      case 'customRedLarge':
+        return 'text-[#EF4444]';
+      default:
+        return 'text-blue-500';
+    }
   };
 
   return (
@@ -39,7 +50,9 @@ export function SecondaryButton({
       onPress={onPress}
       {...props}
     >
-      <Text className="text-blue-500 text-base font-medium">
+      <Text
+        className={`text-[16px] font-medium ${getTextColor()}`}
+      >
         {title}
       </Text>
     </TouchableOpacity>

@@ -12,7 +12,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/dabetai.png",
+        "foregroundImage": "./assets/images/Shape.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -21,7 +21,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/dabetai.png"
+      "favicon": "./assets/images/Shape.png"
     },
     "plugins": [
       "expo-router",

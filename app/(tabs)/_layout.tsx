@@ -20,132 +20,28 @@ export default function HomeLayout() {
       <Stack.Screen
         name="home"
         options={{
-          title: "",
-          headerStyle: { 
-            backgroundColor: '#2196F3',
-          },
-          headerTintColor: '#FFFFFF',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
-              <Image 
-                source={require('../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
-              />
-            </View>
-          ),
-          // ✅ COMENTADO: HeaderRight con botones de settings y notifications
-          // headerRight: () => (
-          //   <View style={{ 
-          //     flexDirection: 'row', 
-          //     alignItems: 'center',
-          //     gap: 16,
-          //     marginRight: 16
-          //   }}>
-          //     <TouchableOpacity onPress={handleNotifications}>
-          //       <Ionicons name="notifications-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //     <TouchableOpacity onPress={handleSettings}>
-          //       <Ionicons name="settings-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //   </View>
-          // ),
+          headerShown: false,  // ← Deshabilitar header para home también
         }}
       />
       
+      <Stack.Screen
+        name="prediction"
+        options={{
+          headerShown: false,  // ← Deshabilitar header para prediction
+        }}
+      />
       
       <Stack.Screen
         name="record"
         options={{
-          title: "",
-          headerStyle: { 
-            backgroundColor: '#2196F3',
-          },
-          headerTintColor: '#FFFFFF',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
-              <Image 
-                source={require('../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
-              />
-            </View>
-          ),
-          // ✅ COMENTADO: HeaderRight con botones de settings y notifications
-          // headerRight: () => (
-          //   <View style={{ 
-          //     flexDirection: 'row', 
-          //     alignItems: 'center',
-          //     gap: 16,
-          //     marginRight: 16
-          //   }}>
-          //     <TouchableOpacity onPress={handleNotifications}>
-          //       <Ionicons name="notifications-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //     <TouchableOpacity onPress={handleSettings}>
-          //       <Ionicons name="settings-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //   </View>
-          // ),
+          headerShown: false,  // ← Deshabilitar header para record también
         }}
       />
+      
       <Stack.Screen
         name="chatai"
         options={{
-          title: "",
-          headerStyle: { 
-            backgroundColor: '#2196F3',
-          },
-          headerTintColor: '#FFFFFF',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
-              <Image 
-                source={require('../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
-              />
-            </View>
-          ),
-          // ✅ COMENTADO: HeaderRight con botones de settings y notifications
-          // headerRight: () => (
-          //   <View style={{ 
-          //     flexDirection: 'row', 
-          //     alignItems: 'center',
-          //     gap: 16,
-          //     marginRight: 16
-          //   }}>
-          //     <TouchableOpacity onPress={handleNotifications}>
-          //       <Ionicons name="notifications-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //     <TouchableOpacity onPress={handleSettings}>
-          //       <Ionicons name="settings-outline" size={24} color="white" />
-          //     </TouchableOpacity>
-          //   </View>
-          // ),
+          headerShown: false,  // ← Deshabilitar header para chatai también
         }}
       />
     </Stack>

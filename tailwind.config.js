@@ -29,6 +29,9 @@ module.exports = {
           700: "#00796B",
           900: "#004D40",
         },
+        fontFamily: {
+        // Aquí defines la fuente
+        sourceSansPro: ['"Source Sans Pro"', 'sans-serif'],
       },
     },
   },
@@ -41,6 +44,8 @@ module.exports = {
           fontWeight: "700", // bold
           lineHeight: "64px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Título Nivel 1
         ".text-h1": {
@@ -48,6 +53,8 @@ module.exports = {
           fontWeight: "700", // bold
           lineHeight: "40px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Título Nivel 2
         ".text-h2": {
@@ -55,6 +62,8 @@ module.exports = {
           fontWeight: "700", // bold
           lineHeight: "36px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Título Nivel 3
         ".text-h3": {
@@ -62,6 +71,8 @@ module.exports = {
           fontWeight: "700", // bold
           lineHeight: "32px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Subtítulo
         ".text-subtitle": {
@@ -69,6 +80,8 @@ module.exports = {
           fontWeight: "700", // bold
           lineHeight: "28px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Cuerpo de Texto Principal
         ".text-body": {
@@ -76,6 +89,8 @@ module.exports = {
           fontWeight: "400", // normal
           lineHeight: "24px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Cuerpo de Texto Pequeño
         ".text-body-sm": {
@@ -83,6 +98,8 @@ module.exports = {
           fontWeight: "400", // normal
           lineHeight: "20px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         },
         // Leyenda o texto muy pequeño
         ".text-caption": {
@@ -90,8 +107,14 @@ module.exports = {
           fontWeight: "400", // normal
           lineHeight: "16px",
           color: "#314158",
+          fontFamily: '"Source Sans Pro", sans-serif',
+
         }
       });
     }),
   ],
+},
+  // NOTE: Add any additional Tailwind CSS configuration here.
+  // For example, you can add custom colors, spacing, etc.
+  // See https://tailwindcss.com/docs/configuration for more details.
 };
