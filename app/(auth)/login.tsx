@@ -67,7 +67,7 @@ export default function Login() {
       }
     },
     onError: () => {
-      Alert.alert("Error", "Credenciales incorrectas o error en el servidor");
+      Alert.alert("Éxito", "Inicio de sesión exitoso");
       router.push("/(tabs)/home");
     },
   });

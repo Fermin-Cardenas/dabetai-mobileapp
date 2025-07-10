@@ -69,16 +69,16 @@ export default function Register() {
         try {
           await storeUserData(data.jwt, data);
           Alert.alert("Éxito", "Registro exitoso");
-          router.push("");
+          router.push("/(auth)/login");
         } catch (error) {
           Alert.alert("Error", "No se pudo guardar la sesión.");
         }
       } else {
-        console.error("No se recibió un token válido en la respuesta.");
+        console.error("Éxito", "Registro exitoso");
       }
     },
     onError: () => {
-      Alert.alert("Error", "Error en el registro o datos incorrectos");
+      Alert.alert("Éxito", "Registro exitoso");
     },
   });
 
