@@ -19,24 +19,24 @@ export function PrimaryButton({
     let baseClasses = "justify-center items-center rounded-full ";
     
     if (size === 'custom') {
-      baseClasses += "bg-[#009688]"; // Verde para custom
+      baseClasses += "bg-[#009688] "; // Verde para custom
     } else {
-      baseClasses += "bg-[#2196F3]"; // Azul para los demás
+      baseClasses += "bg-[#2196F3] "; // Azul para los demás
     }
 
     // Tamaño
     switch (size) {
       case 'small':
-        baseClasses += " h-8 px-4";
+        baseClasses += "h-[44px] px-4";
         break;
       case 'medium':
-        baseClasses += " h-10 px-6";
+        baseClasses += "h-[44px] px-6";
         break;
       case 'large':
-        baseClasses += " h-11 w-[343px]";
+        baseClasses += "h-[44px] w-[343px]"; // ← Mismo ancho que SecondaryButton
         break;
       case 'custom':
-        baseClasses += " h-10 px-6"; // tamaño del botón con verde
+        baseClasses += "h-[44px] px-6";
         break;
     }
 
@@ -49,11 +49,7 @@ export function PrimaryButton({
       onPress={onPress}
       {...props}
     >
-      <Text 
-        className={`text-[16px] font-bold ${
-          size === 'custom' ? 'text-white' : 'text-white'
-        }`}
-      >
+      <Text className="text-[16px] font-bold text-white">
         {title}
       </Text>
     </TouchableOpacity>

@@ -21,20 +21,22 @@ export function SecondaryButton({
       case 'small':
         return `${base} h-8 px-4 border-[#2196F3]`;
       case 'medium':
-        return `${base} h-10 px-6 border-[#2196F3]`;
+        return `${base} h-[44px] px-6 border-[#009688]`;
       case 'large':
-        return `${base} h-11 w-[343px] border-[#2196F3]`;
+        return `${base} h-[44px] w-[343px] border-[#2196F3]`;
       case 'customGreenLarge':
-        return `${base} h-11 w-[343px] border-[#009688]`;
-      case 'customRedLarge':  // Nueva variante roja
-        return `${base} h-11 w-[343px] border-[#EF4444]`;
+        return `${base} h-[44px] w-[343px] border-[#009688]`;
+      case 'customRedLarge':
+        return `${base} h-[44px] w-[343px] border-[#EF4444]`;
       default:
-        return `${base} h-11 w-[343px] border-[#2196F3]`;
+        return `${base} h-[44px] w-[343px] border-[#2196F3]`;
     }
   };
 
   const getTextColor = () => {
     switch (size) {
+      case 'medium':
+        return 'text-[#009688]';
       case 'customGreenLarge':
         return 'text-[#009688]';
       case 'customRedLarge':

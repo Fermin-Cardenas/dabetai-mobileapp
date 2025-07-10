@@ -74,7 +74,7 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
       </View>
 
       {showUpdateButton && onUpdatePress && (
-        <View className="mb-3 rounded-full overflow-hidden w-[343px] h-11 relative">
+        <View className="mb-3 rounded-full overflow-hidden w-[343px] h-[44px] relative">
           {isLoading && (
             <Animated.View
               style={{
