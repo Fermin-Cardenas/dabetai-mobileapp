@@ -1,13 +1,7 @@
-// app/index.tsx
-import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
+import { Redirect } from 'expo-router';
 
-export default function Index() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace('/splash');
-  }, []);
-
-  return null; // No renderiza nada
+export default function IndexScreen() {
+  // Este archivo redirige automáticamente al layout principal
+  // El _layout.tsx se encarga de decidir a dónde ir
+  return <Redirect href="/(auth)/login" />;
 }
