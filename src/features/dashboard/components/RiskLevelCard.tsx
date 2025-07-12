@@ -1,9 +1,9 @@
 // src/features/dashboard/components/RiskLevelCard.tsx
-import React, { useState, useRef } from 'react';
-import { View, Animated } from 'react-native';
-import { H3, Body } from '@/components/common/Typography';
-import { RiskCircle } from './RiskCircle';
+import { Body, H3 } from '@/components/common/Typography';
 import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
+import React, { useRef, useState } from 'react';
+import { Animated, View } from 'react-native';
+import { RiskCircle } from './RiskCircle';
 
 interface RiskLevelCardProps {
   riskLevel: 'bajo' | 'medio' | 'alto';
@@ -17,15 +17,26 @@ interface RiskLevelCardProps {
 }
 
 const riskColors: Record<'bajo' | 'medio' | 'alto', string> = {
-  bajo: '#4CAF50',     // verde
-  medio: '#894B00',    // naranja personalizado
-  alto: '#F44336'      // rojo
+  bajo: '#4CAF50',
+  medio: '#894B00',
+  alto: '#F44336'
 };
+
+const riskTitles: Record<'bajo' | 'medio' | 'alto', string> = {
+  bajo: '¡Buen trabajo!',
+  medio: 'Atención requerida',
+  alto: 'Alto',
+};
+
+const riskDescriptions: Record<'bajo' | 'medio' | 'alto', string> = {
+  bajo: 'Mantener tu control actual ayuda a reducir tu riesgo de complicaciones.',
+  medio: 'Tu riesgo es moderado. Mantente atento y sigue las recomendaciones médicas.',
+  alto: 'Tu riesgo de complicaciones es elevado. Consulta a tu médico.',
+};
+
 
 export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
   riskLevel,
-  title,
-  description,
   lastUpdate,
   onUpdatePress,
   backgroundColor = '#f1f5f9',
@@ -54,7 +65,10 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
     });
   };
 
+  const title = riskTitles[riskLevel];
   const textColor = riskColors[riskLevel];
+  const description = riskDescriptions[riskLevel];
+
 
   return (
     <View className="py-4 mb-4 -mx-4 px-4" style={{ backgroundColor }}>

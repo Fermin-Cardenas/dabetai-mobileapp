@@ -1,63 +1,66 @@
-// app/(tabs)/home.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  ScrollView,
+  Dimensions,
   SafeAreaView,
-  TouchableOpacity // <--- vuelve a agregar esto aquí
+  ScrollView,
+  View
 } from 'react-native';
 
+import { MaterialIcons } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
-
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 
-// Importar componentes core
-import { H1, H2, Body } from '@/components/common/Typography';
+import { H1, H2 } from '@/components/common/Typography';
+import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
 
-// Importar componentes del dashboard
 import {
+  ActionCard,
   DashboardHeader,
   GlucoseCard,
-  ActionCard,
-  StatItem,
-  SimpleChart,
-  RiskIndicator,
   NavButton,
-  RecordChart
+  RecordChart,
+  RiskIndicator,
+  StatItem
 } from '@/features/dashboard/components';
 
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
+const API_URL = 'http://192.168.100.20:8000'; // Usar IP local real aquí
+
+const screenWidth = Dimensions.get('window').width;
 
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('inicio');
+  const [patientData, setPatientData] = useState(null);
+  const [glucoseData, setGlucoseData] = useState<{ time: number; value: number }[]>([]);
+  const [nivelGeneral, setNivelGeneral] = useState('');
+  const [lastUpdate, setLastUpdate] = useState('');
   const router = useRouter();
 
-  const handleNotifications = () => {
-    console.log('Abriendo notificaciones...');
-  };
+  useEffect(() => {
+    const fetchPrediction = async () => {
+      try {
+        const res = await fetch(`${API_URL}/retinopathy/predict/1`);
+        const json = await res.json();
 
-  const handleSettings = () => {
-    console.log('Abriendo configuración...');
-  };
+        setPatientData(json.patient_data);
+        setGlucoseData(json.tendencia);
+        setNivelGeneral(json.nivel_general);
 
-  const handleConnect = () => {
-    console.log('Conectando dispositivo...');
-  };
+        const now = new Date();
+        const hora = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        setLastUpdate(`Última actualización:\nHoy, ${hora}`);
+      } catch (e) {
+        console.error('Error al obtener datos de la API:', e);
+        setNivelGeneral('Error');
+      }
+    };
 
-  const handleLinkDoctor = () => {
-    console.log('Vinculando con médico...');
-  };
+    fetchPrediction();
+  }, []);
 
-  const handleViewHistory = () => {
-    console.log('Mostrando historial detallado...');
-  };
-
-  const handleViewAnalysis = () => {
-    console.log('Mostrando análisis completo...');
-  };
+  const labels = glucoseData.map(p => String(p.time));
+  const data = glucoseData.map(p => p.value);
 
   const handleNavigation = (tab: string, route?: string) => {
     setActiveTab(tab.toLowerCase());
@@ -69,49 +72,39 @@ const Dashboard = () => {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-
       <SafeAreaView className="flex-1 bg-[#f1f5f9]">
-        {/* Header con logo y iconos */}
         <DashboardHeader
-          onNotificationPress={handleNotifications}
-          onSettingsPress={handleSettings}
+          onNotificationPress={() => console.log('Notif')}
+          onSettingsPress={() => console.log('Config')}
         />
 
-        <ScrollView
-          className="flex-1 px-4"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
-        >
-          {/* Saludo */}
+        <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: 100 }}>
           <H1 className="text-[#2C3E50] font-bold text-3xl mt-5 mb-5">
             Hola, Christian
           </H1>
 
-          {/* Tarjeta de glucosa */}
           <GlucoseCard
-            value={98}
+            value={patientData?.Glucose_Mean?.toFixed(1) || '--'}
             unit="mg/dL"
             trend="stable"
             time="Justo ahora"
             context="Antes de comer"
           />
 
-          {/* Automatizar datos */}
           <ActionCard
             icon={<MaterialIcons name="sync" size={18} color="#6B7280" />}
             title="Automatiza tus datos"
             description="Conecta tu glucómetro o sensor para sincronizar mediciones."
             buttonText="Conectar dispositivo"
-            onPress={handleConnect}
+            onPress={() => console.log('Conectando dispositivo...')}
           />
 
-          {/* Vincular médico */}
           <ActionCard
             icon={<MaterialIcons name="local-hospital" size={18} color="#6B7280" />}
             title="Informa a tu médico"
             description="Vincúlate con tu médico para monitorear tu diabetes con un profesional."
             buttonText="Vincular médico"
-            onPress={handleLinkDoctor}
+            onPress={() => console.log('Vinculando con médico...')}
           />
 
           {/* Tendencia 24h */}
@@ -120,21 +113,19 @@ const Dashboard = () => {
               Tendencia de las últimas 24 hrs
             </H2>
 
-            {/* Primera fila de estadísticas */}
             <View className="flex-row justify-between mb-4">
               <StatItem
                 icon={<Feather name="activity" size={24} color="#314158" />}
-                value="78%"
+                value={patientData?.Time_In_Range_70_180 + '%' || '--'}
                 label="TIR"
               />
               <StatItem
                 icon={<Feather name="heart" size={24} color="#314158" />}
-                value="45"
+                value={glucoseData?.length || '--'}
                 label="Lecturas"
               />
             </View>
 
-            {/* Segunda fila de estadísticas */}
             <View className="flex-row justify-between mb-4">
               <StatItem
                 icon={<Feather name="box" size={24} color="#314158" />}
@@ -143,71 +134,42 @@ const Dashboard = () => {
               />
               <StatItem
                 icon={<Feather name="heart" size={24} color="#314158" />}
-                value="135mg/dL"
+                value={`${patientData?.Glucose_Mean || '--'}mg/dL`}
                 label="Promedio"
               />
             </View>
 
-            {/* Gráfico migrado de Record */}
             <RecordChart
+              data={glucoseData}
               xAxisLabels={['0', '50', '100', '150', '200', '250', '300', '350']}
               xAxisTitle="t (min)"
             />
 
-            {/* Botón Ver historial con SecondaryButton */}
-            <SecondaryButton
-              title="Ver historial detallado"
-              onPress={handleViewHistory}
-            />
+
+            <SecondaryButton title="Ver historial detallado" onPress={() => console.log('Historial')} />
           </View>
 
-          {/* Predicción */}
           <View className="bg-white rounded-2xl p-5 mb-4 border" style={{ borderColor: '#CAD5E2' }}>
             <H2 className="text-[#2C3E50] font-bold text-lg mb-5">Predicción</H2>
 
             <RiskIndicator
-  riskLevel="bajo"
-  title="Tu riesgo general de complicaciones es bajo."
-  lastUpdate={`Última actualización:\nHoy, 10:30 AM`}
-/>
+              riskLevel={nivelGeneral.toLowerCase()}
+              title={`Tu riesgo general de complicaciones es ${nivelGeneral.toLowerCase()}.`}
+              lastUpdate={lastUpdate}
+            />
 
-<PrimaryButton
-  title="Ver análisis completo"
-  onPress={handleViewAnalysis}
-  size="custom"
-/>
+            <PrimaryButton title="Ver análisis completo" onPress={() => console.log('Análisis')} size="custom" />
           </View>
         </ScrollView>
 
-        {/* Navegación inferior */}
         <View
           className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
           style={{ width: 375, height: 67 }}
         >
-          <NavButton
-            title="Inicio"
-            iconName="home"
-            isActive={activeTab === 'inicio'}
-            onPress={() => handleNavigation('inicio')}
-          />
-          <NavButton
-            title="Predicción"
-            iconName="box"
-            isActive={activeTab === 'predicción'}
-            onPress={() => handleNavigation('predicción', '/(tabs)/prediction')}
-          />
-          <NavButton
-            title="Historial"
-            iconName="activity"
-            isActive={activeTab === 'historial'}
-            onPress={() => handleNavigation('historial', '/(tabs)/record')}
-          />
-          <NavButton
-            title="IA Chat"
-            iconName="codesandbox"
-            isActive={activeTab === 'ia chat'}
-            onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')}
-          />
+          <NavButton title="Inicio" iconName="home" isActive={activeTab === 'inicio'} onPress={() => handleNavigation('inicio')} />
+          <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/prediction')} />
+          <NavButton title="Historial" iconName="activity" isActive={activeTab === 'historial'} onPress={() => handleNavigation('historial', '/(tabs)/record')} />
+          <NavButton title="IA Chat" iconName="codesandbox" isActive={activeTab === 'ia chat'} onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')} />
         </View>
       </SafeAreaView>
     </>
