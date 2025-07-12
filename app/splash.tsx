@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import React, { useEffect } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 // Mantener la splash screen nativa visible
 SplashScreen.preventAutoHideAsync();
@@ -16,7 +16,7 @@ const CustomSplashScreen = () => {
         await SplashScreen.hideAsync();
         
         // SEGUNDO: Mostrar tu splash personalizada por el tiempo deseado
-        await new Promise(resolve => setTimeout(resolve, 3000)); // 3 segundos de tu splash
+        await new Promise(resolve => setTimeout(resolve, 2500)); // 2.5 segundos de tu splash
         
         // TERCERO: Navegar a la pantalla principal
         router.replace('/Auth/Login');
@@ -36,7 +36,7 @@ const CustomSplashScreen = () => {
       
             
       <Image 
-        source={require('../assets/images/dabetai3.png')} 
+        source={require('../src/assets/images/dabetai3.png')} 
         style={styles.logo}
         resizeMode="contain"
       />

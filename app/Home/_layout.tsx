@@ -1,7 +1,6 @@
-import { Stack } from "expo-router";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { Stack, useRouter } from "expo-router";
+import { Image, TouchableOpacity, View } from "react-native";
 
 export default function HomeLayout() {
   const router = useRouter();
@@ -32,7 +31,7 @@ export default function HomeLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../assets/images/logo3.png')} 
+                source={require('../../src/assets/images/logo3.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente
@@ -87,7 +86,7 @@ export default function HomeLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../assets/images/logo3.png')} 
+                source={require('../../src/assets/images/logo3.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente
@@ -129,7 +128,7 @@ export default function HomeLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../assets/images/logo3.png')} 
+                source={require('../../src/assets/images/logo3.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente
@@ -171,7 +170,7 @@ export default function HomeLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../assets/images/logo3.png')} 
+                source={require('../../src/assets/images/logo3.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente

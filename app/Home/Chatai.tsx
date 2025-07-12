@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  Image,
-} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const AIChat = () => {
   const [message, setMessage] = useState('');
@@ -116,7 +116,7 @@ const AIChat = () => {
               {msg.isAI && (
                 <View style={styles.avatar}>
                   <Image 
-                    source={require('../../assets/images/Shape.png')} // Ruta corregida
+                    source={require('../../src/assets/images/Shape.png')} // Ruta corregida
                     // source={{ uri: 'https://tu-url-de-imagen.com/bot-icon.png' }} // Para imagen de red
                     style={styles.avatarImage}
                     resizeMode="cover"

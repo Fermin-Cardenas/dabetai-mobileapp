@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Image, TouchableOpacity, Alert, Text } from "react-native";
-import { Button, Card } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Card } from "react-native-paper";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -77,7 +77,7 @@ export default function Login() {
       <View style={styles.formContainer}>
         <Card style={styles.card} elevation={0}>
           <Card.Content>
-            <Image source={require("../../assets/images/dabetai.png")} style={styles.image} />
+            <Image source={require("../../src/assets/images/dabetai.png")} style={styles.image} />
             <Text style={styles.subtitle}>Monitorea tu diabetes con inteligencia artificial</Text>
             <Text style={styles.label}>Correo electrónico</Text>
             <TextInput
@@ -102,22 +102,22 @@ export default function Login() {
                 <MaterialCommunityIcons name={showPassword ? "eye-off" : "eye"} size={24} color="#888" />
               </TouchableOpacity>
             </View>
-            
+
             <View style={styles.actions}>
               <Button mode="contained" style={styles.buttons} onPress={() => mutation.mutate()} disabled={mutation.isPending}>
                 {mutation.isPending ? "Cargando..." : "Iniciar sesión"}
               </Button>
             </View>
             <TouchableOpacity onPress={() => Alert.alert("Botón presionado", "Abrir opciones de contraseña")}>
-              <Text style={{ ...styles.label, color: "#0D47A1",  fontSize: 16, textAlign: "center", marginTop: 24,  }}>
+              <Text style={{ ...styles.label, color: "#0D47A1", fontSize: 16, textAlign: "center", marginTop: 24, }}>
                 ¿Olvidaste tu contraseña?
               </Text>
             </TouchableOpacity>
-            
+
           </Card.Content>
-          
+
         </Card>
-        
+
         <Card.Content style={{ paddingTop: 70 }}>
           <TouchableOpacity onPress={handleRegisterPress}>
             <Text style={styles.labelSubtitle}>
@@ -128,9 +128,9 @@ export default function Login() {
         </Card.Content>
 
       </View>
-      
 
-{/* 
+
+      {/* 
   // Mostrar el token almacenado
   <View style={styles.tokenContainer}>
     <Text style={styles.label}>Token guardado:</Text>
@@ -190,14 +190,14 @@ const styles = StyleSheet.create({
     color: "#62748E",
     fontFamily: 'Source Sans 3',
   },
-    buttons: {
-        width: 343,
-        height: 44,
-        borderRadius: 100,
-        backgroundColor: "#2196F3",
-        color: "#fff",
-        fontFamily: 'Source Sans 3',
-    },
+  buttons: {
+    width: 343,
+    height: 44,
+    borderRadius: 100,
+    backgroundColor: "#2196F3",
+    color: "#fff",
+    fontFamily: 'Source Sans 3',
+  },
   icon: {
     padding: 10,
   },
@@ -218,16 +218,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: "#fff",
   },
-    subtitle: {
-        marginBottom: 32,
-        color: "#62748E",
-        fontSize: 16,
-   
-        textAlign: "center",
-        fontFamily: 'Source Sans 3',
-        paddingLeft:50,
-        paddingRight:50,    
-    },
+  subtitle: {
+    marginBottom: 32,
+    color: "#62748E",
+    fontSize: 16,
+
+    textAlign: "center",
+    fontFamily: 'Source Sans 3',
+    paddingLeft: 50,
+    paddingRight: 50,
+  },
   tokenContainer: {
     marginTop: 20,
     padding: 10,
@@ -239,9 +239,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
   },
-    labelSubtitle: {
+  labelSubtitle: {
     marginBottom: 0,
-    color: 'gray', 
+    color: 'gray',
     fontSize: 16,
     fontFamily: 'Source Sans 3',
     textAlign: 'center',

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Provider as PaperProvider, Card, Button } from 'react-native-paper';
-import { Link, Stack, useRouter } from 'expo-router'; // Importamos Link y useRouter para las rutas
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Link, Stack, useRouter } from 'expo-router'; // Importamos Link y useRouter para las rutas
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Card, Provider as PaperProvider } from 'react-native-paper';
 
 export default function Load() {
   const router = useRouter();
@@ -15,12 +15,11 @@ export default function Load() {
         <View style={styles.formContainer}>
           <Card style={styles.card}>
             <Card.Content >
-                <Image source={require('@/assets/images/dabetai.png')} style={styles.imageDabetai} />
-              <Image source={require('@/assets/images/Logo.png')} style={styles.image} />
+                <Image source={require('@/src/assets/images/dabetai.png')} style={styles.imageDabetai} />
+              <Image source={require('@/src/assets/images/Logo.png')} style={styles.image} />
 
               <Card.Content style={{ marginBottom: 0, padding:0 }}>
                 <Text style={styles.labelTitle}>Monitorea tu diabetes con inteligencia artificial</Text>
-            
               </Card.Content>
 
             

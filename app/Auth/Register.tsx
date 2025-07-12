@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Image, TouchableOpacity, Alert, Text, ScrollView } from "react-native";
-import { Button, Card } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Card } from "react-native-paper";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -88,7 +88,7 @@ export default function Register() {
       <View style={styles.formContainer}>
         <Card style={styles.card} elevation={0}>
           <Card.Content>
-            <Image source={require("../../assets/images/dabetai.png")} style={styles.image} />
+            <Image source={require("../../src/assets/images/dabetai.png")} style={styles.image} />
             <Text style={styles.subtitle}>Monitorea tu diabetes con inteligencia artificial</Text>
             <Text style={styles.label}>Nombre</Text>
             <TextInput

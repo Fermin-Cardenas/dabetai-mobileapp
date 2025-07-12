@@ -1,65 +1,91 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Dimensions,
-  Animated
-} from 'react-native';
-import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 const { width } = Dimensions.get('window');
+const API_URL = 'http://127.0.0.1:8000';
 
 const Dashboard = () => {
+  const [patientData, setPatientData] = useState(null);
   const [activeTab, setActiveTab] = useState('inicio');
+  const [nivelGeneral, setNivelGeneral] = useState('');
+  const [lastUpdate, setLastUpdate] = useState('');
+  const [glucoseData, setGlucoseData] = useState([]);
+
   const router = useRouter();
-  
-  // Animación para el círculo de respiración
+
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const opacityAnim = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
-    // Crear animación de pulso continua
-    const createPulseAnimation = () => {
-      return Animated.loop(
-        Animated.sequence([
-          Animated.parallel([
-            Animated.timing(pulseAnim, {
-              toValue: 1.4,
-              duration: 2000,
-              useNativeDriver: true,
-            }),
-            Animated.timing(opacityAnim, {
-              toValue: 0,
-              duration: 2000,
-              useNativeDriver: true,
-            }),
-          ]),
-          Animated.parallel([
-            Animated.timing(pulseAnim, {
-              toValue: 1,
-              duration: 0,
-              useNativeDriver: true,
-            }),
-            Animated.timing(opacityAnim, {
-              toValue: 0.3,
-              duration: 0,
-              useNativeDriver: true,
-            }),
-          ]),
-        ])
-      );
+    const fetchPrediction = async () => {
+      try {
+        const res = await fetch(`${API_URL}/retinopathy/predict/1`);
+        const json = await res.json();
+
+        console.log('Datos recibidos de la API:', json);  // <-- Log general
+
+        setNivelGeneral(json.nivel_general);
+        setGlucoseData(json.tendencia);
+        setPatientData(json.patient_data);
+
+        console.log('patientData:', json.patient_data);      // <-- Log paciente
+        console.log('glucoseData:', json.tendencia);         // <-- Log gráfica
+
+        const now = new Date();
+        const hora = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        setLastUpdate(`Hoy, ${hora}`);
+      } catch (e) {
+        console.error('Error al obtener predicción:', e);
+        setNivelGeneral('Error');
+      }
     };
 
-    const animation = createPulseAnimation();
-    animation.start();
+    fetchPrediction();
 
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.parallel([
+          Animated.timing(pulseAnim, {
+            toValue: 1.4,
+            duration: 2000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacityAnim, {
+            toValue: 0,
+            duration: 2000,
+            useNativeDriver: true,
+          }),
+        ]),
+        Animated.parallel([
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 0,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacityAnim, {
+            toValue: 0.3,
+            duration: 0,
+            useNativeDriver: true,
+          }),
+        ]),
+      ])
+    );
+
+    animation.start();
     return () => animation.stop();
   }, []);
+
 
   const handleConnect = () => {
     console.log('Conectando dispositivo...');
@@ -79,108 +105,46 @@ const Dashboard = () => {
 
   // Componente para crear la línea del gráfico con curvas suaves
   const ChartLine = () => {
-    const chartWidth = width - 100;
-    const chartHeight = 80;
+    if (!glucoseData || glucoseData.length === 0) return null;
+    const chartWidth = width - 120;
+    const chartHeight = 160;
     const padding = 20;
-    
-    // Datos que crean una curva similar a la imagen
-    const glucoseData = [
-      { time: 0, value: 85 },
-      { time: 1, value: 95 },
-      { time: 2, value: 105 },
-      { time: 3, value: 125 },
-      { time: 4, value: 140 },
-      { time: 5, value: 135 },
-      { time: 6, value: 120 },
-      { time: 7, value: 130 },
-      { time: 8, value: 145 }
-    ];
+    const values = glucoseData.map(p => p.value);
+    const maxValue = Math.max(...values, 0);
+    const minValue = Math.min(...values, 0);
+    const range = maxValue - minValue || 1;
 
-    const maxValue = 180;
-    const minValue = 70;
-    const range = maxValue - minValue;
-
-    // Convertir datos a coordenadas de pantalla
-    const points = glucoseData.map((point, index) => {
-      const x = padding + (index / (glucoseData.length - 1)) * (chartWidth - padding * 2);
-      const y = chartHeight - ((point.value - minValue) / range) * (chartHeight - 20) + 10;
-      return { x, y, value: point.value };
-    });
-
-    // Crear segmentos curvos entre puntos
-    const createCurvedSegments = () => {
-      const segments = [];
-      
-      for (let i = 0; i < points.length - 1; i++) {
-        const current = points[i];
-        const next = points[i + 1];
-        const segmentWidth = next.x - current.x;
-        const numSteps = 8;
-        
-        for (let step = 0; step < numSteps; step++) {
-          const t = step / numSteps;
-          const t2 = t * t;
-          
-          const x = current.x + t * segmentWidth;
-          const y = current.y + t * (next.y - current.y) + 
-                   t2 * (next.y - current.y) * 0.1 * (Math.sin(t * Math.PI) - 0.5);
-          
-          const nextT = (step + 1) / numSteps;
-          const nextX = current.x + nextT * segmentWidth;
-          const nextY = current.y + nextT * (next.y - current.y) + 
-                       nextT * nextT * (next.y - current.y) * 0.1 * (Math.sin(nextT * Math.PI) - 0.5);
-          
-          segments.push({
-            id: `${i}-${step}`,
-            x1: x,
-            y1: y,
-            x2: nextX,
-            y2: nextY,
-            width: Math.sqrt(Math.pow(nextX - x, 2) + Math.pow(nextY - y, 2)),
-            angle: Math.atan2(nextY - y, nextX - x)
-          });
-        }
-      }
-      
-      return segments;
-    };
-
-    const curvedSegments = createCurvedSegments();
+    const points = glucoseData.map(point => ({
+      x: padding + (point.time / 350) * (chartWidth - 2 * padding),
+      y: chartHeight - ((point.value - minValue) / range) * (chartHeight - 40) + 20,
+    }));
 
     return (
       <View style={styles.chartSvg}>
-        {/* Líneas curvas */}
-        {curvedSegments.map((segment) => (
+        {points.slice(0, -1).map((pt, i) => {
+          const next = points[i + 1];
+          const length = Math.hypot(next.x - pt.x, next.y - pt.y);
+          const angle = Math.atan2(next.y - pt.y, next.x - pt.x);
+          return (
+            <View
+              key={i}
+              style={[
+                styles.chartLine,
+                { left: pt.x, top: pt.y, width: length, transform: [{ rotate: `${angle}rad` }] }
+              ]}
+            />
+          );
+        })}
+        {points.map((pt, i) => (
           <View
-            key={segment.id}
-            style={[
-              styles.curvedSegment,
-              {
-                left: segment.x1,
-                top: segment.y1,
-                width: segment.width,
-                transform: [{ rotate: `${segment.angle}rad` }],
-              }
-            ]}
-          />
-        ))}
-        
-        {/* Puntos de datos */}
-        {points.map((point, index) => (
-          <View
-            key={`point-${index}`}
-            style={[
-              styles.chartDot,
-              {
-                left: point.x - 4,
-                top: point.y - 4,
-              }
-            ]}
+            key={i}
+            style={[styles.chartDot, { left: pt.x - 3, top: pt.y - 3 }]}
           />
         ))}
       </View>
     );
   };
+
 
   const NavButton = ({ title, isActive, onPress, iconName, route }) => {
     const handlePress = () => {
@@ -193,15 +157,15 @@ const Dashboard = () => {
     };
 
     return (
-      <TouchableOpacity 
-        style={styles.navButton} 
+      <TouchableOpacity
+        style={styles.navButton}
         onPress={handlePress}
       >
         <View style={[styles.navIcon, isActive && styles.navIconActive]}>
-          <MaterialIcons 
-            name={iconName} 
-            size={24} 
-            color={isActive ? '#2196F3' : '#6B7280'} 
+          <MaterialIcons
+            name={iconName}
+            size={24}
+            color={isActive ? '#2196F3' : '#6B7280'}
           />
         </View>
         <Text style={[styles.navText, isActive && styles.navTextActive]}>
@@ -216,33 +180,35 @@ const Dashboard = () => {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Greeting */}
         <Text style={styles.greeting}>Hola, Christian</Text>
-        
+
         {/* Glucose Level Card */}
         <View style={styles.glucoseCard}>
           <View style={styles.glucoseContainer}>
             <View style={styles.glucoseLeft}>
               <View style={styles.glucoseMain}>
-                <Text style={styles.glucoseValue}>98</Text>
+                <Text style={styles.glucoseValue}>
+                  {patientData ? patientData.Glucose_Mean.toFixed(1) : '--'}
+                </Text>
                 <AntDesign name="arrowright" size={18} color="#10B981" style={styles.trendIcon} />
               </View>
               <Text style={styles.glucoseUnit}>mg/dL</Text>
             </View>
-            
+
             <View style={styles.glucoseCenter}>
               <Text style={styles.glucoseTime}>Justo ahora</Text>
               <Text style={styles.glucoseContext}>Antes de comer</Text>
             </View>
-            
+
             <View style={styles.glucoseIndicator}>
               {/* Círculo de pulso animado (respiración) */}
-              <Animated.View 
+              <Animated.View
                 style={[
                   styles.pulseCircle,
                   {
                     transform: [{ scale: pulseAnim }],
                     opacity: opacityAnim,
                   }
-                ]} 
+                ]}
               />
               {/* Círculo principal con cruz */}
               <View style={styles.glucoseInnerCircle}>
@@ -287,15 +253,16 @@ const Dashboard = () => {
         {/* 24h Trend */}
         <View style={styles.trendCard}>
           <Text style={styles.trendTitle}>Tendencia de las últimas 24 hrs</Text>
-          
-          {/* Stats Row */}
+
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <View style={styles.statIcon}>
                 <Ionicons name="pulse-outline" size={20} color="#6B7280" />
               </View>
               <View style={styles.statTextGroup}>
-                <Text style={styles.statValue}>78%</Text>
+                <Text style={styles.statValue}>
+                  {patientData ? `${patientData.Time_In_Range_70_180}%` : '--'}
+                </Text>
                 <Text style={styles.statLabel}>TIR</Text>
               </View>
             </View>
@@ -304,83 +271,61 @@ const Dashboard = () => {
                 <Ionicons name="heart-outline" size={20} color="#6B7280" />
               </View>
               <View style={styles.statTextGroup}>
-                <Text style={styles.statValue}>45</Text>
-                <Text style={styles.statLabel}>Lecturas</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <View style={styles.statIcon}>
-                <MaterialIcons name="view-in-ar" size={20} color="#6B7280" />
-              </View>
-              <View style={styles.statTextGroup}>
-                <Text style={styles.statValue}>6.5%</Text>
-                <Text style={styles.statLabel}>HbA1c Est.</Text>
-              </View>
-            </View>
-            <View style={styles.statItem}>
-              <View style={styles.statIcon}>
-                <Ionicons name="heart-outline" size={20} color="#6B7280" />
-              </View>
-              <View style={styles.statTextGroup}>
-                <Text style={styles.statValue}>135mg/dL</Text>
+                <Text style={styles.statValue}>
+                  {patientData ? patientData.Glucose_Mean + 'mg/dL' : '--'}
+                </Text>
                 <Text style={styles.statLabel}>Promedio</Text>
               </View>
             </View>
           </View>
 
-          {/* Chart Area */}
           <View style={styles.chartContainer}>
-            <View style={styles.chartArea}>
-              <View style={styles.yAxis}>
-                <Text style={styles.axisLabel}>0.4</Text>
-                <Text style={styles.axisLabel}>0.3</Text>
-                <Text style={styles.axisLabel}>0.2</Text>
-                <Text style={styles.axisLabel}>0.1</Text>
-                <Text style={styles.axisLabel}>0</Text>
-                <Text style={styles.axisLabel}>-0.1</Text>
-              </View>
-              <View style={styles.chartContent}>
-                <ChartLine />
-                <View style={styles.xAxis}>
-                  <Text style={styles.axisLabel}>0</Text>
-                  <Text style={styles.axisLabel}>50</Text>
-                  <Text style={styles.axisLabel}>100</Text>
-                  <Text style={styles.axisLabel}>150</Text>
-                  <Text style={styles.axisLabel}>200</Text>
-                  <Text style={styles.axisLabel}>250</Text>
-                  <Text style={styles.axisLabel}>300</Text>
-                  <Text style={styles.axisLabel}>350</Text>
-                </View>
-                <Text style={styles.xAxisLabel}>t (min)</Text>
-              </View>
-            </View>
-          </View>
+  <View style={styles.chartArea}>
+    <View style={styles.yAxis}>
+      <Text style={styles.axisLabel}>0.4</Text>
+      <Text style={styles.axisLabel}>0.3</Text>
+      <Text style={styles.axisLabel}>0.2</Text>
+      <Text style={styles.axisLabel}>0.1</Text>
+      <Text style={styles.axisLabel}>0</Text>
+      <Text style={styles.axisLabel}>-0.1</Text>
+    </View>
+    <View style={styles.chartContent}>
+      <ChartLine />
+      <View style={styles.xAxis}>
+        <Text style={styles.axisLabel}>0</Text>
+        <Text style={styles.axisLabel}>50</Text>
+        <Text style={styles.axisLabel}>100</Text>
+        <Text style={styles.axisLabel}>150</Text>
+        <Text style={styles.axisLabel}>200</Text>
+        <Text style={styles.axisLabel}>250</Text>
+        <Text style={styles.axisLabel}>300</Text>
+        <Text style={styles.axisLabel}>350</Text>
+      </View>
+      <Text style={styles.xAxisLabel}>t (min)</Text>
+    </View>
+  </View>
+</View>
 
-          <TouchableOpacity style={styles.historyButton} onPress={handleViewHistory}>
-            <Text style={styles.historyButtonText}>Ver historial detallado</Text>
-          </TouchableOpacity>
+
         </View>
 
         {/* Prediction Card */}
         <View style={[styles.card, styles.lastCard]}>
           <Text style={styles.cardTitle}>Predicción</Text>
-          
+
           <View style={styles.predictionContainer}>
             <View style={styles.riskIndicator}>
               <View style={styles.riskCircle}>
-                <Text style={styles.riskText}>Bajo</Text>
+                <Text style={styles.riskText}>{nivelGeneral}</Text>
                 <Text style={styles.riskSubtext}>Riesgo</Text>
               </View>
             </View>
             <View style={styles.predictionTextContainer}>
               <Text style={styles.predictionTitle}>
-                Tu riesgo general de complicaciones es bajo.
+                Tu riesgo general de complicaciones es {nivelGeneral.toLowerCase()}.
               </Text>
               <Text style={styles.predictionTime}>
-                Última actualización: Hoy, 10:30 AM
+                Última actualización: {lastUpdate}
               </Text>
             </View>
           </View>
@@ -393,39 +338,40 @@ const Dashboard = () => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <NavButton 
-          title="Inicio" 
+        <NavButton
+          title="Inicio"
           iconName="home"
-          isActive={activeTab === 'inicio'} 
-          onPress={() => {}} 
+          route="/Home/Home"
+          isActive={activeTab === 'inicio'}
+          onPress={() => { }}
         />
-        <NavButton 
-          title="Predicción" 
+        <NavButton
+          title="Predicción"
           iconName="view-in-ar"
           route="/Home/Prediction"
-          isActive={activeTab === 'predicción'} 
-          onPress={() => {}} 
+          isActive={activeTab === 'predicción'}
+          onPress={() => { }}
         />
-        <NavButton 
-          title="Historial" 
+        <NavButton
+          title="Historial"
           iconName="timeline"
           route="/Home/Record"
-          isActive={activeTab === 'historial'} 
-          onPress={() => {}} 
+          isActive={activeTab === 'historial'}
+          onPress={() => { }}
         />
-        <NavButton 
-          title="IA Chat" 
+        <NavButton
+          title="IA Chat"
           iconName="smart-toy"
           route="/Home/Chatai"
-          isActive={activeTab === 'ia chat'} 
-          onPress={() => {}} 
+          isActive={activeTab === 'ia chat'}
+          onPress={() => { }}
         />
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E8F1F5',
@@ -563,6 +509,12 @@ const Dashboard = () => {
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
+  },
+  chartLine: {
+    position: 'absolute',
+    height: 2,
+    backgroundColor: '#2196F3',
+    borderRadius: 1,
   },
   cardTitle: {
     fontSize: 16,
