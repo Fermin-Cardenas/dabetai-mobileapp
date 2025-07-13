@@ -1,50 +1,110 @@
-# Welcome to your Expo app 👋
+# dabetai - Aplicación móvil
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación para pacientes diabéticos que permite monitorear su condición y predecir complicaciones usando inteligencia artificial.
 
-## Get started
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-0.79-blue?logo=react" alt="React Native version">
+  <img src="https://img.shields.io/badge/Expo-53.x-black?logo=expo" alt="Expo version">
+  <img src="https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript" alt="TypeScript version">
+</p>
 
-1. Install dependencies
+## 📱 Capturas de pantalla
 
-   ```bash
-   npm install
-   ```
+<p align="center">
+  <img src="./assets/screenshots/login.png" alt="Pantalla de login" width="200"/>
+  <img src="./assets/screenshots/dashboard.png" alt="Dashboard principal" width="200"/>
+  <img src="./assets/screenshots/predictions.png" alt="Predicciones IA" width="200"/>
+  <img src="./assets/screenshots/chat.png" alt="Chat inteligente" width="200"/>
+</p>
 
-2. Start the app
+## 🩺 ¿Qué es dabetai?
 
-   ```bash
-   npx expo start
-   ```
+**dabetai** es una plataforma integral para el monitoreo de diabetes que incluye:
 
-In the output, you'll find options to open the app in a
+- **App móvil** (esta): para pacientes, monitoreo y predicciones
+- **App web**: para médicos, seguimiento de pacientes
+- **Modelo de IA**: predicción de complicaciones diabéticas
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+La app móvil permite registrar datos de salud y recibir predicciones sobre **retinopatía, nefropatía, neuropatía y pie diabético**, ayudando a prevenir complicaciones graves.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## ✨ Funcionalidades
 
-When you're ready, run:
+🤖 **Predicciones de IA** - alertas tempranas de complicaciones diabéticas  
+📊 **Monitoreo glucosa** - registro y visualización de niveles  
+💬 **Chat inteligente** - asistente IA para consultas sobre diabetes  
+📱 **Registro fácil** - comidas, medicación y actividad física  
+👨‍⚕️ **Conexión médico** - compartir datos con tu doctor  
+🔒 **Datos seguros** - autenticación y encriptación completa
+
+---
+
+## 🛠 Tecnologías
+
+- **React Native** con Expo
+- **TypeScript** para mayor robustez
+- **Expo Router** para navegación
+- **NativeWind** (Tailwind CSS) para estilos
+- **Axios** para comunicación con API
+- **React Query** para gestión de estado
+
+---
+
+## ⚡ Instalación rápida
+
+### Prerrequisitos
+
+- **Node.js** (v18 o superior)
+- **Expo CLI**: `npm install -g expo-cli`
+
+### Pasos
+
+1. **Clonar repositorio**
 
 ```bash
-npm run reset-project
+git clone https://github.com/Fermin-Cardenas/dabetai-mobileapp.git
+cd dabetai-mobileapp
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. **Instalar dependencias**
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. **Configurar conexión al backend**
+   Crea `.env` en la raíz:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+API_BASE_URL="http://TU_IP:PUERTO"
+```
 
-## Join the community
+4. **Ejecutar aplicación**
 
-Join our community of developers creating universal apps.
+```bash
+npm start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Escanea el código QR con Expo Go o usa un emulador.
+
+---
+
+## 🏗 Ecosistema dabetai: nuestros repositorios
+
+dabetai está compuesto por múltiples repositorios especializados:
+
+| Repositorio                                                             | Propósito                   | Estado           |
+| ----------------------------------------------------------------------- | --------------------------- | ---------------- |
+| **dabetai-mobileapp**                                                   | App para pacientes          | ✅ En desarrollo |
+| **[dabetai-webapp](https://github.com/chrisdev-ts/dabetai-webapp)**     | App web para médicos        | ✅ En desarrollo |
+| **[dabetai-aiapi](https://github.com/aleor25/dabetai-aiapi)**           | API de IA y predicciones    | ✅ En desarrollo |
+| **[dabetai-aimodels](https://github.com/chrisdev-ts/dabetai-aimodels)** | Modelos de machine learning | ✅ En desarrollo |
+| **[dabetai-landing](https://github.com/chrisdev-ts/dabetai-landing)**   | Página de aterrizaje        | ✅ En desarrollo |
+| **dabetai-api**                                                         | API principal del backend   | 🚧 Planificado   |
+
+---
+
+## 🤝 Colaboración interna
+
+Seguimos convenciones específicas para mantener consistencia - consulta [CONTRIBUTING.MD](CONTRIBUTING.MD).
