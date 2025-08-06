@@ -1,13 +1,12 @@
 // app/(tabs)/record.tsx
+import Feather from '@expo/vector-icons/Feather';
+import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
-  ScrollView,
   SafeAreaView,
+  ScrollView,
+  View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import Feather from '@expo/vector-icons/Feather';
 
 // Importar componentes core
 import { H2 } from '@/components/common/Typography';
@@ -16,8 +15,8 @@ import { NavButton } from '@/features/dashboard/components/NavButton';
 
 // Importar componentes del record
 import {
-  PeriodSelector,
   CategoryTabs,
+  PeriodSelector,
   RecordChart,
   RecordsList,
   StatItem
@@ -101,67 +100,67 @@ const Record = () => {
             xAxisTitle="t (min)"
           />
 
-  <View className="rounded-2xl p-1 mb-4">
-  <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
-    Estadísticas clave ({selectedPeriod})
-  </H2>
+          <View className="rounded-2xl p-1 mb-4">
+            <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
+              Estadísticas clave ({selectedPeriod})
+            </H2>
 
-  {/* Fila 1 */}
-  <View className="flex-row justify-between mb-4">
-    <StatItem
-      icon={<Feather name="activity" size={24} color="#314158" />}
-      value="78%"
-      label="TIR"
-    />
-    <StatItem
-      icon={<Feather name="heart" size={24} color="#314158" />}
-      value="45"
-      label="Lecturas"
-    />
-  </View>
+            {/* Fila 1 */}
+            <View className="flex-row justify-between mb-4">
+              <StatItem
+                icon={<Feather name="activity" size={24} color="#314158" />}
+                value="78%"
+                label="TIR"
+              />
+              <StatItem
+                icon={<Feather name="heart" size={24} color="#314158" />}
+                value="45"
+                label="Lecturas"
+              />
+            </View>
 
-  {/* Fila 2 */}
-  <View className="flex-row justify-between mb-4">
-    <StatItem
-      icon={<Feather name="box" size={24} color="#314158" />}
-      value="6.5%"
-      label="HbA1c Est."
-    />
-    <StatItem
-      icon={<Feather name="hexagon" size={24} color="#314158" />}
-      value="135mg/dL"
-      label="Promedio"
-    />
-  </View>
+            {/* Fila 2 */}
+            <View className="flex-row justify-between mb-4">
+              <StatItem
+                icon={<Feather name="box" size={24} color="#314158" />}
+                value="6.5%"
+                label="HbA1c Est."
+              />
+              <StatItem
+                icon={<Feather name="hexagon" size={24} color="#314158" />}
+                value="135mg/dL"
+                label="Promedio"
+              />
+            </View>
 
-  {/* Fila 3 */}
-  <View className="flex-row justify-between mb-4">
-    <StatItem
-      icon={<Feather name="box" size={24} color="#314158" />}
-      value="4.1/día"
-      label="Promedio"
-    />
-    <StatItem
-      icon={<Feather name="heart" size={24} color="#314158" />}
-      value="32mg/dL"
-      label="Desv. Est."
-    />
-  </View>
+            {/* Fila 3 */}
+            <View className="flex-row justify-between mb-4">
+              <StatItem
+                icon={<Feather name="box" size={24} color="#314158" />}
+                value="4.1/día"
+                label="Promedio"
+              />
+              <StatItem
+                icon={<Feather name="heart" size={24} color="#314158" />}
+                value="32mg/dL"
+                label="Desv. Est."
+              />
+            </View>
 
-  {/* Fila 4 */}
-  <View className="flex-row justify-between mb-2">
-    <StatItem
-      icon={<Feather name="hexagon" size={24} color="#314158" />}
-      value="135mg/dL"
-      label="Promedio"
-    />
-    <StatItem
-      icon={<Feather name="box" size={24} color="#314158" />}
-      value="4.1/día"
-      label="Promedio"
-    />
-  </View>
-</View>
+            {/* Fila 4 */}
+            <View className="flex-row justify-between mb-2">
+              <StatItem
+                icon={<Feather name="hexagon" size={24} color="#314158" />}
+                value="135mg/dL"
+                label="Promedio"
+              />
+              <StatItem
+                icon={<Feather name="box" size={24} color="#314158" />}
+                value="4.1/día"
+                label="Promedio"
+              />
+            </View>
+          </View>
 
 
           {/* Lista de registros */}
@@ -176,30 +175,30 @@ const Record = () => {
           className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
           style={{ width: 375, height: 67 }}
         >
-   <NavButton
-             title="Inicio"
-             iconName="home"
-             isActive={activeTab === 'inicio'}
+          <NavButton
+            title="Inicio"
+            iconName="home"
+            isActive={activeTab === 'inicio'}
             onPress={() => handleNavigation('home', '/(tabs)/home')}
-           />
-           <NavButton
-             title="Predicción"
-             iconName="box"
-             isActive={activeTab === 'predicción'}
-             onPress={() => handleNavigation('predicción', '/(tabs)/prediction')}
-           />
-           <NavButton
-             title="Historial"
-             iconName="activity"
-             isActive={activeTab === 'historial'}
-             onPress={() => handleNavigation('historial', '/(tabs)/record')}
-           />
-           <NavButton
-             title="IA Chat"
-             iconName="codesandbox"
-             isActive={activeTab === 'ia chat'}
-             onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')}
-           />
+          />
+          <NavButton
+            title="Predicción"
+            iconName="box"
+            isActive={activeTab === 'predicción'}
+            onPress={() => handleNavigation('predicción', '/(tabs)/retinopatia')}
+          />
+          <NavButton
+            title="Historial"
+            iconName="activity"
+            isActive={activeTab === 'historial'}
+            onPress={() => handleNavigation('historial', '/(tabs)/record')}
+          />
+          <NavButton
+            title="IA Chat"
+            iconName="codesandbox"
+            isActive={activeTab === 'ia chat'}
+            onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')}
+          />
         </View>
       </SafeAreaView>
     </>

@@ -1,7 +1,4 @@
-import { Stack } from "expo-router";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from "expo-router";
 
 export default function HomeLayout() {
   const router = useRouter();
@@ -25,7 +22,7 @@ export default function HomeLayout() {
       />
       
       <Stack.Screen
-        name="prediction"
+        name="retinopatia"
         options={{
           headerShown: false,  // ← Deshabilitar header para prediction
         }}

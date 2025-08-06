@@ -1,22 +1,22 @@
 // app/(tabs)/chatai.tsx
-import React, { useState, useEffect } from 'react';
+import { Stack, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  SafeAreaView,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
+  SafeAreaView,
+  View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
 
 // Importar componentes core
 import { DashboardHeader } from '@/features/dashboard/components/DashboardHeader';
 import { NavButton } from '@/features/dashboard/components/NavButton';
 
 // Importar componentes del chat
-import { 
-  ChatMessagesList,
-  ChatInput 
+import {
+  ChatInput,
+  ChatMessagesList
 } from '@/features/dashboard/components';
 
 const AIChat = () => {
@@ -154,7 +154,7 @@ const AIChat = () => {
                       title="Predicción"
                       iconName="box"
                       isActive={activeTab === 'predicción'}
-                      onPress={() => handleNavigation('predicción', '/(tabs)/prediction')}
+                      onPress={() => handleNavigation('predicción', '/(tabs)/retinopatia')}
                     />
                     <NavButton
                       title="Historial"

@@ -1,7 +1,7 @@
 // app/(tabs)/prediction/nefropatia.tsx
-import React, { useState } from 'react';
-import { View, ScrollView, SafeAreaView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 // Tipografía
 import { H2 } from '@/components/common/Typography';
@@ -11,9 +11,9 @@ import { Header } from '@/components/core/navigation/Header';
 
 // Componentes específicos
 import {
-  RiskLevelCard,
   ComplicationsSection,
-  RecommendationsSection
+  RecommendationsSection,
+  RiskLevelCard
 } from '@/features/dashboard/components';
 
 const Nefropatia = () => {

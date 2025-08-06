@@ -167,7 +167,7 @@ const Dashboard = () => {
           style={{ width: 375, height: 67 }}
         >
           <NavButton title="Inicio" iconName="home" isActive={activeTab === 'inicio'} onPress={() => handleNavigation('inicio')} />
-          <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/prediction')} />
+          <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/retinopatia')} />
           <NavButton title="Historial" iconName="activity" isActive={activeTab === 'historial'} onPress={() => handleNavigation('historial', '/(tabs)/record')} />
           <NavButton title="IA Chat" iconName="codesandbox" isActive={activeTab === 'ia chat'} onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')} />
         </View>
