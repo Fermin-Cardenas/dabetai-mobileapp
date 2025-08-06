@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 interface Complication {
   name: string;
-  level: 'Alto' | 'Moderado' | 'Bajo';
+  level: 'Alto' | 'Medio' | 'Bajo';
   isHigh: boolean;
   value?: string; // ← Nueva propiedad para la descripción/valor
 }
@@ -17,11 +17,11 @@ interface ComplicationsListProps {
   showArrow?: boolean;
 }
 
-const getLevelColor = (level: 'Alto' | 'Moderado' | 'Bajo') => {
+const getLevelColor = (level: 'Alto' | 'Medio' | 'Bajo') => {
   switch (level) {
     case 'Alto':
       return '#EF4444'; // rojo
-    case 'Moderado':
+    case 'Medio':
       return '#F59E0B'; // naranja oscuro
     case 'Bajo':
       return '#10B981'; // verde
