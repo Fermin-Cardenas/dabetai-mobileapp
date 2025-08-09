@@ -94,17 +94,33 @@ Escanea el código QR con Expo Go o usa un emulador.
 
 dabetai está compuesto por múltiples repositorios especializados:
 
-| Repositorio                                                             | Propósito                   | Estado           |
-| ----------------------------------------------------------------------- | --------------------------- | ---------------- |
-| **dabetai-mobileapp**                                                   | App para pacientes          | ✅ En desarrollo |
+| Repositorio                                                             | Propósito                   | Estado          |
+| ----------------------------------------------------------------------- | --------------------------- | --------------- |
+| **[dabetai-mobileapp](https://github.com/Fermin-Cardenas/dabetai-mobileapp)** | App para pacientes          | ✅ En desarrollo |
 | **[dabetai-webapp](https://github.com/chrisdev-ts/dabetai-webapp)**     | App web para médicos        | ✅ En desarrollo |
 | **[dabetai-aiapi](https://github.com/aleor25/dabetai-aiapi)**           | API de IA y predicciones    | ✅ En desarrollo |
 | **[dabetai-aimodels](https://github.com/chrisdev-ts/dabetai-aimodels)** | Modelos de machine learning | ✅ En desarrollo |
 | **[dabetai-landing](https://github.com/chrisdev-ts/dabetai-landing)**   | Página de aterrizaje        | ✅ En desarrollo |
-| **dabetai-api**                                                         | API principal del backend   | 🚧 Planificado   |
+| **[dabetai-api](https://github.com/chrisdev-ts/dabetai-api)**                                                         | API principal del backend   | ✅ En desarrollo |
 
 ---
 
 ## 🤝 Colaboración interna
 
 Seguimos convenciones específicas para mantener consistencia - consulta [CONTRIBUTING.MD](CONTRIBUTING.MD).
+
+## 🤝 Reconocimientos
+
+Este proyecto fue desarrollado por el equipo de autores:
+
+- Cardenas Cabal Fermín  
+- Ortiz Pérez Alejandro  
+- Serrano Puertos Jorge Christian  
+
+Con la asesoría y guía conceptual de:
+
+- Guarneros Nolasco Luis Rolando  
+- Cruz Ramos Nancy Aracely  
+
+Y con el apoyo académico de la  
+- Universidad Tecnológica del Centro de Veracruz
