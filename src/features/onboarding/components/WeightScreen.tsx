@@ -1,8 +1,8 @@
 // src/features/onboarding/components/WeightScreen.tsx
+import { H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { H2 } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 import { WeightSelector } from './WeightSelector';
 
 interface WeightScreenProps {
@@ -60,10 +60,11 @@ export const WeightScreen: React.FC<WeightScreenProps> = ({
 
       {/* Botón continuar */}
       <View className="pb-8 px-0">
-        <PrimaryButton
+        <Button
           title="Continuar"
           onPress={handleContinue}
-          size="large"
+          variant="fill"
+          color="primary"
         />
       </View>
     </View>

@@ -1,8 +1,8 @@
 // src/features/onboarding/components/GenderScreen.tsx
+import { H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { H2 } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 import { RadioOption } from './RadioOption';
 
 interface GenderScreenProps {
@@ -54,10 +54,11 @@ export const GenderScreen: React.FC<GenderScreenProps> = ({
 
       {/* Botón continuar */}
       <View className="pb-8 items-center">
-        <PrimaryButton
+        <Button
           title="Continuar"
           onPress={handleContinue}
-          size="large"
+          variant="fill"
+          color="primary"
         />
       </View>
     </View>

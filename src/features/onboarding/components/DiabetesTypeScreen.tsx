@@ -1,8 +1,8 @@
 // src/features/onboarding/components/DiabetesTypeScreen.tsx
+import { H1 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { H1, H2} from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 import { RadioOption } from './RadioOption';
 
 interface DiabetesTypeScreenProps {
@@ -55,10 +55,11 @@ export const DiabetesTypeScreen: React.FC<DiabetesTypeScreenProps> = ({
 
       {/* Botón continuar */}
       <View className="pb-8 items-center">
-        <PrimaryButton
+        <Button
           title="Continuar"
           onPress={handleContinue}
-          size="large"
+          variant="fill"
+          color="primary"
         />
       </View>
     </View>
