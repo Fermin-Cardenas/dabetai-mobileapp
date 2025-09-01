@@ -1,57 +1,58 @@
-// src/components/core/buttons/ButtonGroup.tsx
 import React from 'react';
 import { View } from 'react-native';
-import { PrimaryButton } from './PrimaryButton';
-import { SecondaryButton } from './SecondaryButton';
 
-interface ButtonGroupProps {
-  align?: 'stack' | 'row' | 'start' | 'end' | 'center' | 'justify';
-  buttonLabel: string;
-  buttonLabel1: string;
-  onPrimaryPress: () => void;
-  onSecondaryPress: () => void;
+export type ButtonGroupAlign = 'justify' | 'start' | 'end' | 'center' | 'stack';
+
+export interface ButtonGroupProps {
+  /** Child button components */
+  children: React.ReactNode;
+  /** Alignment of buttons */
+  align?: ButtonGroupAlign;
+  /** Additional CSS classes */
   className?: string;
 }
 
-export const ButtonGroup = ({
-  align = 'stack',
-  buttonLabel,
-  buttonLabel1,
-  onPrimaryPress,
-  onSecondaryPress,
-  className
-}: ButtonGroupProps) => {
+/**
+ * ButtonGroup component for organizing buttons with flexible layout options
+ */
+export const ButtonGroup = React.memo<ButtonGroupProps>(({
+  children,
+  align = 'justify',
+  className = '',
+}) => {
+  // Generate container classes using Tailwind
   const getContainerClasses = () => {
-    let baseClasses = "flex relative";
-    
+    const baseClasses = ['space-x-4']; // gap between buttons
+
     switch (align) {
-      case 'stack':
-        return `${baseClasses} flex-col items-start justify-center gap-3`;
-      case 'row':
-        return `${baseClasses} flex-row gap-3 justify-center`;
-      case 'start':
-        return `${baseClasses} flex-row items-center w-[214px] gap-3`;
-      case 'end':
-        return `${baseClasses} flex-row items-center justify-end w-[214px] gap-3`;
-      case 'center':
-        return `${baseClasses} flex-row items-center justify-center w-[214px] gap-3`;
       case 'justify':
-        return `${baseClasses} flex-row items-center w-[214px] gap-3`;
-      default:
-        return `${baseClasses} flex-col items-start justify-center gap-3`;
+        baseClasses.push('flex-row', 'flex-1', 'justify-between');
+        break;
+      case 'start':
+        baseClasses.push('flex-row', 'justify-start');
+        break;
+      case 'end':
+        baseClasses.push('flex-row', 'justify-end');
+        break;
+      case 'center':
+        baseClasses.push('flex-row', 'justify-center');
+        break;
+      case 'stack':
+        baseClasses.pop(); // Remove space-x-4 for stack
+        baseClasses.push('flex-col', 'space-y-4');
+        break;
     }
+
+    return baseClasses.join(' ');
   };
 
   return (
-    <View className={`${getContainerClasses()} ${className || ''}`}>
-      <PrimaryButton
-        title={buttonLabel}
-        onPress={onPrimaryPress}
-      />
-      <SecondaryButton
-        title={buttonLabel1}
-        onPress={onSecondaryPress}
-      />
+    <View className={`${getContainerClasses()} ${className}`}>
+      {children}
     </View>
   );
-};
+});
+
+ButtonGroup.displayName = 'ButtonGroup';
+
+ButtonGroup.displayName = 'ButtonGroup';
