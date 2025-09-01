@@ -1,20 +1,18 @@
 // app/config/notifications/index.tsx
+import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
-  ScrollView,
+    View
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
 
 // Importar componentes core
+import { Button } from '@/components/core/buttons';
 import { Header } from '@/components/core/navigation/Header';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
 
 // Importar componentes específicos para Notifications
 import {
-  NotificationTabs,
-  NotificationsList,
-  NotificationItem
+    NotificationTabs,
+    NotificationsList
 } from '@/features/notifications/components';
 
 interface Notification {
@@ -135,10 +133,11 @@ const Notifications = () => {
           {/* Botón "Marcar todas como leídas" - solo para tab no leídas */}
           {activeTab === 'no-leidas' && (
             <View className="px-4 py-3">
-              <SecondaryButton
+              <Button
                 title="Marcar todas como leídas"
                 onPress={handleMarkAllAsRead}
-                size="large"
+                variant="outline"
+                color="secondary"
               />
             </View>
           )}
