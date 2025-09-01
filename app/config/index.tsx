@@ -1,20 +1,19 @@
 // app/config/index.tsx
+import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import {
-  View,
   ScrollView,
+  View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
 
 // Importar componentes core
+import { Button } from '@/components/core/buttons';
 import { Header } from '@/components/core/navigation/Header';
 
 // Importar componentes específicos para Config
 import {
-  ConfigSection,
-  
-  DeleteAccountButton,
-  ConfigFooter
+  ConfigFooter,
+  ConfigSection
 } from '@/features/configuration/components';
 
 const Configuration = () => {
@@ -108,7 +107,14 @@ const Configuration = () => {
           ))}
 
           {/* Botón de eliminar cuenta */}
-          <DeleteAccountButton onPress={handleDeleteAccount} />
+          <View className="px-4 pt-5 pb-5">
+            <Button
+              title="Eliminar cuenta"
+              onPress={handleDeleteAccount}
+              variant="outline"
+              color="danger"
+            />
+          </View>
 
           {/* Footer */}
           <ConfigFooter />

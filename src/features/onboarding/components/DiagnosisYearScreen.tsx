@@ -1,8 +1,8 @@
 // src/features/onboarding/components/DiagnosisYearScreen.tsx
+import { H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { H2 } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 import { YearSelector } from './YearSelector';
 
 interface DiagnosisYearScreenProps {
@@ -44,10 +44,11 @@ export const DiagnosisYearScreen: React.FC<DiagnosisYearScreenProps> = ({
 
       {/* Botón continuar */}
       <View className="pb-8 px-0">
-        <PrimaryButton
+        <Button
           title="Continuar"
           onPress={handleContinue}
-          size="large"
+          variant="fill"
+          color="primary"
         />
       </View>
     </View>

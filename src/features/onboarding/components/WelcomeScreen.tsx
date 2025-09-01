@@ -1,8 +1,8 @@
 // src/features/onboarding/components/WelcomeScreen.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2, Body } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 
 interface WelcomeScreenProps {
   onContinue: () => void;
@@ -28,10 +28,11 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         
         {/* Espacio grande como en el diseño original */}
         <View style={{ marginTop: 500 }}>
-          <PrimaryButton
+          <Button
             title="Continuar"
             onPress={onContinue}
-            size="large"
+            variant="fill"
+            color="primary"
           />
         </View>
       </View>

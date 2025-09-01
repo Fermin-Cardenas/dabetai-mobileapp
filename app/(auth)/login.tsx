@@ -1,15 +1,15 @@
 // app/(auth)/login.tsx
-import React, { useState, useEffect } from "react";
-import { View, Alert, Image } from "react-native";
-import { Stack, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { Stack, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, Image, View } from "react-native";
 
 // Importar componentes
-import { InputField } from "@/components/core/inputs/InputField";
-import { PrimaryButton } from "@/components/core/buttons/PrimaryButton";
 import { Body } from "@/components/common/Typography";
+import { Button } from "@/components/core/buttons";
+import { InputField } from "@/components/core/inputs/InputField";
 import { Header } from "@/components/core/navigation/Header";
 
 export default function Login() {
@@ -152,10 +152,12 @@ export default function Login() {
 
             {/* Botón de login */}
             <View className="flex-row justify-center" style={{ marginTop: 20 }}>
-              <PrimaryButton
+              <Button
                 title={mutation.isPending ? "Cargando..." : "Iniciar sesión"}
                 onPress={() => mutation.mutate()}
                 disabled={mutation.isPending}
+                variant="fill"
+                color="primary"
               />
             </View>
 

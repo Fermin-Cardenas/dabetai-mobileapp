@@ -1,8 +1,8 @@
 // src/features/onboarding/components/OnboardingCompleteScreen.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2, Body } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 
 interface OnboardingCompleteScreenProps {
   onGoToHome: () => void;
@@ -28,10 +28,11 @@ export const OnboardingCompleteScreen: React.FC<OnboardingCompleteScreenProps> =
         
         {/* Espacio grande como en el diseño original */}
         <View style={{ marginTop: 500 }}>
-          <PrimaryButton
+          <Button
             title="Ir al inicio"
             onPress={onGoToHome}
-            size="large"
+            variant="fill"
+            color="primary"
           />
         </View>
       </View>

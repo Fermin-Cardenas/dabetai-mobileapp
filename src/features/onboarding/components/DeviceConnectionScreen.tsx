@@ -1,9 +1,8 @@
 // src/features/onboarding/components/DeviceConnectionScreen.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Button, ButtonGroup } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2, Body } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
 
 interface DeviceConnectionScreenProps {
   onConnectDevice: () => void;
@@ -31,19 +30,20 @@ export const DeviceConnectionScreen: React.FC<DeviceConnectionScreenProps> = ({
         
         {/* Espacio grande como en el diseño original */}
         <View style={{ marginTop: 430 }} className="items-center">
-          <PrimaryButton
-            title="Conectar un dispositivo"
-            onPress={onConnectDevice}
-            size="large"
-          />
-          
-          <View className="mt-3">
-            <SecondaryButton
+          <ButtonGroup align="stack">
+            <Button
+              title="Conectar un dispositivo"
+              onPress={onConnectDevice}
+              variant="fill"
+              color="primary"
+            />
+            <Button
               title="Saltar por ahora"
               onPress={onSkip}
-              size="large"
+              variant="outline"
+              color="secondary"
             />
-          </View>
+          </ButtonGroup>
         </View>
       </View>
     </View>

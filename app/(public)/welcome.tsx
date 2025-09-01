@@ -1,11 +1,10 @@
 // src/features/welcome/screens/WelcomeScreen.tsx
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Stack, useRouter } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ButtonGroup } from '@/components/core/buttons';
+import { Button, ButtonGroup } from '@/components/core/buttons';
 import { TermsText } from '@/features/authentication/components/TermsText';
-import { BrandFrame } from '@/features/authentication/components/BrandFrame';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Stack, useRouter } from "expo-router";
+import React from "react";
+import { Image, Text, View } from "react-native";
 
 export default function Welcome() {
     const router = useRouter();
@@ -77,13 +76,20 @@ export default function Welcome() {
                         
                         {/* Grupo de botones */}
                         <View className="self-stretch w-full">
-                            <ButtonGroup
-                                align="stack"
-                                buttonLabel="Registrarse"
-                                buttonLabel1="Iniciar sesión"
-                                onPrimaryPress={handleRegister}
-                                onSecondaryPress={handleLogin}
-                            />
+                            <ButtonGroup align="stack">
+                                <Button
+                                    title="Registrarse"
+                                    onPress={handleRegister}
+                                    variant="fill"
+                                    color="primary"
+                                />
+                                <Button
+                                    title="Iniciar sesión"
+                                    onPress={handleLogin}
+                                    variant="outline"
+                                    color="primary"
+                                />
+                            </ButtonGroup>
                         </View>
                     </View>
 

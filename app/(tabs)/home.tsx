@@ -11,8 +11,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { Stack, useRouter } from 'expo-router';
 
 import { H1, H2 } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
+import { Button } from '@/components/core/buttons';
 
 import {
   ActionCard,
@@ -146,7 +145,12 @@ const Dashboard = () => {
             />
 
 
-            <SecondaryButton title="Ver historial detallado" onPress={() => console.log('Historial')} />
+            <Button 
+              title="Ver historial detallado" 
+              onPress={() => console.log('Historial')} 
+              variant="outline" 
+              color="secondary" 
+            />
           </View>
 
           <View className="bg-white rounded-2xl p-5 mb-4 border" style={{ borderColor: '#CAD5E2' }}>
@@ -158,7 +162,12 @@ const Dashboard = () => {
               lastUpdate={lastUpdate}
             />
 
-            <PrimaryButton title="Ver análisis completo" onPress={() => console.log('Análisis')} size="custom" />
+            <Button 
+              title="Ver análisis completo" 
+              onPress={() => console.log('Análisis')} 
+              variant="fill" 
+              color="primary" 
+            />
           </View>
         </ScrollView>
 
