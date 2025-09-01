@@ -1,8 +1,8 @@
 // src/features/dashboard/components/ActionCard.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2, Body } from '@/components/common/Typography';
-import { PrimaryButton } from '@/components/core/buttons/PrimaryButton';
 
 interface ActionCardProps {
   icon: React.ReactNode;
@@ -35,10 +35,11 @@ export const ActionCard = ({
         <H2 className="text-[#2C3E50] font-bold text-lg ">{title}</H2>
       </View>
       <Body className="text-gray-500 font-normal text-base mb-4 leading-none">{description}</Body>
-      <PrimaryButton
+      <Button
         title={buttonText}
         onPress={onPress}
-        size="medium"
+        variant="fill"
+        color="primary"
       />
     </View>
   );

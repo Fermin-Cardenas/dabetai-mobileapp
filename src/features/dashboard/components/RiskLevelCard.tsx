@@ -1,6 +1,6 @@
 // src/features/dashboard/components/RiskLevelCard.tsx
 import { Body, H3 } from '@/components/common/Typography';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
+import { Button } from '@/components/core/buttons';
 import React, { useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 import { RiskCircle } from './RiskCircle';
@@ -106,11 +106,12 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
             />
           )}
 
-          <SecondaryButton
+          <Button
             title={isLoading ? 'Actualizando...' : 'Actualizar predicción'}
             onPress={handleUpdatePress}
             disabled={isLoading}
-            size="customGreenLarge"
+            variant="outline"
+            color="secondary"
           />
         </View>
       )}

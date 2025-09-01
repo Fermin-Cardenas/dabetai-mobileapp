@@ -1,8 +1,8 @@
 // src/features/dashboard/components/RecommendationsSection.tsx
+import { H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2 } from '@/components/common/Typography';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
 import { RecommendationsList } from './RecommendationsList';
 
 interface RecommendationsSectionProps {
@@ -28,10 +28,11 @@ export const RecommendationsSection: React.FC<RecommendationsSectionProps> = ({
           {title}
         </H2>
         {showViewMoreButton && onViewMore && (
-          <SecondaryButton
+          <Button
             title={buttonTitle}
             onPress={onViewMore}
-            size="medium"
+            variant="outline"
+            color="secondary"
           />
         )}
       </View>

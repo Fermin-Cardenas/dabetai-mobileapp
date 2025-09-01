@@ -1,8 +1,8 @@
 // src/features/dashboard/components/ComplicationsSection.tsx
+import { H2 } from '@/components/common/Typography';
+import { Button } from '@/components/core/buttons';
 import React from 'react';
 import { View } from 'react-native';
-import { H2 } from '@/components/common/Typography';
-import { SecondaryButton } from '@/components/core/buttons/SecondaryButton';
 import { ComplicationsList } from './ComplicationsList';
 
 interface Complication {
@@ -43,10 +43,11 @@ export const ComplicationsSection: React.FC<ComplicationsSectionProps> = ({
           {title}
         </H2>
         {showToggleButton && (
-          <SecondaryButton
+          <Button
             title={buttonText}
             onPress={onToggleView}
-            size="medium"
+            variant="outline"
+            color="secondary"
           />
         )}
       </View>
