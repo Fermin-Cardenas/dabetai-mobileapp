@@ -1,4 +1,12 @@
-// src/components/core/buttons/index.ts
-export { PrimaryButton } from './PrimaryButton';
-export { SecondaryButton } from './SecondaryButton';
-export { ButtonGroup } from './ButtonGroup';
+// Modern Button Components
+export { Button } from "./Button";
+export { ButtonGroup } from "./ButtonGroup";
+
+// Types
+export type {
+  ButtonColor,
+  ButtonProps,
+  ButtonVariant,
+  IconPosition,
+} from "./Button";
+export type { ButtonGroupAlign, ButtonGroupProps } from "./ButtonGroup";
