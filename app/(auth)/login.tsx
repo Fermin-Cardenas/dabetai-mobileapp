@@ -9,15 +9,16 @@ import { Alert, Image, View } from "react-native";
 // Importar componentes
 import { Body } from "@/components/common/Typography";
 import { Button } from "@/components/core/buttons";
-import { InputField } from "@/components/core/inputs/InputField";
+import { InputField, useInputField, usePasswordInput, validators } from "@/components/core/inputs";
 import { Header } from "@/components/core/navigation/Header";
 
 export default function Login() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+
+  // Using our custom hooks for form management and validation
+  const emailField = useInputField("");
+  const passwordField = usePasswordInput("");
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -47,8 +48,8 @@ export default function Login() {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post("http://localhost:8080/auth/login", {
-        email,
-        password,
+        email: emailField.value,
+        password: passwordField.value,
       });
       console.log("Respuesta del servidor:", response.data);
       return response.data;
@@ -72,6 +73,19 @@ export default function Login() {
     },
   });
 
+  const handleLogin = () => {
+    // Validate fields before submitting
+    const emailError = validators.email(emailField.value);
+    const passwordError = validators.password(passwordField.value);
+
+    if (emailError || passwordError) {
+      Alert.alert("Error de validación", emailError || passwordError || "Por favor verifica los campos");
+      return;
+    }
+
+    mutation.mutate();
+  };
+
   const handleForgotPassword = () => {
     Alert.alert("Botón presionado", "Abrir opciones de contraseña");
   };
@@ -87,10 +101,10 @@ export default function Login() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      
+
       <View className="flex-1 bg-[#f1f5f9]">
         {/* Header azul con título y flecha de regreso */}
-        <Header 
+        <Header
           title="Iniciar sesión"
           showBackButton
           onBackPress={handleBack}
@@ -99,103 +113,83 @@ export default function Login() {
 
         {/* Contenido principal */}
         <View className="flex-1" style={{ padding: 20 }}>
-          
           {/* Contenedor centrado para el formulario */}
           <View className="flex-1 justify-center">
-            
             {/* Logo dabetai */}
             <View className="items-center" style={{ marginBottom: 8 }}>
               <Image
-                source={require('@/assets/images/dabetai.png')}
+                source={require("@/assets/images/dabetai.png")}
                 style={{
                   width: 203,
                   height: 66,
-                  alignSelf: "center"
+                  alignSelf: "center",
                 }}
                 resizeMode="contain"
               />
             </View>
-            
+
             {/* Subtítulo */}
-            <Body 
+            <Body
               className="text-[#62748E] text-center text-base"
               style={{
                 marginBottom: 32,
-                fontFamily: 'Source Sans 3',
+                fontFamily: "Source Sans 3",
                 paddingLeft: 50,
-                paddingRight: 50
+                paddingRight: 50,
               }}
             >
               Monitorea tu diabetes con inteligencia artificial
             </Body>
 
-            {/* Campo de email */}
-            <InputField
-              label="Correo electrónico"
-              placeholder="correo@ejemplo.com"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+            <View className="gap-6">
+              {/* Campo de email */}
+              <InputField
+                label="Correo electrónico"
+                placeholder="correo@ejemplo.com"
+                value={emailField.value}
+                onChangeText={emailField.handleChange}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                error={emailField.value && validators.email(emailField.value) || undefined}
+              />
 
-            {/* Campo de contraseña */}
-            <InputField
-              label="Contraseña"
-              placeholder="*************"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              showPasswordToggle
-              onTogglePassword={() => setShowPassword(!showPassword)}
-            />
+              {/* Campo de contraseña */}
+              <InputField
+                label="Contraseña"
+                placeholder="*************"
+                value={passwordField.value}
+                onChangeText={passwordField.handleChange}
+                secureTextEntry={passwordField.secureTextEntry}
+                showPasswordToggle
+                onTogglePassword={passwordField.togglePasswordVisibility}
+                error={passwordField.value && validators.password(passwordField.value) || undefined}
+              />
 
-            {/* Botón de login */}
-            <View className="flex-row justify-center" style={{ marginTop: 20 }}>
+              {/* Botón de login */}
               <Button
                 title={mutation.isPending ? "Cargando..." : "Iniciar sesión"}
-                onPress={() => mutation.mutate()}
+                onPress={handleLogin}
                 disabled={mutation.isPending}
                 variant="fill"
                 color="primary"
               />
-            </View>
 
-            {/* ¿Olvidaste tu contraseña? */}
-            <Body
-              className="text-[#0D47A1] text-center"
-              style={{
-                fontSize: 16,
-                marginTop: 24,
-                fontFamily: 'Source Sans 3'
-              }}
-              onPress={handleForgotPassword}
-            >
-              ¿Olvidaste tu contraseña?
-            </Body>
+              {/* ¿Olvidaste tu contraseña? */}
+              <Body
+                className="text-center text-primary-900"
+                onPress={handleForgotPassword}
+              >
+                ¿Olvidaste tu contraseña?
+              </Body>
+            </View>
           </View>
         </View>
 
         {/* ¿No tienes cuenta? - hasta abajo */}
-        <View className="absolute bottom-0 left-0 right-0" style={{ paddingBottom: 40, paddingHorizontal: 20 }}>
-          <Body
-            className="text-gray-600 text-center font-semibold"
-            style={{
-              fontSize: 16,
-              fontFamily: 'Source Sans 3'
-            }}
-            onPress={handleRegisterPress}
-          >
-            ¿No tienes una cuenta?{' '}
-            <Body 
-              className="text-[#2196F3] font-semibold"
-              style={{
-                fontSize: 16,
-                fontFamily: 'Source Sans 3'
-              }}
-            >
-              Regístrate
-            </Body>
+        <View className="flex-row justify-center items-center">
+          <Body className="text-center">¿No tienes una cuenta? </Body>
+          <Body className="text-primary-900 text-center" onPress={handleRegisterPress}>
+            Regístrate
           </Body>
         </View>
       </View>

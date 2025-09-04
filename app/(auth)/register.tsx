@@ -9,23 +9,25 @@ import { Alert, Image, ScrollView, View } from "react-native";
 // Importar componentes
 import { Body } from "@/components/common/Typography";
 import { Button } from "@/components/core/buttons";
-import { InputField } from "@/components/core/inputs/InputField";
+import {
+  InputField,
+  useInputField,
+  usePasswordInput,
+  validators,
+} from "@/components/core/inputs";
 import { Header } from "@/components/core/navigation/Header";
 
 export default function Register() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
-  // Estados únicos para cada campo
-  const [nombre, setNombre] = useState("");
-  const [primerApellido, setPrimerApellido] = useState("");
-  const [segundoApellido, setSegundoApellido] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+
+  // Using our custom hooks for form management and validation
+  const nombreField = useInputField("");
+  const primerApellidoField = useInputField("");
+  const segundoApellidoField = useInputField("");
+  const emailField = useInputField("");
+  const passwordField = usePasswordInput("");
+  const confirmPasswordField = usePasswordInput("");
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -55,11 +57,11 @@ export default function Register() {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post("http://localhost:8080/auth/register", {
-        nombre,
-        primerApellido,
-        segundoApellido,
-        email,
-        password,
+        nombre: nombreField.value,
+        primerApellido: primerApellidoField.value,
+        segundoApellido: segundoApellidoField.value,
+        email: emailField.value,
+        password: passwordField.value,
       });
       console.log("Respuesta del servidor:", response.data);
       return response.data;
@@ -83,6 +85,36 @@ export default function Register() {
   });
 
   const handleRegister = () => {
+    // Validate all fields
+    const nameError = nombreField.value.trim()
+      ? null
+      : "El nombre es requerido";
+    const firstLastNameError = primerApellidoField.value.trim()
+      ? null
+      : "El primer apellido es requerido";
+    const emailError = validators.email(emailField.value);
+    const passwordError = validators.password(passwordField.value);
+    const confirmPasswordError =
+      confirmPasswordField.value !== passwordField.value
+        ? "Las contraseñas no coinciden"
+        : null;
+
+    const errors = [
+      nameError,
+      firstLastNameError,
+      emailError,
+      passwordError,
+      confirmPasswordError,
+    ].filter(Boolean);
+
+    if (errors.length > 0) {
+      Alert.alert(
+        "Error de validación",
+        errors[0] || "Por favor verifica los campos"
+      );
+      return;
+    }
+
     mutation.mutate();
     router.push("/onboarding");
   };
@@ -98,141 +130,144 @@ export default function Register() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      
+
       <View className="flex-1 bg-[#f1f5f9]">
         {/* Header azul con título y flecha de regreso */}
-        <Header 
-          title="Registrarse"
-          showBackButton
-          onBackPress={handleBack}
-        />
+        <Header title="Registrarse" showBackButton onBackPress={handleBack} />
 
         {/* ScrollView para contenido scrolleable */}
-        <ScrollView 
+        <ScrollView
           className="flex-1"
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
         >
           {/* Contenido principal */}
           <View className="flex-1" style={{ padding: 20 }}>
-            
             {/* Logo dabetai */}
             <View className="items-center" style={{ marginBottom: 8 }}>
               <Image
-                source={require('@/assets/images/dabetai.png')}
+                source={require("@/assets/images/dabetai.png")}
                 style={{
                   width: 203,
                   height: 66,
-                  alignSelf: "center"
+                  alignSelf: "center",
                 }}
                 resizeMode="contain"
               />
             </View>
-            
+
             {/* Subtítulo */}
-            <Body 
+            <Body
               className="text-[#62748E] text-center text-base"
               style={{
                 marginBottom: 32,
-                fontFamily: 'Source Sans 3',
+                fontFamily: "Source Sans 3",
                 paddingLeft: 50,
-                paddingRight: 50
+                paddingRight: 50,
               }}
             >
               Monitorea tu diabetes con inteligencia artificial
             </Body>
 
             {/* Formulario */}
-            <View>
+            <View className="gap-6">
               {/* Campo Nombre */}
               <InputField
                 label="Nombre"
                 placeholder="Ingresa tu nombre"
-                value={nombre}
-                onChangeText={setNombre}
+                value={nombreField.value}
+                onChangeText={nombreField.handleChange}
+                error={
+                  nombreField.value && !nombreField.value.trim()
+                    ? "El nombre es requerido"
+                    : undefined
+                }
               />
 
               {/* Campo Primer Apellido */}
               <InputField
                 label="Primer apellido"
                 placeholder="Ingresa tu primer apellido"
-                value={primerApellido}
-                onChangeText={setPrimerApellido}
+                value={primerApellidoField.value}
+                onChangeText={primerApellidoField.handleChange}
+                error={
+                  primerApellidoField.value && !primerApellidoField.value.trim()
+                    ? "El primer apellido es requerido"
+                    : undefined
+                }
               />
 
               {/* Campo Segundo Apellido */}
               <InputField
                 label="Segundo apellido"
                 placeholder="Ingresa tu segundo apellido"
-                value={segundoApellido}
-                onChangeText={setSegundoApellido}
+                value={segundoApellidoField.value}
+                onChangeText={segundoApellidoField.handleChange}
               />
 
               {/* Campo Email */}
               <InputField
                 label="Correo electrónico"
                 placeholder="correo@ejemplo.com"
-                value={email}
-                onChangeText={setEmail}
+                value={emailField.value}
+                onChangeText={emailField.handleChange}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                error={
+                  (emailField.value && validators.email(emailField.value)) ||
+                  undefined
+                }
               />
 
               {/* Campo Contraseña */}
               <InputField
                 label="Contraseña"
                 placeholder="Mínimo 6 caracteres"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
+                value={passwordField.value}
+                onChangeText={passwordField.handleChange}
+                secureTextEntry={passwordField.secureTextEntry}
                 showPasswordToggle
-                onTogglePassword={() => setShowPassword(!showPassword)}
+                onTogglePassword={passwordField.togglePasswordVisibility}
+                error={
+                  (passwordField.value &&
+                    validators.password(passwordField.value)) ||
+                  undefined
+                }
               />
 
               {/* Campo Repetir Contraseña */}
               <InputField
                 label="Repetir contraseña"
                 placeholder="Confirma tu contraseña"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry={!showConfirmPassword}
+                value={confirmPasswordField.value}
+                onChangeText={confirmPasswordField.handleChange}
+                secureTextEntry={confirmPasswordField.secureTextEntry}
                 showPasswordToggle
-                onTogglePassword={() => setShowConfirmPassword(!showConfirmPassword)}
+                onTogglePassword={confirmPasswordField.togglePasswordVisibility}
+                error={
+                  confirmPasswordField.value &&
+                  confirmPasswordField.value !== passwordField.value
+                    ? "Las contraseñas no coinciden"
+                    : undefined
+                }
               />
 
               {/* Botón de registro */}
-              <View className="flex-row justify-center" style={{ marginTop: 20 }}>
-                <Button
-                  title={mutation.isPending ? "Cargando..." : "Registrarse"}
-                  onPress={handleRegister}
-                  disabled={mutation.isPending}
-                  variant="fill"
-                  color="primary"
-                />
-              </View>
+              <Button
+                title={mutation.isPending ? "Cargando..." : "Registrarse"}
+                onPress={handleRegister}
+                disabled={mutation.isPending}
+                variant="fill"
+                color="primary"
+              />
             </View>
           </View>
 
           {/* ¿Ya tienes cuenta? - al final del scroll */}
-          <View className="items-center" style={{ paddingBottom: 40, paddingHorizontal: 20 }}>
-            <Body
-              className="text-gray-600 text-center font-semibold"
-              style={{
-                fontSize: 16,
-                fontFamily: 'Source Sans 3'
-              }}
-              onPress={handleLoginPress}
-            >
-              ¿Ya tienes una cuenta?{' '}
-              <Body 
-                className="text-[#2196F3] font-semibold"
-                style={{
-                  fontSize: 16,
-                  fontFamily: 'Source Sans 3'
-                }}
-              >
-                Inicia sesión
-              </Body>
+          <View className="items-center">
+            <Body className="text-center" onPress={handleLoginPress}>
+              ¿Ya tienes una cuenta?{" "}
+              <Body className="text-primary-900">Inicia sesión</Body>
             </Body>
           </View>
         </ScrollView>
