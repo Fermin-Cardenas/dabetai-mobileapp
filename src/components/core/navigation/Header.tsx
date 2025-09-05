@@ -1,8 +1,8 @@
 // src/components/core/navigation/Header.tsx
-import React from 'react';
-import { View, TouchableOpacity, StatusBar } from 'react-native';
+import { Subtitle } from '@/components/common/Typography';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { H3, Subtitle } from '@/components/common/Typography';
+import React from 'react';
+import { StatusBar, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface HeaderProps {
@@ -26,7 +26,7 @@ export const Header = ({
     <>
       <StatusBar barStyle="light-content" backgroundColor="#2196F3" />
       <View 
-        className={`bg-[#2196F3] ${className || ''}`}
+        className={`bg-primary-500 ${className || ''}`}
         style={{ paddingTop: insets.top }}
       >
         <View className="flex-row items-center h-14 px-4">
