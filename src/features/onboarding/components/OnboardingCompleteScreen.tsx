@@ -27,7 +27,7 @@ export const OnboardingCompleteScreen: React.FC<OnboardingCompleteScreenProps> =
         </View>
         
         {/* Espacio grande como en el diseño original */}
-        <View style={{ marginTop: 500 }}>
+        <View className="mt-96">
           <Button
             title="Ir al inicio"
             onPress={onGoToHome}

@@ -33,7 +33,7 @@ export const DoctorLinkScreen: React.FC<DoctorLinkScreenProps> = ({
         </View>
         
         {/* Espacio grande como en el diseño original */}
-        <View style={{ marginTop: 430 }} className="items-center">
+        <View className="mt-80 items-center">
           <ButtonGroup align="stack">
             <Button
               title="Vincular médico"

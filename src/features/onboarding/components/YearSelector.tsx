@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface YearSelectorProps {
   selectedYear: number;
@@ -46,8 +46,7 @@ export const YearSelector: React.FC<YearSelectorProps> = ({
       <View className="h-56 w-full">
         <ScrollView
           ref={scrollViewRef}
-          className="flex-1"
-          contentContainerStyle={{ paddingVertical: 40 }}
+          className="flex-1 py-10"
           showsVerticalScrollIndicator={false}
         >
           {years.map((year) => (
@@ -58,11 +57,7 @@ export const YearSelector: React.FC<YearSelectorProps> = ({
               {/* Línea superior */}
               {selectedYear === year && (
                 <View
-                  className="absolute top-2 h-0.5 bg-[#2196F3]"
-                  style={{
-                    left: 0,
-                    right: 0
-                  }}
+                  className="absolute top-2 h-0.5 bg-[#2196F3] left-0 right-0"
                 />
               )}
 
@@ -86,11 +81,7 @@ export const YearSelector: React.FC<YearSelectorProps> = ({
               {/* Línea inferior */}
               {selectedYear === year && (
                 <View
-                  className="absolute bottom-2 h-0.5 bg-[#2196F3]"
-                  style={{
-                    left: 0,
-                    right: 0
-                  }}
+                  className="absolute bottom-2 h-0.5 bg-[#2196F3] left-0 right-0"
                 />
               )}
             </View>

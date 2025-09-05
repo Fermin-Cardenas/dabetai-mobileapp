@@ -1,7 +1,7 @@
 // src/features/onboarding/components/DateSelector.tsx
-import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface DateSelectorProps {
   selectedDay: number;
@@ -103,14 +103,13 @@ export const DateSelector: React.FC<DateSelectorProps> = ({
     items: any[],
     selectedValue: any,
     onSelect: (value: any) => void,
-    scrollRef: React.RefObject<ScrollView>,
+    scrollRef: React.RefObject<ScrollView | null>,
     renderItem: (item: any) => string | number
   ) => (
     <View className="flex-1 h-full">
       <ScrollView 
         ref={scrollRef}
-        className="flex-1"
-        contentContainerStyle={{ paddingVertical: 70 }}
+        className="flex-1 py-16"
         showsVerticalScrollIndicator={false}
       >
         {items.map((item, index) => {
@@ -128,8 +127,7 @@ export const DateSelector: React.FC<DateSelectorProps> = ({
               
               {/* Item seleccionable */}
               <TouchableOpacity
-                className="py-6 items-center relative justify-center"
-                style={{ height: 70 }}
+                className="py-6 items-center relative justify-center h-16"
                 onPress={() => onSelect(itemValue)}
                 activeOpacity={0.7}
               >
