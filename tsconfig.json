@@ -5,7 +5,8 @@
     "baseUrl": ".",  // ← Agrega esto
     "paths": {
       "@/*": [
-        "./src/*"    // ← Cambia de "./*" a "./src/*"
+        "./src/*",   // ← Para archivos de src
+        "./assets/*" // ← Para archivos de assets
       ]
     }
   },
