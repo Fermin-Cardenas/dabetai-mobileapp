@@ -1,7 +1,7 @@
 // src/features/chat/components/ChatMessage.tsx
-import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 interface ChatMessageProps {
   id: number;
@@ -44,11 +44,11 @@ export const ChatMessage = ({ id, isAI, text, hasLink, onLinkPress }: ChatMessag
   return (
     <View className={`mb-4 px-4 ${isAI ? 'flex-row items-start gap-3' : 'flex-row justify-end'}`}>
       {isAI && (
-        <View className="w-10 h-10 bg-[#2196F3] rounded-full justify-center items-center overflow-hidden">
+                <View className="w-8 h-8 bg-blue-500 rounded-full mr-3 justify-center items-center overflow-hidden">
           <Image 
-            source={require('@/assets/images/Shape.png')}
-            className="w-10 h-10 rounded-full"
-            resizeMode="cover"
+            className="w-6 h-6"
+            source={require('@/assets/images/icons/chat-avatar.png')}
+            resizeMode="contain"
           />
         </View>
       )}

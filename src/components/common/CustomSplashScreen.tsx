@@ -1,7 +1,7 @@
 // src/components/common/CustomSplashScreen.tsx
 
 import React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 export const CustomSplashScreen = () => {
   console.log("🚀 CustomSplashScreen se está renderizando");
@@ -11,12 +11,10 @@ export const CustomSplashScreen = () => {
       {/* Agrega texto temporal para confirmar que aparece */}
     
       
-      <Image
-        source={require("../../assets/images/dabetai3.png")}
-        style={styles.logo}
+            <Image
+        className="w-64 h-20 self-center"
+        source={require("@/assets/images/logos/dabetai-splash.png")}
         resizeMode="contain"
-        onError={(error) => console.log("❌ Error cargando imagen:", error)}
-        onLoad={() => console.log("✅ Imagen cargada correctamente")}
       />
     </View>
   );
