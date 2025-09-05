@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { H3 } from '@/components/common/Typography';
+import { H3, Subtitle } from '@/components/common/Typography';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface HeaderProps {
@@ -45,9 +45,9 @@ export const Header = ({
           )}
                     
           {/* Título */}
-          <H3 className="text-white font-bold flex-1 text-lg">
+          <Subtitle className="text-white font-bold flex-1">
             {title}
-          </H3>
+          </Subtitle>
         </View>
       </View>
     </>

@@ -1,22 +1,9 @@
 // src/components/core/inputs/InputField.tsx
-import React from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { Body, BodySmall } from '@/components/common/Typography';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Body } from '@/components/common/Typography';
-
-interface InputFieldProps {
-  label?: string;
-  placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  secureTextEntry?: boolean;
-  showPasswordToggle?: boolean;
-  onTogglePassword?: () => void;
-  error?: string;
-  className?: string;
-}
+import React from 'react';
+import { TextInput, TouchableOpacity, View } from 'react-native';
+import { InputFieldProps, InputState } from './types';
 
 export const InputField = ({
   label,
@@ -29,84 +16,139 @@ export const InputField = ({
   showPasswordToggle = false,
   onTogglePassword,
   error,
-  className
+  feedback,
+  disabled = false,
+  valid = false,
+  onFocus,
+  onBlur,
+  className,
+  inputRef
 }: InputFieldProps) => {
+  const [isFocused, setIsFocused] = React.useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
+  // Determine the current state for styling
+  const getState = (): InputState => {
+    if (disabled) return 'disabled';
+    if (error) return 'error';
+    if (valid) return 'valid';
+    if (isFocused) return 'focus';
+    return 'default';
+  };
+
+  const state = getState();
+
+  // Get Tailwind classes based on state
+  const getContainerClasses = () => {
+    return `gap-2 ${className || ''}`;
+  };
+
+  const getLabelClasses = () => {
+    const baseClasses = 'text-body';
+    return disabled 
+      ? `${baseClasses} text-gray-400` 
+      : `${baseClasses} text-gray-600`;
+  };
+
+  const getInputContainerClasses = () => {
+    const baseClasses = 'flex-row items-center self-stretch gap-2.5 px-4 py-3 rounded-lg border';
+    
+    let stateClasses = '';
+    switch (state) {
+      case 'disabled':
+        stateClasses = 'bg-gray-200 border-gray-300';
+        break;
+      case 'error':
+        stateClasses = 'bg-gray-50 border-danger-800';
+        break;
+      case 'valid':
+        stateClasses = 'bg-gray-50 border-success-800';
+        break;
+      case 'focus':
+        stateClasses = 'bg-gray-50 border-primary-700';
+        break;
+      default:
+        stateClasses = 'bg-gray-50 border-gray-300';
+    }
+    
+    return `${baseClasses} ${stateClasses}`;
+  };
+
+  const getTextInputClasses = () => {
+    const baseClasses = 'flex-1 text-body';
+    return disabled 
+      ? `${baseClasses} text-gray-400` 
+      : `${baseClasses} text-gray-600`;
+  };
+
+  const getFeedbackClasses = () => {
+    return 'text-body-sm text-danger-800';
+  };
+
+  const getIconColor = () => {
+    return disabled ? '#90A1B9' : '#314158'; // gray-400 : gray-600
+  };
+
+  const getPlaceholderColor = () => {
+    return '#62748E'; // gray-500
+  };
+
   return (
-    <View className={`${className || ''}`}>
+    <View className={getContainerClasses()}>
       {/* Label */}
       {label && (
-        <Body 
-          className="text-[#314158]"
-          style={{
-            marginBottom: 2,
-            fontSize: 16,
-            fontFamily: 'Source Sans 3'
-          }}
-        >
+        <Body className={getLabelClasses()}>
           {label}
         </Body>
       )}
       
       {/* Input Container */}
-      {showPasswordToggle ? (
-        <View 
-          className="flex-row items-center bg-white"
-          style={{
-            borderColor: "#CAD5E2",
-            borderWidth: 1,
-            borderRadius: 15,
-            paddingHorizontal: 10,
-            marginBottom: 15
-          }}
-        >
-          <TextInput
-            className="flex-1 text-[#62748E]"
-            style={{
-              height: 44,
-              fontFamily: 'Source Sans 3'
-            }}
-            placeholder={placeholder}
-            placeholderTextColor="#888"
-            value={value}
-            onChangeText={onChangeText}
-            keyboardType={keyboardType}
-            autoCapitalize={autoCapitalize}
-            secureTextEntry={secureTextEntry}
-          />
-          <TouchableOpacity onPress={onTogglePassword} style={{ padding: 10 }}>
-            <MaterialCommunityIcons 
-              name={secureTextEntry ? "eye-off" : "eye"} 
-              size={24} 
-              color="#888" 
-            />
-          </TouchableOpacity>
-        </View>
-      ) : (
+      <View className={getInputContainerClasses()}>
         <TextInput
-          className="bg-white text-[#62748E]"
-          style={{
-            height: 44,
-            borderColor: "#CAD5E2",
-            borderWidth: 1,
-            borderRadius: 15,
-            marginBottom: 15,
-            paddingLeft: 10,
-            fontFamily: 'Source Sans 3'
-          }}
+          ref={inputRef}
+          className={getTextInputClasses()}
           placeholder={placeholder}
-          placeholderTextColor="#888"
+          placeholderTextColor={getPlaceholderColor()}
           value={value}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
+          secureTextEntry={secureTextEntry}
+          editable={!disabled}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
-      )}
+        
+        {/* Password Toggle Icon */}
+        {showPasswordToggle && (
+          <TouchableOpacity 
+            onPress={onTogglePassword}
+            disabled={disabled}
+            className="w-4 h-4 justify-center items-center"
+          >
+            <MaterialCommunityIcons 
+              name={secureTextEntry ? "eye-off" : "eye"} 
+              size={16} 
+              color={getIconColor()}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
       
-      {/* Error Message */}
-      {error && (
-        <Body className="text-red-500 text-sm mt-1">
-          {error}
-        </Body>
+      {/* Feedback Message */}
+      {(error || feedback) && (
+        <BodySmall className={getFeedbackClasses()}>
+          {error || feedback}
+        </BodySmall>
       )}
     </View>
   );
