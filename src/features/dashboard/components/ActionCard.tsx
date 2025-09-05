@@ -26,10 +26,7 @@ export const ActionCard = ({
   return (
     <View className={`bg-white rounded-2xl p-5 mb-4 shadow-sm border border-gray-300 ${className || ''}`}>
       <View className="flex-row items-center mb-2">
-        <View 
-          className="w-8 h-8 rounded-2xl justify-center items-center mr-3"
-          style={{ backgroundColor: iconBg }}
-        >
+        <View className={`w-8 h-8 rounded-2xl justify-center items-center mr-3 ${iconBg}`}>
           {icon}
         </View>
         <H2 className="text-gray-700 font-bold text-lg ">{title}</H2>

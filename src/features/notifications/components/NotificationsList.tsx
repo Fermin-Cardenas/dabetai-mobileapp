@@ -30,7 +30,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
   if (notifications.length === 0) {
     return (
       <View className="flex-1 justify-center items-center px-4">
-        <Body className="text-[#9CA3AF] text-center">
+        <Body className="text-gray-400 text-center">
           No tienes notificaciones {activeTab === 'no-leidas' ? 'sin leer' : 'leídas'}
         </Body>
       </View>
@@ -45,7 +45,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
     >
       {/* Encabezado "Title" */}
       <View className="px-4 pt-2 pb-2">
-        <Body className="text-[#1F2937] font-semibold text-base">
+        <Body className="text-gray-800 font-semibold text-base">
           Title
         </Body>
       </View>

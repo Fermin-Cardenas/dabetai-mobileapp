@@ -66,7 +66,7 @@ export const TrendChart: React.FC<TrendChartProps> = ({
       </View>
 
       {/* Contenedor del gráfico */}
-      <View style={{ flex: 1, alignItems: 'center' }}>
+      <View className="flex-1 items-center">
         <LineChart
           data={{
             labels,

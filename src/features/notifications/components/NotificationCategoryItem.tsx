@@ -17,7 +17,7 @@ export const NotificationCategoryItem: React.FC<NotificationCategoryItemProps> =
   return (
     <TouchableOpacity 
       className={`bg-white flex-row justify-between items-center px-4 py-3.5 ${
-        !isLast ? 'border-b border-[#E5E7EB]' : ''
+        !isLast ? 'border-b border-gray-200' : ''
       }`}
       style={{ borderBottomWidth: isLast ? 0 : 0.5 }}
       onPress={onPress}
@@ -31,7 +31,7 @@ export const NotificationCategoryItem: React.FC<NotificationCategoryItemProps> =
         </View>
         
         {/* Título */}
-        <Body className="text-[#62748E] text-base font-normal">
+        <Body className="text-slate-600 text-base font-normal">
           {title}
         </Body>
       </View>
@@ -41,7 +41,7 @@ export const NotificationCategoryItem: React.FC<NotificationCategoryItemProps> =
         name="chevron-right" 
         size={20} 
         color="#1F2937" 
-        style={{ fontWeight: 'bold' }}
+        className="font-bold"
       />
     </TouchableOpacity>
   );

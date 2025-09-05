@@ -38,13 +38,22 @@ export const ComplicationsList: React.FC<ComplicationsListProps> = ({
   backgroundColor = '#f1f5f9',
   showArrow = true
 }) => {
+  const getColorClass = (level: 'Alto' | 'Medio' | 'Bajo' | 'Moderado') => {
+    switch (level) {
+      case 'Alto':
+        return 'text-danger-500';
+      case 'Medio':
+      case 'Moderado':
+        return 'text-warning-500';
+      case 'Bajo':
+        return 'text-success-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
   return (
-    <View
-      className="-mx-4 px-4 py-2"
-      style={{
-        backgroundColor
-      }}
-    >
+    <View className="-mx-4 px-4 py-2 bg-slate-100">
       {complications.map((complication, index) => (
         <TouchableOpacity
           key={index}
@@ -66,12 +75,7 @@ export const ComplicationsList: React.FC<ComplicationsListProps> = ({
           
           {/* Lado derecho: Nivel y flecha */}
           <View className="flex-row items-center">
-            <Body
-              className="text-base font-semibold"
-              style={{
-                color: getLevelColor(complication.level)
-              }}
-            >
+            <Body className={`text-base font-semibold ${getColorClass(complication.level)}`}>
               {complication.level}
             </Body>
             {showArrow && (

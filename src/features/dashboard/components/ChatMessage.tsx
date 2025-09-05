@@ -13,21 +13,21 @@ interface ChatMessageProps {
 
 export const ChatMessage = ({ id, isAI, text, hasLink, onLinkPress }: ChatMessageProps) => {
   const renderMessageText = () => {
-    const textColor = isAI ? '#1F2937' : '#FFFFFF';
+    const textColorClass = isAI ? 'text-gray-800' : 'text-white';
     
     if (hasLink && text.includes('aquí')) {
       const parts = text.split('aquí');
       return (
         <View className="flex-row flex-wrap">
-          <Body className="text-sm leading-5" style={{ color: textColor }}>
+          <Body className={`text-sm leading-5 ${textColorClass}`}>
             {parts[0]}
           </Body>
           <TouchableOpacity onPress={onLinkPress}>
-            <Body className="text-sm leading-5 text-[#1E40AF] underline font-semibold">
+            <Body className="text-sm leading-5 text-blue-700 underline font-semibold">
               aquí
             </Body>
           </TouchableOpacity>
-          <Body className="text-sm leading-5" style={{ color: textColor }}>
+          <Body className={`text-sm leading-5 ${textColorClass}`}>
             {parts[1]}
           </Body>
         </View>
@@ -35,7 +35,7 @@ export const ChatMessage = ({ id, isAI, text, hasLink, onLinkPress }: ChatMessag
     }
     
     return (
-      <Body className="text-sm leading-5" style={{ color: textColor }}>
+      <Body className={`text-sm leading-5 ${textColorClass}`}>
         {text}
       </Body>
     );
@@ -56,8 +56,8 @@ export const ChatMessage = ({ id, isAI, text, hasLink, onLinkPress }: ChatMessag
       <View 
         className={`px-4 py-3 rounded-2xl max-w-[80%] ${
           isAI 
-            ? 'bg-[#E5E7EB] rounded-bl-sm' 
-            : 'bg-[#2196F3] rounded-br-sm'
+            ? 'bg-gray-200 rounded-bl-sm' 
+            : 'bg-primary-500 rounded-br-sm'
         }`}
       >
         {renderMessageText()}

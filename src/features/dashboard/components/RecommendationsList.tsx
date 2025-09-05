@@ -10,14 +10,11 @@ interface RecommendationsListProps {
 
 export const RecommendationsList: React.FC<RecommendationsListProps> = ({
   recommendations,
-  backgroundColor = 'bg-slate-100'
+  backgroundColor = '#f1f5f9'
 }) => {
   return (
     <View
-      className="-mx-4 px-4 py-2"
-      style={{
-        backgroundColor
-      }}
+      className="-mx-4 px-4 py-2 bg-slate-100"
     >
       {recommendations.map((recommendation, index) => (
         <View

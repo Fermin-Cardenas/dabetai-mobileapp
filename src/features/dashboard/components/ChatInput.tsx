@@ -29,12 +29,8 @@ export const ChatInput = ({
       {/* Input wrapper */}
       <View className="flex-row items-end gap-3 mb-2">
         <TextInput
-          className="flex-1 bg-gray-100 rounded-3xl px-4 py-3 text-base text-gray-800"
-          style={{ 
-            maxHeight: 120, 
-            minHeight: 44,
-            textAlignVertical: 'top' 
-          }}
+          className="flex-1 bg-gray-100 rounded-3xl px-4 py-3 text-base text-gray-800 max-h-30 min-h-11"
+          style={{ textAlignVertical: 'top' }}
           value={message}
           onChangeText={onMessageChange}
           placeholder={placeholder}

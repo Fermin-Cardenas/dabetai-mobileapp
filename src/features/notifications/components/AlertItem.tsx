@@ -21,7 +21,7 @@ export const AlertItem: React.FC<AlertItemProps> = ({
   return (
     <View 
       className={`bg-white flex-row justify-between items-center px-4 py-3.5 min-h-[60px] ${
-        !isLast ? 'border-b border-[#E5E7EB]' : ''
+        !isLast ? 'border-b border-gray-200' : ''
       }`}
       style={{ borderBottomWidth: isLast ? 0 : 0.5 }}
     >
@@ -31,11 +31,11 @@ export const AlertItem: React.FC<AlertItemProps> = ({
           !subtitle ? 'justify-center' : ''
         }`}
       >
-        <Body className="text-[#62748E] text-base font-normal leading-5 mb-0.5 flex-wrap">
+        <Body className="text-slate-600 text-base font-normal leading-5 mb-0.5 flex-wrap">
           {title}
         </Body>
         {subtitle && (
-          <Body className="text-[#9CA3AF] text-sm font-normal leading-[18px] mt-1 flex-wrap">
+          <Body className="text-gray-400 text-sm font-normal leading-[18px] mt-1 flex-wrap">
             {subtitle}
           </Body>
         )}

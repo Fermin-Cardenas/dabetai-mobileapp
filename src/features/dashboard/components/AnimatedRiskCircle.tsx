@@ -45,6 +45,9 @@ export const AnimatedRiskCircle: React.FC<AnimatedRiskCircleProps> = ({
   };
 
   const riskColor = getRiskColor();
+  const riskColorClass = riskLevel === 'bajo' ? 'text-success-500' : 
+                        riskLevel === 'medio' ? 'text-warning-500' : 
+                        'text-danger-500';
 
   return (
     <View>
@@ -81,10 +84,7 @@ export const AnimatedRiskCircle: React.FC<AnimatedRiskCircleProps> = ({
             }}
           >
             <Body className="text-gray-500 text-xs mb-1">Nivel</Body>
-            <Body 
-              className="text-2xl font-bold capitalize"
-              style={{ color: riskColor }}
-            >
+            <Body className={`text-2xl font-bold capitalize ${riskColorClass}`}>
               {riskLevel}
             </Body>
             <Body className="text-gray-500 text-xs mt-0.5">Estimado</Body>
@@ -93,10 +93,7 @@ export const AnimatedRiskCircle: React.FC<AnimatedRiskCircleProps> = ({
         
         {/* Descripción */}
         <View className="flex-1">
-          <Body 
-            className="text-sm leading-5 font-medium"
-            style={{ color: riskColor }}
-          >
+          <Body className={`text-sm leading-5 font-medium ${riskColorClass}`}>
             {description}
           </Body>
         </View>

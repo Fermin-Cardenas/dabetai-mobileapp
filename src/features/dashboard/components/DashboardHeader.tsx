@@ -47,10 +47,7 @@ export const DashboardHeader = ({
           <View className="flex-1">
             <Image
               source={require('@/assets/images/logos/dabetai-header.png')}
-              style={{
-                width: 104,
-                height: 24,
-              }}
+              className="w-26 h-6"
               resizeMode="contain"
             />
           </View>

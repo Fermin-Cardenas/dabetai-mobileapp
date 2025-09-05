@@ -18,7 +18,7 @@ export default function PredictionLayout() {
       <Stack.Screen
         name="index"
         options={{
-          headerShown: false,  // ← Agregar esta línea para quitar la barra blanca
+          headerShown: false,
           title: "",
           headerStyle: { 
             backgroundColor: '#2196F3',
@@ -26,18 +26,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),
@@ -71,18 +64,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),
@@ -114,18 +100,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),

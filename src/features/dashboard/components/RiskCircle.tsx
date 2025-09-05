@@ -108,13 +108,13 @@ export const RiskCircle: React.FC<RiskCircleProps> = ({
           borderWidth: 6 
         }}
       >
-        <Body className="font-normal mb-1" style={{ color: '#9CA3AF', fontSize: 16 }}>
+        <Body className="font-normal mb-1 text-gray-400 text-base">
           Nivel
         </Body>
-        <Body className="font-bold capitalize" style={{ color: riskColor, fontSize: 24 }}>
+        <Body className={`font-bold capitalize text-2xl ${riskLevel === 'bajo' ? 'text-success-500' : riskLevel === 'medio' ? 'text-warning-500' : 'text-danger-500'}`}>
           {riskLevel}
         </Body>
-        <Body className="font-normal mt-1" style={{ color: '#9CA3AF', fontSize: 16 }}>
+        <Body className="font-normal mt-1 text-gray-400 text-base">
           Estimado
         </Body>
       </View>
