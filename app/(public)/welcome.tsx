@@ -1,11 +1,10 @@
 // src/features/welcome/screens/WelcomeScreen.tsx
-import { H1 } from '@/components/common/Typography';
+import { H1, Caption } from '@/components/common/Typography';
 import { Button, ButtonGroup } from '@/components/core/buttons';
-import { TermsText } from '@/features/authentication/components/TermsText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, View, TouchableOpacity } from "react-native";
 
 export default function Welcome() {
     const router = useRouter();
@@ -85,12 +84,24 @@ export default function Welcome() {
                     </View>
 
                     {/* Términos y condiciones */}
-<View className="relative self-stretch">
-    <TermsText 
-        onTermsPress={handleTermsPress}
-        onPrivacyPress={handlePrivacyPress}
-    />
-</View>
+                    <View className="relative self-stretch">
+                        <Caption className="text-gray-500 text-xs text-center font-semibold">
+                            <Caption className="text-gray-500">
+                                Continúa solo si estás de acuerdo con nuestros{' '}
+                            </Caption>
+                            <TouchableOpacity onPress={handleTermsPress}>
+                                <Caption className="text-blue-500 text-xs font-semibold">
+                                    Términos y condiciones
+                                </Caption>
+                            </TouchableOpacity>
+                            <Caption className="text-gray-500"> y nuestra </Caption>
+                            <TouchableOpacity onPress={handlePrivacyPress}>
+                                <Caption className="text-blue-500 text-xs font-semibold">
+                                    Política de privacidad
+                                </Caption>
+                            </TouchableOpacity>
+                        </Caption>
+                    </View>
                 </View>
             </View>
         </>

@@ -90,6 +90,7 @@ const Dashboard = () => {
             context="Antes de comer"
           />
 
+          {/* Automatizar datos */}
           <ActionCard
             icon={<MaterialIcons name="sync" size={18} color="#6B7280" />}
             title="Automatiza tus datos"
@@ -98,6 +99,7 @@ const Dashboard = () => {
             onPress={() => console.log('Conectando dispositivo...')}
           />
 
+          {/* Vincular médico */}
           <ActionCard
             icon={<MaterialIcons name="local-hospital" size={18} color="#6B7280" />}
             title="Informa a tu médico"

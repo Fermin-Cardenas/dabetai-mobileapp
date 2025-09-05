@@ -1,37 +1,37 @@
 // src/features/dashboard/components/index.tsx
+export { ActionCard } from './ActionCard';
+export { CategoryTabs } from './CategoryTabs';
 export { DashboardHeader } from './DashboardHeader';
 export { GlucoseCard } from './GlucoseCard';
-export { ActionCard } from './ActionCard';
-export { StatItem } from './StatItem';
-export { SimpleChart } from './SimpleChart';
-export { RiskIndicator } from './RiskIndicator';
 export { NavButton } from './NavButton';
 export { PeriodSelector } from './PeriodSelector';
-export { CategoryTabs } from './CategoryTabs';
 export { RecordChart } from './RecordChart';
-export { StatsGrid } from './StatsGrid';
 export { RecordsList } from './RecordsList';
+export { RiskIndicator } from './RiskIndicator';
+export { SimpleChart } from './SimpleChart';
+export { StatItem } from './StatItem';
+export { StatsGrid } from './StatsGrid';
 
 // src/features/chat/components/index.tsx
-export { ChatMessage } from './ChatMessage';
 export { ChatInput } from './ChatInput';
+export { ChatMessage } from './ChatMessage';
 export { ChatMessagesList } from './ChatMessagesList';
 
 // Nuevos componentes para Prediction
+export { ComplicationsList } from './ComplicationsList';
+export { DropdownSelector } from './DropdownSelector';
 export { RiskCircle } from './RiskCircle';
 export { RiskLevelCard } from './RiskLevelCard';
-export { ComplicationsList } from './ComplicationsList';
 export { TrendChart } from './TrendChart';
-export { DropdownSelector } from './DropdownSelector';
 // Componentes para Specific Prediction
-export { HorizontalTabs } from './HorizontalTabs';
 export { AnimatedRiskCircle } from './AnimatedRiskCircle';
-export { RiskFactorsSection } from './RiskFactorsSection';
-export { RecommendationsSection } from './RecommendationsSection';
+export { HorizontalTabs } from './HorizontalTabs';
 export { LearnMoreSection } from './LearnMoreSection';
+export { RecommendationsSection } from './RecommendationsSection';
+export { RiskFactorsSection } from './RiskFactorsSection';
 // Nuevo componente
 export { default as RiskDescription } from './RiskDescription';
 
 // Nuevos componentes
-export { RecommendationsList } from './RecommendationsList';
 export { ComplicationsSection } from './ComplicationsSection';
+export { RecommendationsList } from './RecommendationsList';
