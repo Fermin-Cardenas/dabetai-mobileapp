@@ -1,11 +1,12 @@
 // src/features/dashboard/components/ComplicationsList.tsx
+import { Body, BodySmall } from '@/components/common/Typography';
 import Feather from '@expo/vector-icons/Feather';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 interface Complication {
   name: string;
-  level: 'Alto' | 'Medio' | 'Bajo';
+  level: 'Alto' | 'Medio' | 'Bajo' | 'Moderado';
   isHigh: boolean;
   value?: string; // ← Nueva propiedad para la descripción/valor
 }
@@ -17,16 +18,17 @@ interface ComplicationsListProps {
   showArrow?: boolean;
 }
 
-const getLevelColor = (level: 'Alto' | 'Medio' | 'Bajo') => {
+const getLevelColor = (level: 'Alto' | 'Medio' | 'Bajo' | 'Moderado') => {
   switch (level) {
     case 'Alto':
-      return '#EF4444'; // rojo
+      return '#F44336'; // Rojo
     case 'Medio':
-      return '#F59E0B'; // naranja oscuro
+    case 'Moderado':
+      return '#FF9800'; // Naranja
     case 'Bajo':
-      return '#10B981'; // verde
+      return '#4CAF50'; // Verde
     default:
-      return '#6B7280'; // gris por defecto
+      return '#9E9E9E'; // Gris por defecto
   }
 };
 
@@ -38,69 +40,46 @@ export const ComplicationsList: React.FC<ComplicationsListProps> = ({
 }) => {
   return (
     <View
+      className="-mx-4 px-4 py-2"
       style={{
-        marginHorizontal: -16,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
         backgroundColor
       }}
     >
       {complications.map((complication, index) => (
         <TouchableOpacity
           key={index}
-          style={{
-            backgroundColor: 'white',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingVertical: 20,
-            paddingHorizontal: 16,
-            marginHorizontal: -16,
-            marginBottom: 0.5,
-            borderBottomWidth: index < complications.length - 1 ? 1 : 0,
-            borderBottomColor: '#D1D5DB'
-          }}
+          className={`bg-white flex-row justify-between items-center py-5 px-4 -mx-4 ${index < complications.length - 1 ? 'border-b border-gray-300' : ''}`}
           onPress={() => onComplicationPress(complication.name)}
           activeOpacity={0.7}
         >
           {/* Lado izquierdo: Nombre y valor/descripción */}
-          <View style={{ flex: 1 }}>
-            <Text style={{ 
-              color: '#374151', 
-              fontSize: 16, 
-              fontWeight: '500',
-              marginBottom: complication.value ? 4 : 0 
-            }}>
+          <View className="flex-1">
+            <Body className={`text-gray-700 text-base font-medium ${complication.value ? 'mb-1' : ''}`}>
               {complication.name}
-            </Text>
+            </Body>
             {complication.value && (
-              <Text style={{ 
-                color: '#6B7280', 
-                fontSize: 14,
-                fontWeight: '400'
-              }}>
+              <BodySmall className="text-gray-500 text-sm font-normal">
                 {complication.value}
-              </Text>
+              </BodySmall>
             )}
           </View>
           
           {/* Lado derecho: Nivel y flecha */}
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text
+          <View className="flex-row items-center">
+            <Body
+              className="text-base font-semibold"
               style={{
-                fontSize: 16,
-                fontWeight: '600',
                 color: getLevelColor(complication.level)
               }}
             >
               {complication.level}
-            </Text>
+            </Body>
             {showArrow && (
               <Feather
                 name="chevron-right"
                 size={20}
                 color="#314158"
-                style={{ marginLeft: 8 }}
+                className="ml-2"
               />
             )}
           </View>

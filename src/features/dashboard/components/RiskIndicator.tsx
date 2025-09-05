@@ -1,7 +1,7 @@
 // src/features/dashboard/components/RiskIndicator.tsx
+import { Body, Caption } from '@/components/common/Typography';
 import React from 'react';
 import { View } from 'react-native';
-import { Body, Caption } from '@/components/common/Typography';
 
 interface RiskIndicatorProps {
   riskLevel: 'bajo' | 'medio' | 'alto';
@@ -20,21 +20,30 @@ export const RiskIndicator = ({
     switch (riskLevel) {
       case 'alto':
         return {
-          color: '#EF4444',
+          color: '#FB2C36', // danger-500
           text: 'Alto',
-          bgColor: '#FEF2F2'
+          bgColor: '#FFC9C9', // danger-200
+          borderClass: 'border-danger-500',
+          textClass: 'text-danger-500',
+          bgClass: 'bg-danger-200'
         };
       case 'medio':
         return {
-          color: '#F59E0B',
+          color: '#F0B100', // warning-500
           text: 'Medio',
-          bgColor: '#FFFBEB'
+          bgColor: '#FFF085', // warning-200
+          borderClass: 'border-warning-500',
+          textClass: 'text-warning-500',
+          bgClass: 'bg-warning-200'
         };
       default:
         return {
-          color: '#00C950',
+          color: '#00C950', // success-500
           text: 'Bajo',
-          bgColor: '#F0FDF4'
+          bgColor: '#B9F8CF', // success-200
+          borderClass: 'border-success-500',
+          textClass: 'text-success-500',
+          bgClass: 'bg-success-200'
         };
     }
   };
@@ -44,16 +53,15 @@ export const RiskIndicator = ({
   return (
     <View className={`flex-row items-center mb-5 ${className || ''}`}>
       <View 
-        className="w-20 h-20 border-4 bg-white rounded-full justify-center items-center mr-4"
-        style={{ borderColor: config.color }}
+        className={`w-20 h-20 border-4 bg-white rounded-full justify-center items-center mr-4 ${config.borderClass}`}
       >
-        <Body className="font-bold text-sm" style={{ color: config.color }}>
+        <Body className={`font-bold text-sm ${config.textClass}`}>
           {config.text}
         </Body>
         <Caption className="text-gray-400 text-xs mt-1">Riesgo</Caption>
       </View>
       <View className="flex-1">
-        <Body className="text-[#2C3E50] font-semibold text-base leading-6 mb-2">
+        <Body className="text-gray-700 font-semibold text-base leading-6 mb-2">
           {title}
         </Body>
         <Caption className="text-gray-400">{lastUpdate}</Caption>

@@ -1,10 +1,10 @@
 // src/features/dashboard/components/GlucoseCard.tsx
-import React, { useRef, useEffect } from 'react';
-import { View, Animated } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
+import React, { useEffect, useRef } from 'react';
+import { Animated, View } from 'react-native';
 
-import { H1, BodySmall, Caption } from '@/components/common/Typography';
+import { BodySmall, Caption, H1 } from '@/components/common/Typography';
 
 interface GlucoseCardProps {
   value: number;
@@ -67,21 +67,21 @@ export const GlucoseCard = ({
   const getTrendIcon = () => {
     switch (trend) {
       case 'up':
-        return <Feather name="arrow-up" size={18} color="#10B981" />;
+        return <Feather name="arrow-up" size={18} color="#00C950" />; // success-500
       case 'down':
-        return <Feather name="arrow-down" size={18} color="#EF4444" />;
+        return <Feather name="arrow-down" size={18} color="#FB2C36" />; // danger-500
       default:
-        return <Feather name="arrow-right" size={18} color="#10B981" />;
+        return <Feather name="arrow-right" size={18} color="#00C950" />; // success-500
     }
   };
 
   return (
-    <View className="bg-white rounded-3xl p-5 mb-4 shadow-sm border" style={{ borderColor: '#CAD5E2' }}>
+    <View className="bg-white rounded-3xl p-5 mb-4 shadow-sm border border-gray-300">
       <View className="flex-row justify-between items-center">
         {/* Valor de glucosa */}
         <View className="items-start">
           <View className="flex-row items-center mb-1">
-            <H1 className="text-[#009688] font-bold text-3xl mr-2">{value}</H1>
+            <H1 className="text-secondary-500 font-bold text-3xl mr-2">{value}</H1>
             {getTrendIcon()}
           </View>
           <BodySmall className="text-gray-500 font-medium">{unit}</BodySmall>
@@ -96,14 +96,14 @@ export const GlucoseCard = ({
         {/* Indicador animado */}
         <View className="relative">
           <Animated.View 
-            className="absolute w-12 h-12 bg-[#10B981] rounded-full"
+            className="absolute w-12 h-12 bg-success-500 rounded-full"
             style={{
               transform: [{ scale: pulseAnim }],
               opacity: opacityAnim,
               zIndex: 1
             }}
           />
-          <View className="w-12 h-12 bg-[#009688] rounded-full justify-center items-center z-10">
+          <View className="w-12 h-12 bg-secondary-500 rounded-full justify-center items-center z-10">
             <AntDesign name="pluscircleo" size={16} color="white" />
           </View>
         </View>

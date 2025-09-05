@@ -19,9 +19,8 @@ interface ChatMessagesListProps {
 export const ChatMessagesList = ({ messages, onLinkPress, className }: ChatMessagesListProps) => {
   return (
     <ScrollView 
-      className={`flex-1 pt-4 ${className || ''}`}
+      className={`flex-1 pt-4 pb-4 ${className || ''}`}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 16 }}
     >
       {messages.map((message) => (
         <ChatMessage

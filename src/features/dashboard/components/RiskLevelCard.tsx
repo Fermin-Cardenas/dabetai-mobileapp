@@ -7,8 +7,8 @@ import { RiskCircle } from './RiskCircle';
 
 interface RiskLevelCardProps {
   riskLevel: 'bajo' | 'medio' | 'alto';
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   lastUpdate?: string;
   onUpdatePress?: () => void;
   backgroundColor?: string;
@@ -37,9 +37,11 @@ const riskDescriptions: Record<'bajo' | 'medio' | 'alto', string> = {
 
 export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
   riskLevel,
+  title: titleProp,
+  description: descriptionProp,
   lastUpdate,
   onUpdatePress,
-  backgroundColor = '#f1f5f9',
+  backgroundColor = 'bg-slate-100',
   showUpdateButton = true,
   showLastUpdate = true
 }) => {
@@ -65,9 +67,9 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
     });
   };
 
-  const title = riskTitles[riskLevel];
+  const title = titleProp || riskTitles[riskLevel];
   const textColor = riskColors[riskLevel];
-  const description = riskDescriptions[riskLevel];
+  const description = descriptionProp || riskDescriptions[riskLevel];
 
 
   return (
@@ -117,7 +119,7 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
       )}
 
       {showLastUpdate && lastUpdate && (
-        <Body className="text-[#9CA3AF] text-sm text-center">
+        <Body className="text-gray-400 text-sm text-center">
           Última actualización: {lastUpdate}
         </Body>
       )}

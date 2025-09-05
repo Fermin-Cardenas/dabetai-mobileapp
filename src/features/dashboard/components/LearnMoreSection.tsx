@@ -1,8 +1,8 @@
 // src/features/dashboard/components/LearnMoreSection.tsx
-import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { Body, H3 } from '@/components/common/Typography';
 import { MaterialIcons } from '@expo/vector-icons';
-import { H3, Body } from '@/components/common/Typography';
+import React, { useState } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 
 interface LearnMoreItem {
   id: string;
@@ -32,14 +32,14 @@ export const LearnMoreSection: React.FC<LearnMoreSectionProps> = ({
     <View className="px-4 mb-6">
       {/* Header */}
       <View className="flex-row justify-between items-start mb-4">
-        <H3 className="text-[#1F2937] font-semibold text-base flex-1">
+        <H3 className="text-gray-800 font-semibold text-base flex-1">
           {title}
         </H3>
         <TouchableOpacity 
-          className="px-6 py-3 bg-transparent border-2 border-[#0891B2] rounded-full"
+          className="px-6 py-3 bg-transparent border-2 border-secondary-600 rounded-full"
           onPress={() => {}}
         >
-          <Body className="text-[#0891B2] text-sm font-semibold">
+          <Body className="text-secondary-600 text-sm font-semibold">
             Ver más
           </Body>
         </TouchableOpacity>
@@ -58,7 +58,7 @@ export const LearnMoreSection: React.FC<LearnMoreSectionProps> = ({
               className="flex-row justify-between items-center p-4"
               onPress={() => toggleSection(section.id)}
             >
-              <Body className="text-[#1F2937] text-sm font-medium flex-1">
+              <Body className="text-gray-800 text-sm font-medium flex-1">
                 {section.title}
               </Body>
               <MaterialIcons 
@@ -69,7 +69,7 @@ export const LearnMoreSection: React.FC<LearnMoreSectionProps> = ({
             </TouchableOpacity>
             {expandedSections[section.id] && (
               <View className="px-4 pb-4">
-                <Body className="text-[#6B7280] text-sm leading-5">
+                <Body className="text-gray-500 text-sm leading-5">
                   {section.content}
                 </Body>
               </View>

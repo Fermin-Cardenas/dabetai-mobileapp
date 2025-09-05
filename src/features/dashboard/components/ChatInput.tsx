@@ -1,9 +1,8 @@
 // src/features/chat/components/ChatInput.tsx
-import React from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Caption } from '@/components/common/Typography';
 import Feather from '@expo/vector-icons/Feather';
+import React from 'react';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 interface ChatInputProps {
   message: string;
   onMessageChange: (text: string) => void;
@@ -26,11 +25,11 @@ export const ChatInput = ({
   };
 
   return (
-    <View className="px-4 py-4 bg-[#F8FAFC]">
+    <View className="px-4 py-4 bg-slate-50">
       {/* Input wrapper */}
       <View className="flex-row items-end gap-3 mb-2">
         <TextInput
-          className="flex-1 bg-[#F3F4F6] rounded-3xl px-4 py-3 text-base text-[#1F2937]"
+          className="flex-1 bg-gray-100 rounded-3xl px-4 py-3 text-base text-gray-800"
           style={{ 
             maxHeight: 120, 
             minHeight: 44,
@@ -48,7 +47,7 @@ export const ChatInput = ({
         />
         <TouchableOpacity
           className={`w-12 h-12 rounded-full justify-center items-center ${
-            message.trim() ? 'bg-[#2196F3]' : 'bg-gray-300'
+            message.trim() ? 'bg-primary-500' : 'bg-gray-300'
           }`}
           onPress={handleSend}
           disabled={!message.trim()}

@@ -1,10 +1,8 @@
 // src/features/record/components/RecordsList.tsx
-import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { H2, Body, BodySmall } from '@/components/common/Typography';
+import { Body, BodySmall, H2 } from '@/components/common/Typography';
 import Feather from '@expo/vector-icons/Feather';
-import { FadeSpec } from 'node_modules/@react-navigation/bottom-tabs/lib/typescript/src/TransitionConfigs/TransitionSpecs';
+import React from 'react';
+import { TouchableOpacity, View } from 'react-native';
 
 interface RecordData {
   id: string;
@@ -29,7 +27,7 @@ const RecordItem = ({ value, date, onPress }: RecordData) => {
           if (part.startsWith('**') && part.endsWith('**')) {
             const boldText = part.slice(2, -2);
             return (
-              <Body key={index} className="text-[#2C3E50] font-bold text-lg">
+              <Body key={index} className="text-gray-700 font-bold text-lg">
                 {boldText}
               </Body>
             );
@@ -70,7 +68,7 @@ const RecordItem = ({ value, date, onPress }: RecordData) => {
 export const RecordsList = ({ title, records, className }: RecordsListProps) => {
   return (
     <View className={`mb-20 ${className || ''}`}>
-      <H2 className="text-[#2C3E50] font-bold text-lg mb-6 px-1">
+      <H2 className="text-gray-700 font-bold text-lg mb-6 px-1">
         {title}
       </H2>
       

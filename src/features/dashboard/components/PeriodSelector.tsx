@@ -1,7 +1,7 @@
 // src/features/record/components/PeriodSelector.tsx
-import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React from 'react';
+import { TouchableOpacity, View } from 'react-native';
 
 interface PeriodSelectorProps {
   periods: string[];
@@ -18,13 +18,13 @@ export const PeriodSelector = ({
 }: PeriodSelectorProps) => {
   return (
     <View className={`mt-4 mb-6 ${className || ''}`}>
-      <View className="bg-[#fff] rounded-full p-1 flex-row">
+      <View className="bg-white rounded-full p-1 flex-row">
         {periods.map((period, index) => (
           <TouchableOpacity 
             key={period}
             className={`px-4 py-3 rounded-full flex-1 ${
               selectedPeriod === period 
-                ? 'bg-[#2196F3] shadow-md' 
+                ? 'bg-primary-500 shadow-md' 
                 : 'bg-transparent'
             }`}
             onPress={() => onPeriodChange(period)}
