@@ -1,7 +1,7 @@
 // src/features/dashboard/components/RiskFactorsSection.tsx
+import { Body, H3 } from '@/components/common/Typography';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { H3, Body } from '@/components/common/Typography';
+import { TouchableOpacity, View } from 'react-native';
 
 interface RiskFactor {
   id: string;

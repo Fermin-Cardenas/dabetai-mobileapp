@@ -1,7 +1,7 @@
 // src/features/notifications/components/NotificationsList.tsx
+import { Body } from '@/components/common/Typography';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Body } from '@/components/common/Typography';
 import { NotificationItem } from './NotificationItem';
 
 interface Notification {

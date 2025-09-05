@@ -1,7 +1,7 @@
 // src/features/dashboard/components/RiskCircle.tsx
-import React, { useRef, useEffect } from 'react';
-import { View, Animated } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React, { useEffect, useRef } from 'react';
+import { Animated, View } from 'react-native';
 
 interface RiskCircleProps {
   riskLevel: 'bajo' | 'medio' | 'alto';

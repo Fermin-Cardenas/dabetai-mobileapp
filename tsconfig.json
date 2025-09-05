@@ -2,12 +2,10 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",  // ← Agrega esto
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*",   // ← Para archivos de src
-        "./assets/*" // ← Para archivos de assets
-      ]
+      "@/assets/*": ["./assets/*"],  // ← Más específico para assets
+      "@/*": ["./src/*"]            // ← Fallback para src
     }
   },
   "include": [
@@ -15,6 +13,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "types/**/*.d.ts"
   ]
 }

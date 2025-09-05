@@ -1,7 +1,7 @@
 // src/features/notifications/components/AlertItem.tsx
-import React from 'react';
-import { View, Switch } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React from 'react';
+import { Switch, View } from 'react-native';
 
 interface AlertItemProps {
   title: string;

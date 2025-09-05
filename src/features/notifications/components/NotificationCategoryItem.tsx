@@ -1,7 +1,7 @@
+import { Body } from '@/components/common/Typography';
+import Feather from '@expo/vector-icons/Feather'; // Cambiado a Feather
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import Feather from '@expo/vector-icons/Feather'; // Cambiado a Feather
-import { Body } from '@/components/common/Typography';
 
 interface NotificationCategoryItemProps {
   title: string;
