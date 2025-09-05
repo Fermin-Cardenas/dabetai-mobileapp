@@ -115,7 +115,7 @@ const Notifications = () => {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       
-      <View className="flex-1 bg-[#f1f5f9]">
+      <View className="flex-1 bg-slate-100">
         {/* Header */}
         <Header
           title="Notificaciones"

@@ -1,8 +1,8 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 
-import { H2 } from '@/components/common/Typography';
+import { Body, H2 } from '@/components/common/Typography';
 import {
   ComplicationsList,
   ComplicationsSection,
@@ -98,20 +98,23 @@ const Retinopatia = () => {
   const handleUpdatePrediction = () => fetchPrediction();
 
   const complications = [
-    { name: 'Nefropatía diabética', level: 'Bajo', isHigh: false },
-    { name: 'Retinopatía diabética', level: 'Medio', isHigh: false },
-    { name: 'Neuropatía diabética', level: 'Alto', isHigh: true },
-    { name: 'Pie diabético', level: 'Bajo', isHigh: false }
+    { name: 'Nefropatía diabética', level: 'Bajo' as const, isHigh: false },
+    { name: 'Retinopatía diabética', level: 'Medio' as const, isHigh: false },
+    { name: 'Neuropatía diabética', level: 'Alto' as const, isHigh: true },
+    { name: 'Pie diabético', level: 'Bajo' as const, isHigh: false }
   ];
 
   const handleComplicationPress = (complication: string) => {
-    const routes: Record<string, string> = {
-      'Nefropatía diabética': '/prediction/nefropatia',
-      'Retinopatía diabética': '/prediction/retinopatia',
-      'Neuropatía diabética': '/prediction/neuropatia',
-      'Pie diabético': '/prediction/pie-diabetico'
+    const routes: Record<string, any> = {
+      'Nefropatía diabética': '/(tabs)/prediction/nefropatia',
+      'Retinopatía diabética': '/(tabs)/retinopatia',
+      'Neuropatía diabética': '/(tabs)/prediction/neuropatia',
+      'Pie diabético': '/(tabs)/prediction/pie-diabetico'
     };
-    router.push(routes[complication] || '/prediction/complicacion');
+    const route = routes[complication];
+    if (route) {
+      router.push(route as any);
+    }
   };
 
   const handleViewMore = () => console.log('Ver más recomendaciones...');
@@ -120,7 +123,7 @@ const Retinopatia = () => {
 
   const handleNavigation = (tab: string, route?: string) => {
     setActiveTab(tab.toLowerCase());
-    if (route) router.push(route);
+    if (route) router.push(route as any);
   };
 
   // Recomendaciones de ejemplo
@@ -133,10 +136,10 @@ const Retinopatia = () => {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <SafeAreaView className="flex-1 bg-[#f1f5f9]">
+      <SafeAreaView className="flex-1 bg-slate-100">
         <DashboardHeader onNotificationPress={handleNotifications} onSettingsPress={handleSettings} />
-        <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-6 mb-5">Tu nivel de riesgo de retinopatía diabética</H2>
+        <ScrollView className="flex-1 px-4 pb-24" showsVerticalScrollIndicator={false}>
+          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">Tu nivel de riesgo de retinopatía diabética</H2>
 
           {nivelGeneral !== '' && (
             <RiskLevelCard
@@ -146,14 +149,14 @@ const Retinopatia = () => {
             />
           )}
 
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-1 mb-5">Tu riesgo por complicación</H2>
+          <H2 className="text-gray-700 font-bold text-lg mt-1 mb-5">Tu riesgo por complicación</H2>
           <ComplicationsList complications={complications} onComplicationPress={handleComplicationPress} />
 
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-6 mb-5">Tendencia histórica de riesgo</H2>
+          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">Tendencia histórica de riesgo</H2>
           <TrendChart data={trendData} selectedType={selectedRiskType} />
 
           {retinopatiaFactors.length === 0 ? (
-            <Text className="text-center text-gray-500">Cargando factores…</Text>
+            <Body className="text-center text-gray-500">Cargando factores…</Body>
           ) : (
             <ComplicationsSection
               title="Factores que influyen en la retinopatía"
@@ -174,7 +177,7 @@ const Retinopatia = () => {
           />
         </ScrollView>
 
-        <View className="bg-white border-t border-gray-200 flex-row shadow-lg self-center" style={{ width: 375, height: 67 }}>
+        <View className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16">
           <NavButton title="Inicio" iconName="home" isActive={activeTab === 'inicio'} onPress={() => handleNavigation('home', '/(tabs)/home')} />
           <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/prediction')} />
           <NavButton title="Historial" iconName="activity" isActive={activeTab === 'historial'} onPress={() => handleNavigation('historial', '/(tabs)/record')} />

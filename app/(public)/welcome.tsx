@@ -1,10 +1,11 @@
 // src/features/welcome/screens/WelcomeScreen.tsx
+import { H1 } from '@/components/common/Typography';
 import { Button, ButtonGroup } from '@/components/core/buttons';
 import { TermsText } from '@/features/authentication/components/TermsText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 
 export default function Welcome() {
     const router = useRouter();
@@ -35,24 +36,19 @@ export default function Welcome() {
             <View className="flex flex-col min-h-screen items-center justify-center gap-6 pt-6 pr-4 pb-6 pl-4 relative bg-gray-100">
                 
                 {/* Frame superior con logos */}
-                <View className="inline-flex justify-between flex-1 grow flex-col items-center relative">
-                    
-                    {/* Logo de texto dabetai */}
-                    <View className="relative w-[206px] h-[66px] -mr-1">
+                                        <View className="items-center mb-8">
+                            <Image
+                                className="w-48 h-16 mb-2"
+                                source={require('@/assets/images/logos/dabetai-main.png')}
+                                resizeMode="contain"
+                            />
+                        </View>
+
                         <Image
-                            className="w-full h-full"
-                            source={require('@/assets/images/dabetai.png')}
+                            className="w-16 h-12"
+                            source={require('@/assets/images/logos/brand-logo.png')}
                             resizeMode="contain"
                         />
-                    </View>
-                    
-                    {/* Imagen del logo */}
-                    <Image
-                        className="relative w-[200px] h-[200px] object-cover"
-                        source={require('@/assets/images/Logo.png')}
-                        resizeMode="cover"
-                    />
-                </View>
 
                 {/* Frame inferior con contenido */}
                 <View className="flex justify-between flex-1 self-stretch w-full grow flex-col items-center relative">
@@ -62,16 +58,11 @@ export default function Welcome() {
                         
                         {/* Título principal */}
                         <View className="w-[350px] h-[76px]">
-                            <Text 
-                                className="w-[350px] h-[76px] font-bold text-[#314157] text-center"
-                                style={{
-                                    fontFamily: 'Source Sans Pro-Bold',
-                                    letterSpacing: 0,
-                                    fontSize: 28,
-                                }}
+                            <H1 
+                                className="w-[350px] h-[76px] font-bold text-gray-700 text-center"
                             >
                                 Monitorea tu diabetes con inteligencia artificial
-                            </Text>
+                            </H1>
                         </View>
                         
                         {/* Grupo de botones */}

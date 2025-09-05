@@ -1,7 +1,5 @@
-import { Stack } from "expo-router";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from "expo-router";
+import { Image, View } from "react-native";
 
 export default function PredictionLayout() {
   const router = useRouter();
@@ -34,7 +32,7 @@ export default function PredictionLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente
@@ -79,7 +77,7 @@ export default function PredictionLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente
@@ -122,7 +120,7 @@ export default function PredictionLayout() {
               marginLeft: 5, 
             }}>
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
                 style={{
                   width: 104,  // Aumentado para que coincida con tu referencia
                   height: 24,  // Aumentado proporcionalmente

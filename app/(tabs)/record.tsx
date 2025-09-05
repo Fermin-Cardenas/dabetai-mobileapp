@@ -76,9 +76,8 @@ const Record = () => {
         />
 
         <ScrollView
-          className="flex-1 px-4"
+          className="flex-1 px-4 pb-24"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
         >
           {/* Selector de período */}
           <PeriodSelector
@@ -101,7 +100,7 @@ const Record = () => {
           />
 
           <View className="rounded-2xl p-1 mb-4">
-            <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
+            <H2 className="text-gray-700 font-bold text-lg mb-5">
               Estadísticas clave ({selectedPeriod})
             </H2>
 
@@ -172,8 +171,7 @@ const Record = () => {
 
         {/* Navegación inferior */}
         <View
-          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
-          style={{ width: 375, height: 67 }}
+          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
         >
           <NavButton
             title="Inicio"
