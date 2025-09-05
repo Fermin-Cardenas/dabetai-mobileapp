@@ -27,7 +27,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         </View>
         
         {/* Espacio grande como en el diseño original */}
-        <View style={{ marginTop: 500 }}>
+        <View className="mt-96">
           <Button
             title="Continuar"
             onPress={onContinue}

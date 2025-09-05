@@ -1,6 +1,7 @@
 // src/features/welcome/components/TermsText.tsx
+import { Caption } from '@/components/common/Typography';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 interface TermsTextProps {
   onTermsPress: () => void;
@@ -14,22 +15,22 @@ export const TermsText = ({
   className 
 }: TermsTextProps) => {
   return (
-    <Text className={`text-gray-500 text-xs text-center font-semibold ${className || ''}`}>
-      <Text className="text-gray-500">
+    <Caption className={`text-gray-500 text-xs text-center font-semibold ${className || ''}`}>
+      <Caption className="text-gray-500">
         Continúa solo si estás de acuerdo con nuestros{' '}
-      </Text>
+      </Caption>
       <TouchableOpacity onPress={onTermsPress}>
-        <Text className="text-blue-500 text-xs font-semibold">
+        <Caption className="text-blue-500 text-xs font-semibold">
           Términos y condiciones
-        </Text>
+        </Caption>
       </TouchableOpacity>
-      <Text className="text-gray-500"> y nuestra </Text>
+      <Caption className="text-gray-500"> y nuestra </Caption>
       <TouchableOpacity onPress={onPrivacyPress}>
-        <Text className="text-blue-500 text-xs font-semibold">
+        <Caption className="text-blue-500 text-xs font-semibold">
           Política de privacidad
-        </Text>
+        </Caption>
       </TouchableOpacity>
-      <Text className="text-gray-500"></Text>
-    </Text>
+      <Caption className="text-gray-500"></Caption>
+    </Caption>
   );
 };

@@ -1,23 +1,23 @@
 // app/onboarding.tsx
+import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
 
 // Header de navegación
 import { Header } from '@/components/core/navigation/Header';
 
 // Componentes del onboarding
-import { WelcomeScreen } from '@/features/onboarding/components/WelcomeScreen';
+import { BirthDateScreen } from '@/features/onboarding/components/BirthDateScreen';
+import { DeviceConnectionScreen } from '@/features/onboarding/components/DeviceConnectionScreen';
 import { DiabetesTypeScreen } from '@/features/onboarding/components/DiabetesTypeScreen';
 import { DiagnosisYearScreen } from '@/features/onboarding/components/DiagnosisYearScreen';
-import { BirthDateScreen } from '@/features/onboarding/components/BirthDateScreen';
-import { GenderScreen } from '@/features/onboarding/components/GenderScreen';
-import { HeightScreen } from '@/features/onboarding/components/HeightScreen';
-import { WeightScreen } from '@/features/onboarding/components/WeightScreen';
-import { DeviceConnectionScreen } from '@/features/onboarding/components/DeviceConnectionScreen';
-import { HealthAppsConnectionScreen } from '@/features/onboarding/components/HealthAppsConnectionScreen';
 import { DoctorLinkScreen } from '@/features/onboarding/components/DoctorLinkScreen';
+import { GenderScreen } from '@/features/onboarding/components/GenderScreen';
+import { HealthAppsConnectionScreen } from '@/features/onboarding/components/HealthAppsConnectionScreen';
+import { HeightScreen } from '@/features/onboarding/components/HeightScreen';
 import { OnboardingCompleteScreen } from '@/features/onboarding/components/OnboardingCompleteScreen';
+import { WeightScreen } from '@/features/onboarding/components/WeightScreen';
+import { WelcomeScreen } from '@/features/onboarding/components/WelcomeScreen';
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -218,7 +218,7 @@ const Onboarding = () => {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       
-      <SafeAreaView className="flex-1 bg-[#f1f5f9]">
+      <SafeAreaView className="flex-1 bg-slate-100">
         {/* Header transparente siempre visible para regresar */}
         <Header 
           title=""

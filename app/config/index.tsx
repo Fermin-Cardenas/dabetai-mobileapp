@@ -2,8 +2,8 @@
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import {
-  ScrollView,
-  View,
+    ScrollView,
+    View,
 } from 'react-native';
 
 // Importar componentes core
@@ -12,8 +12,8 @@ import { Header } from '@/components/core/navigation/Header';
 
 // Importar componentes específicos para Config
 import {
-  ConfigFooter,
-  ConfigSection
+    ConfigFooter,
+    ConfigSection
 } from '@/features/configuration/components';
 
 const Configuration = () => {
@@ -92,9 +92,8 @@ const Configuration = () => {
         
         {/* Content */}
         <ScrollView 
-          className="flex-1"
+          className="flex-1 pb-8"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 30 }}
         >
           {/* Secciones del menú */}
           {menuSections.map((section) => (

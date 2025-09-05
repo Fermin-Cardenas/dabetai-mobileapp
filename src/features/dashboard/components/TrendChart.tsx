@@ -16,6 +16,7 @@ interface TrendChartProps {
   xAxisLabels?: string[]
   xAxisTitle?: string
   className?: string
+  selectedType?: string
 }
 
 export const TrendChart: React.FC<TrendChartProps> = ({
@@ -23,6 +24,7 @@ export const TrendChart: React.FC<TrendChartProps> = ({
   xAxisLabels = ['0', '50', '100', '150', '200', '250', '300', '350'],
   xAxisTitle = 't (min)',
   className,
+  selectedType,
 }) => {
   const chartData = data && data.length > 0
     ? data
@@ -45,16 +47,11 @@ export const TrendChart: React.FC<TrendChartProps> = ({
 
   return (
     <View
-      className={`bg-white rounded-3xl pl-5 py-4 mb-6 shadow-sm border flex-row ${className || ''}`}
-      style={{ borderColor: '#CAD5E2' }}
+      className={`bg-white rounded-3xl pl-5 py-4 mb-6 shadow-sm border border-gray-300 flex-row ${className || ''}`}
     >
       {/* Leyenda vertical */}
       <View
-        style={{
-          width: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        className="w-0 justify-center items-center"
       >
         <Caption
           className="text-gray-500 text-xs"
@@ -69,7 +66,7 @@ export const TrendChart: React.FC<TrendChartProps> = ({
       </View>
 
       {/* Contenedor del gráfico */}
-      <View style={{ flex: 1, alignItems: 'center' }}>
+      <View className="flex-1 items-center">
         <LineChart
           data={{
             labels,

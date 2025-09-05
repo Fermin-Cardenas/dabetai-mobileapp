@@ -39,7 +39,7 @@ export const ComplicationsSection: React.FC<ComplicationsSectionProps> = ({
     <View className="mt-6 mb-6">
       {/* Header con título y botón */}
       <View className="flex-row justify-between items-start mb-4">
-        <H2 className="text-[#2C3E50] font-bold text-lg flex-1">
+        <H2 className="text-gray-700 font-bold text-lg flex-1">
           {title}
         </H2>
         {showToggleButton && (

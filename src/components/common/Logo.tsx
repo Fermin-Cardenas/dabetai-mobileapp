@@ -1,6 +1,6 @@
 // src/components/common/Logo.tsx
 import React from 'react';
-import { View, Image } from 'react-native';
+import { Image, View } from 'react-native';
 
 interface LogoProps {
   variant?: 'main' | 'symbol';
@@ -31,15 +31,15 @@ export function Logo({ variant = 'main', size = 'large' }: LogoProps) {
   return (
     <View className={getContainerClasses()}>
       {variant === 'main' ? (
-        <Image 
-          source={require('@/assets/images/dabetai.png')} 
-          className={getLogoClasses()}
+        <Image
+          className="w-48 h-16 self-center"
+          source={require('@/assets/images/logos/dabetai-main.png')} 
           resizeMode="contain"
         />
       ) : (
-        <Image 
-          source={require('@/assets/images/Logo.png')} 
-          className={getLogoClasses()}
+        <Image
+          className="w-24 h-16 self-center"
+          source={require('@/assets/images/logos/brand-logo.png')} 
           resizeMode="contain"
         />
       )}

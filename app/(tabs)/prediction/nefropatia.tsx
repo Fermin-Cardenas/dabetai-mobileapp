@@ -11,9 +11,9 @@ import { Header } from '@/components/core/navigation/Header';
 
 // Componentes específicos
 import {
-  ComplicationsSection,
-  RecommendationsSection,
-  RiskLevelCard
+    ComplicationsSection,
+    RecommendationsSection,
+    RiskLevelCard
 } from '@/features/dashboard/components';
 
 const Nefropatia = () => {
@@ -54,10 +54,10 @@ const Nefropatia = () => {
 
   // Datos específicos de nefropatía con valores/descripciones
   const nefropatiaFactors = [
-    { name: 'HbA1c promedio', level: 'Moderado', isHigh: false, value: '6.5%' },
-    { name: 'Tiempo en rango (TIR)', level: 'Moderado', isHigh: false, value: '78%' },
-    { name: 'Presión arterial', level: 'Alto', isHigh: true, value: '140/90 mmHg' },
-    { name: 'Presión arterial', level: 'Alto', isHigh: true, value: '78%' }
+    { name: 'HbA1c promedio', level: 'Moderado' as const, isHigh: false, value: '6.5%' },
+    { name: 'Tiempo en rango (TIR)', level: 'Moderado' as const, isHigh: false, value: '78%' },
+    { name: 'Presión arterial', level: 'Alto' as const, isHigh: true, value: '140/90 mmHg' },
+    { name: 'Presión arterial', level: 'Alto' as const, isHigh: true, value: '78%' }
   ];
 
   // Datos de recomendaciones
@@ -71,7 +71,7 @@ const Nefropatia = () => {
     <>
       <Stack.Screen options={{ headerShown: false }} />
 
-      <SafeAreaView className="flex-1 bg-[#f1f5f9]">
+      <SafeAreaView className="flex-1 bg-slate-100">
         {/* Header con botón de regreso */}
         <Header
           title="Nefropatía diabética"
@@ -80,11 +80,10 @@ const Nefropatia = () => {
         />
 
         <ScrollView
-          className="flex-1 px-4"
+          className="flex-1 px-4 pb-24"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
         >
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-6 mb-5">
+          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">
             Tu nivel de riesgo de nefropatía diabética
           </H2>
 

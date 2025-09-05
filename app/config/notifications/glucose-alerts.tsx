@@ -1,18 +1,17 @@
 // app/config/notifications/glucose-alerts.tsx
+import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
   ScrollView,
+  View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
 
 // Importar componentes core
 import { Header } from '@/components/core/navigation/Header';
 
 // Importar componentes específicos para Glucose Alerts
 import {
-  AlertSection,
-  AlertItem
+  AlertSection
 } from '@/features/notifications/components';
 
 interface AlertConfig {
@@ -99,9 +98,8 @@ const GlucoseAlerts = () => {
         
         {/* Content */}
         <ScrollView 
-          className="flex-1"
+          className="flex-1 pb-8"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 30 }}
         >
           {/* Alertas críticas */}
           <AlertSection

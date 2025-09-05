@@ -112,31 +112,21 @@ export default function Login() {
         />
 
         {/* Contenido principal */}
-        <View className="flex-1" style={{ padding: 20 }}>
+        <View className="flex-1 p-5">
           {/* Contenedor centrado para el formulario */}
           <View className="flex-1 justify-center">
             {/* Logo dabetai */}
-            <View className="items-center" style={{ marginBottom: 8 }}>
+            <View className="items-center mb-2">
               <Image
-                source={require("@/assets/images/dabetai.png")}
-                style={{
-                  width: 203,
-                  height: 66,
-                  alignSelf: "center",
-                }}
+                source={require("@/assets/images/logos/dabetai-main.png")}
+                className="w-48 h-16 self-center"
                 resizeMode="contain"
               />
             </View>
 
             {/* Subtítulo */}
             <Body
-              className="text-[#62748E] text-center text-base"
-              style={{
-                marginBottom: 32,
-                fontFamily: "Source Sans 3",
-                paddingLeft: 50,
-                paddingRight: 50,
-              }}
+              className="text-gray-500 text-center text-base mb-8 px-12 font-normal"
             >
               Monitorea tu diabetes con inteligencia artificial
             </Body>

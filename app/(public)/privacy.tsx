@@ -1,12 +1,12 @@
 // app/(public)/privacy.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Header } from '@/components/core/navigation/Header';
+import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import {
-  View,
   ScrollView,
+  View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { H1, H2, Body } from '@/components/common/Typography';
-import { Header } from '@/components/core/navigation/Header';
 
 export default function PrivacyScreen() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function PrivacyScreen() {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       
-      <View className="flex-1 bg-[#f1f5f9]">
+      <View className="flex-1 bg-slate-100">
         {/* Header con botón de regreso */}
         <Header
           title="Política de privacidad"
@@ -49,12 +49,11 @@ export default function PrivacyScreen() {
         
         {/* Content */}
         <ScrollView 
-          className="flex-1 bg-[#f1f5f9] px-5 pt-4"
+          className="flex-1 bg-slate-100 px-5 pt-4 pb-10"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
         >
           {/* Última actualización */}
-      <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
+      <H2 className="text-gray-700 font-bold text-lg mb-5">
                Última actualización: 14/08/2024
              </H2>
           
@@ -62,8 +61,7 @@ export default function PrivacyScreen() {
           {privacyContent.map((item) => (
             <Body 
               key={item.id}
-              className="text-[#333333] text-base leading-6 mb-5 text-justify"
-              style={{ fontFamily: 'System' }}
+              className="text-gray-800 text-base leading-6 mb-5 text-justify font-normal"
             >
               {item.id}. {item.text}
             </Body>

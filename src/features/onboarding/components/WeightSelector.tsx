@@ -1,7 +1,7 @@
 // src/features/onboarding/components/WeightSelector.tsx
-import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface WeightSelectorProps {
   selectedKg: number;
@@ -72,14 +72,13 @@ export const WeightSelector: React.FC<WeightSelectorProps> = ({
     items: number[],
     selectedValue: number,
     onSelect: (value: number) => void,
-    scrollRef: React.RefObject<ScrollView>,
+    scrollRef: React.RefObject<ScrollView | null>,
     unit: string
   ) => (
     <View className="flex-1 h-full">
       <ScrollView 
         ref={scrollRef}
-        className="flex-1"
-        contentContainerStyle={{ paddingVertical: 70 }}
+        className="flex-1 py-16"
         showsVerticalScrollIndicator={false}
       >
         {items.map((item, index) => {
@@ -96,8 +95,7 @@ export const WeightSelector: React.FC<WeightSelectorProps> = ({
               
               {/* Item seleccionable */}
               <TouchableOpacity
-                className="py-6 items-center relative justify-center"
-                style={{ height: 70 }}
+                className="py-6 items-center relative justify-center h-16"
                 onPress={() => onSelect(item)}
                 activeOpacity={0.7}
               >

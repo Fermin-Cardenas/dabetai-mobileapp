@@ -1,6 +1,7 @@
 // src/features/dashboard/components/RiskDescription.tsx
+import { Body } from '@/components/common/Typography';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 interface RiskDescriptionProps {
   description: string;
@@ -13,12 +14,11 @@ export const RiskDescription: React.FC<RiskDescriptionProps> = ({
 }) => {
   return (
     <View className="flex-1 ml-5">
-      <Text 
+      <Body 
         className="text-sm font-medium leading-5"
-        style={{ color: textColor }}
       >
         {description}
-      </Text>
+      </Body>
     </View>
   );
 };

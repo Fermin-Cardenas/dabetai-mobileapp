@@ -45,23 +45,16 @@ export const RecordChart: React.FC<RecordChartProps> = ({
 
   return (
     <View
-      className={`bg-white rounded-3xl pl-4 py-4 mb-6 shadow-sm border flex-row ${className || ''}`}
-      style={{ borderColor: '#CAD5E2' }}
+      className={`bg-white rounded-3xl pl-4 py-4 mb-6 shadow-sm border border-gray-300 flex-row ${className || ''}`}
     >
       {/* Eje Y - Etiqueta [Glucosa] */}
       <View
-        style={{
-          width: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        className="w-0 justify-center items-center"
       >
         <Caption
-          className="text-gray-500 text-xs"
+          className="text-gray-500 text-xs w-11 text-center"
           style={{
             transform: [{ rotate: '-90deg' }],
-            width: 45,
-            textAlign: 'center',
           }}
         >
           [Glucosa]
@@ -69,7 +62,7 @@ export const RecordChart: React.FC<RecordChartProps> = ({
       </View>
 
       {/* Contenedor del gráfico */}
-      <View style={{ flex: 1, alignItems: 'center' }}>
+      <View className="flex-1 items-center">
         <LineChart
           data={{
             labels,

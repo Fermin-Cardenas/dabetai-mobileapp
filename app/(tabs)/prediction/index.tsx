@@ -67,39 +67,41 @@ const Prediction = () => {
 
   // Mapeo de complicaciones para el listado
   const complications = [
-    { name: 'Nefropatía diabética', level: 'Bajo', isHigh: false },
-    { name: 'Retinopatía diabética', level: 'Bajo', isHigh: false },
-    { name: 'Neuropatía diabética', level: 'Alto', isHigh: true },
-    { name: 'Pie diabético', level: 'Bajo', isHigh: false }
+    { name: 'Nefropatía diabética', level: 'Bajo' as const, isHigh: false },
+    { name: 'Retinopatía diabética', level: 'Bajo' as const, isHigh: false },
+    { name: 'Neuropatía diabética', level: 'Alto' as const, isHigh: true },
+    { name: 'Pie diabético', level: 'Bajo' as const, isHigh: false }
   ];
 
 
   const handleComplicationPress = (complication: string) => {
-    const routes: Record<string, string> = {
-      'Nefropatía diabética': '/prediction/nefropatia',
-      'Retinopatía diabética': '/prediction/retinopatia',
-      'Neuropatía diabética': '/prediction/neuropatia',
-      'Pie diabético': '/prediction/pie-diabetico'
+    const routes: Record<string, any> = {
+      'Nefropatía diabética': '/(tabs)/prediction/nefropatia',
+      'Retinopatía diabética': '/retinopatia',
+      'Neuropatía diabética': '/(tabs)/prediction/neuropatia',
+      'Pie diabético': '/(tabs)/prediction/pie-diabetico'
     };
-    router.push(routes[complication] || '/(tabs)/prediction/complicacion');
+    const route = routes[complication];
+    if (route) {
+      router.push(route as any);
+    }
   };
 
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
 
-      <SafeAreaView className="flex-1 bg-[#f1f5f9]">
+      <SafeAreaView className="flex-1 bg-slate-100">
         <DashboardHeader
           onNotificationPress={handleNotifications}
           onSettingsPress={handleSettings}
         />
 
         <ScrollView
-          className="flex-1 px-4"
+          className="flex-1 px-4 pb-24"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
         >
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-6 mb-5">
+          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">
             Tu nivel de riesgo general
           </H2>
 
@@ -111,7 +113,7 @@ const Prediction = () => {
             />
           )}
 
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-1 mb-5">
+          <H2 className="text-gray-700 font-bold text-lg mt-1 mb-5">
             Tu riesgo por complicación
           </H2>
           <ComplicationsList
@@ -119,7 +121,7 @@ const Prediction = () => {
             onComplicationPress={handleComplicationPress}
           />
 
-          <H2 className="text-[#2C3E50] font-bold text-lg mt-6 mb-5">
+          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">
             Tendencia histórica de riesgo
           </H2>
           {/* <DropdownSelector
@@ -131,8 +133,7 @@ const Prediction = () => {
         </ScrollView>
 
         <View
-          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
-          style={{ width: 375, height: 67 }}
+          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
         >
           <NavButton
             title="Inicio"

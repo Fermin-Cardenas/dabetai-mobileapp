@@ -1,7 +1,7 @@
 // src/features/notifications/components/NotificationPreferenceItem.tsx
-import React from 'react';
-import { View, Switch } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React from 'react';
+import { Switch, View } from 'react-native';
 
 interface NotificationPreferenceItemProps {
   title: string;
@@ -19,12 +19,12 @@ export const NotificationPreferenceItem: React.FC<NotificationPreferenceItemProp
   return (
     <View 
       className={`bg-white flex-row justify-between items-center px-4 py-3.5 ${
-        !isLast ? 'border-b border-[#E5E7EB]' : ''
+        !isLast ? 'border-b border-gray-200' : ''
       }`}
       style={{ borderBottomWidth: isLast ? 0 : 0.5 }}
     >
       {/* Título */}
-      <Body className="text-[#62748E] text-base font-normal flex-1">
+      <Body className="text-slate-600 text-base font-normal flex-1">
         {title}
       </Body>
       

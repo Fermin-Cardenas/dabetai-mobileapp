@@ -1,6 +1,7 @@
 // src/features/dashboard/components/RecommendationsList.tsx
+import { Body } from '@/components/common/Typography';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 interface RecommendationsListProps {
   recommendations: string[];
@@ -13,34 +14,16 @@ export const RecommendationsList: React.FC<RecommendationsListProps> = ({
 }) => {
   return (
     <View
-      style={{
-        marginHorizontal: -16,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        backgroundColor
-      }}
+      className="-mx-4 px-4 py-2 bg-slate-100"
     >
       {recommendations.map((recommendation, index) => (
         <View
           key={index}
-          style={{
-            backgroundColor: 'white',
-            paddingVertical: 16,
-            paddingHorizontal: 16,
-            marginHorizontal: -16,
-            marginBottom: 0.5,
-            borderBottomWidth: index < recommendations.length - 1 ? 1 : 0,
-            borderBottomColor: '#E5E7EB'
-          }}
+          className={`bg-white py-4 px-4 -mx-4 ${index < recommendations.length - 1 ? 'border-b border-gray-200' : ''}`}
         >
-          <Text style={{ 
-            color: '#1F2937', 
-            fontSize: 14,
-            lineHeight: 20,
-            fontWeight: '400'
-          }}>
+          <Body className="text-gray-800 text-sm leading-5 font-normal">
             {recommendation}
-          </Text>
+          </Body>
         </View>
       ))}
     </View>

@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Body } from '@/components/common/Typography';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface HeightSelectorProps {
   selectedHeight: number;
@@ -46,8 +46,7 @@ export const HeightSelector: React.FC<HeightSelectorProps> = ({
       <View className="h-56 w-full">
         <ScrollView
           ref={scrollViewRef}
-          className="flex-1"
-          contentContainerStyle={{ paddingVertical: 40 }}
+          className="flex-1 py-10"
           showsVerticalScrollIndicator={false}
         >
           {heights.map((height) => (
@@ -58,11 +57,7 @@ export const HeightSelector: React.FC<HeightSelectorProps> = ({
               {/* Línea superior */}
               {selectedHeight === height && (
                 <View
-                  className="absolute top-2 h-0.5 bg-[#2196F3]"
-                  style={{
-                    left: 0,
-                    right: 0
-                  }}
+                  className="absolute top-2 h-0.5 bg-[#2196F3] left-0 right-0"
                 />
               )}
 
@@ -86,11 +81,7 @@ export const HeightSelector: React.FC<HeightSelectorProps> = ({
               {/* Línea inferior */}
               {selectedHeight === height && (
                 <View
-                  className="absolute bottom-2 h-0.5 bg-[#2196F3]"
-                  style={{
-                    left: 0,
-                    right: 0
-                  }}
+                  className="absolute bottom-2 h-0.5 bg-[#2196F3] left-0 right-0"
                 />
               )}
             </View>

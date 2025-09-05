@@ -2,11 +2,11 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    View,
 } from 'react-native';
 
 // Importar componentes core
@@ -15,8 +15,8 @@ import { NavButton } from '@/features/dashboard/components/NavButton';
 
 // Importar componentes del chat
 import {
-  ChatInput,
-  ChatMessagesList
+    ChatInput,
+    ChatMessagesList
 } from '@/features/dashboard/components';
 
 const AIChat = () => {
@@ -104,7 +104,7 @@ const AIChat = () => {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       
-      <SafeAreaView className="flex-1 bg-[#F8FAFC]">
+      <SafeAreaView className="flex-1 bg-slate-50">
         {/* Header */}
         <DashboardHeader 
           onNotificationPress={handleNotifications}
@@ -133,7 +133,7 @@ const AIChat = () => {
 
             {/* Spacer dinámico para Android - SOLO cuando el teclado está abierto */}
             {Platform.OS === 'android' && keyboardHeight > 0 && (
-              <View style={{ height: keyboardHeight - 15 }} />
+              <View className="h-14" />
             )}
           </KeyboardAvoidingView>
         </View>
@@ -141,8 +141,7 @@ const AIChat = () => {
         {/* Navegación inferior - SOLO visible cuando el teclado está cerrado */}
         {keyboardHeight === 0 && (
           <View 
-            className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
-            style={{ width: 375, height: 67 }}
+            className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
           >
             <NavButton
                       title="Inicio"

@@ -1,7 +1,5 @@
-import { Stack } from "expo-router";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from "expo-router";
+import { Image, View } from "react-native";
 
 export default function PredictionLayout() {
   const router = useRouter();
@@ -20,7 +18,7 @@ export default function PredictionLayout() {
       <Stack.Screen
         name="index"
         options={{
-          headerShown: false,  // ← Agregar esta línea para quitar la barra blanca
+          headerShown: false,
           title: "",
           headerStyle: { 
             backgroundColor: '#2196F3',
@@ -28,18 +26,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),
@@ -73,18 +64,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),
@@ -116,18 +100,11 @@ export default function PredictionLayout() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: 'bold' },
           headerLeft: () => (
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              marginLeft: 5, 
-            }}>
+            <View className="flex-row items-center ml-1">
               <Image 
-                source={require('../../../src/assets/images/logo3.png')} 
-                style={{
-                  width: 104,  // Aumentado para que coincida con tu referencia
-                  height: 24,  // Aumentado proporcionalmente
-                  resizeMode: 'contain'
-                }}
+                source={require('@/assets/images/logos/dabetai-compact.png')} 
+                className="w-26 h-6"
+                resizeMode="contain"
               />
             </View>
           ),

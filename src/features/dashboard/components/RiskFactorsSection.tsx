@@ -1,7 +1,7 @@
 // src/features/dashboard/components/RiskFactorsSection.tsx
+import { Body, H3 } from '@/components/common/Typography';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { H3, Body } from '@/components/common/Typography';
+import { TouchableOpacity, View } from 'react-native';
 
 interface RiskFactor {
   id: string;
@@ -28,18 +28,31 @@ export const RiskFactorsSection: React.FC<RiskFactorsSectionProps> = ({
 }) => {
   const displayedFactors = showAll ? factors : factors.slice(0, 3);
 
+  const getLevelColorClass = (levelColor: string) => {
+    switch (levelColor) {
+      case '#F44336':
+        return 'text-danger-500';
+      case '#FF9800':
+        return 'text-warning-500';
+      case '#4CAF50':
+        return 'text-success-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
   return (
     <View className="px-4 mb-6">
       {/* Header */}
       <View className="flex-row justify-between items-center mb-3">
-        <H3 className="text-[#1F2937] font-semibold text-base">
+        <H3 className="text-gray-800 font-semibold text-base">
           {title}
         </H3>
         <TouchableOpacity 
-          className="px-6 py-3 bg-transparent border-2 border-[#0891B2] rounded-full"
+          className="px-6 py-3 bg-transparent border-2 border-cyan-600 rounded-full"
           onPress={onToggleView}
         >
-          <Body className="text-[#0891B2] text-sm font-semibold">
+          <Body className="text-cyan-600 text-sm font-semibold">
             {buttonText}
           </Body>
         </TouchableOpacity>
@@ -51,21 +64,18 @@ export const RiskFactorsSection: React.FC<RiskFactorsSectionProps> = ({
           <View 
             key={factor.id}
             className={`flex-row justify-between items-center px-4 py-4 ${
-              index < displayedFactors.length - 1 ? 'border-b border-[#E5E7EB]' : ''
+              index < displayedFactors.length - 1 ? 'border-b border-gray-200' : ''
             }`}
           >
             <View className="flex-1">
-              <Body className="text-[#1F2937] text-sm font-medium mb-1">
+              <Body className="text-gray-800 text-sm font-medium mb-1">
                 {factor.label}
               </Body>
-              <Body className="text-[#6B7280] text-xs">
+              <Body className="text-gray-500 text-xs">
                 {factor.value}
               </Body>
             </View>
-            <Body 
-              className="text-sm font-semibold"
-              style={{ color: factor.levelColor }}
-            >
+            <Body className={`text-sm font-semibold ${getLevelColorClass(factor.levelColor)}`}>
               {factor.level}
             </Body>
           </View>

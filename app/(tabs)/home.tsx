@@ -30,7 +30,7 @@ const screenWidth = Dimensions.get('window').width;
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('inicio');
-  const [patientData, setPatientData] = useState(null);
+  const [patientData, setPatientData] = useState<any>(null);
   const [glucoseData, setGlucoseData] = useState<{ time: number; value: number }[]>([]);
   const [nivelGeneral, setNivelGeneral] = useState('');
   const [lastUpdate, setLastUpdate] = useState('');
@@ -77,8 +77,8 @@ const Dashboard = () => {
           onSettingsPress={() => console.log('Config')}
         />
 
-        <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: 100 }}>
-          <H1 className="text-[#2C3E50] font-bold text-3xl mt-5 mb-5">
+        <ScrollView className="flex-1 px-4 pb-24">
+          <H1 className="text-gray-700 font-bold text-3xl mt-5 mb-5">
             Hola, Christian
           </H1>
 
@@ -108,19 +108,19 @@ const Dashboard = () => {
 
           {/* Tendencia 24h */}
           <View className="bg-[#f1f5f9] rounded-2xl p-1 mb-4">
-            <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
+            <H2 className="text-gray-700 font-bold text-lg mb-5">
               Tendencia de las últimas 24 hrs
             </H2>
 
             <View className="flex-row justify-between mb-4">
               <StatItem
                 icon={<Feather name="activity" size={24} color="#314158" />}
-                value={patientData?.Time_In_Range_70_180 + '%' || '--'}
+                value={patientData?.Time_In_Range_70_180 ? `${patientData.Time_In_Range_70_180}%` : '--'}
                 label="TIR"
               />
               <StatItem
                 icon={<Feather name="heart" size={24} color="#314158" />}
-                value={glucoseData?.length || '--'}
+                value={glucoseData?.length ? `${glucoseData.length}` : '--'}
                 label="Lecturas"
               />
             </View>
@@ -153,11 +153,11 @@ const Dashboard = () => {
             />
           </View>
 
-          <View className="bg-white rounded-2xl p-5 mb-4 border" style={{ borderColor: '#CAD5E2' }}>
-            <H2 className="text-[#2C3E50] font-bold text-lg mb-5">Predicción</H2>
+          <View className="bg-white rounded-2xl p-5 mb-4 border border-gray-300">
+            <H2 className="text-gray-700 font-bold text-lg mb-5">Predicción</H2>
 
             <RiskIndicator
-              riskLevel={nivelGeneral.toLowerCase()}
+              riskLevel={nivelGeneral.toLowerCase() as 'bajo' | 'medio' | 'alto'}
               title={`Tu riesgo general de complicaciones es ${nivelGeneral.toLowerCase()}.`}
               lastUpdate={lastUpdate}
             />
@@ -172,8 +172,7 @@ const Dashboard = () => {
         </ScrollView>
 
         <View
-          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center"
-          style={{ width: 375, height: 67 }}
+          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
         >
           <NavButton title="Inicio" iconName="home" isActive={activeTab === 'inicio'} onPress={() => handleNavigation('inicio')} />
           <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/retinopatia')} />

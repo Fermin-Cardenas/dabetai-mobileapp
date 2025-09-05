@@ -1,12 +1,12 @@
 // app/(public)/tyc.tsx
+import { Body, H2 } from '@/components/common/Typography';
+import { Header } from '@/components/core/navigation/Header';
+import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import {
-  View,
-  ScrollView,
+    ScrollView,
+    View,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { H1, Body, H2 } from '@/components/common/Typography';
-import { Header } from '@/components/core/navigation/Header';
 
 export default function TermsScreen() {
   const router = useRouter();
@@ -49,12 +49,11 @@ export default function TermsScreen() {
         
         {/* Content */}
         <ScrollView 
-          className="flex-1 bg-[#f1f5f9] px-5 pt-4"
+          className="flex-1 bg-[#f1f5f9] px-5 pt-4 pb-10"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
         >
           {/* Última actualización */}
-          <H2 className="text-[#2C3E50] font-bold text-lg mb-5">
+          <H2 className="text-gray-700 font-bold text-lg mb-5">
             Última actualización: 14/08/2024
           </H2>
           
@@ -62,8 +61,7 @@ export default function TermsScreen() {
           {termsContent.map((item) => (
             <Body 
               key={item.id}
-              className="text-[#333333] text-base leading-6 mb-5 text-justify"
-              style={{ fontFamily: 'System' }}
+              className="text-gray-800 text-base leading-6 mb-5 text-justify font-normal"
             >
               {item.id}. {item.text}
             </Body>
