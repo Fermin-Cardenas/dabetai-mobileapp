@@ -9,10 +9,10 @@ import {
 // Importar componentes core
 import { Button } from '@/components/core/buttons';
 import { Header } from '@/components/core/navigation/Header';
+import { Body } from '@/components/common/Typography';
 
 // Importar componentes específicos para Config
 import {
-    ConfigFooter,
     ConfigSection
 } from '@/features/configuration/components';
 
@@ -116,7 +116,11 @@ const Configuration = () => {
           </View>
 
           {/* Footer */}
-          <ConfigFooter />
+          <View className="px-4 pb-7 pt-4 items-center">
+            <Body className="text-[#62748E] text-base font-normal text-center">
+              © 2025 dabetai. Todos los derechos reservados.
+            </Body>
+          </View>
         </ScrollView>
       </View>
     </>

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  View,
+  View
 } from 'react-native';
 
 // Importar componentes core
