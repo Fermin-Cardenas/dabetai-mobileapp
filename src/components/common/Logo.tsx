@@ -8,14 +8,14 @@ interface LogoProps {
 }
 
 export function Logo({ variant = 'main', size = 'large' }: LogoProps) {
-  const getLogoClasses = () => {
+  const getLogoStyles = () => {
     switch (size) {
       case 'small':
-        return variant === 'main' ? "w-24 h-6" : "w-16 h-16";
+        return variant === 'main' ? { width: 80, height: 24 } : { width: 32, height: 32 };
       case 'medium':
-        return variant === 'main' ? "w-32 h-8" : "w-24 h-24";
+        return variant === 'main' ? { width: 128, height: 40 } : { width: 48, height: 48 };
       case 'large':
-        return variant === 'main' ? "w-[202px] h-[66px]" : "w-[200px] h-[200px]";
+        return variant === 'main' ? { width: 160, height: 48 } : { width: 64, height: 64 };
     }
   };
 
@@ -32,13 +32,13 @@ export function Logo({ variant = 'main', size = 'large' }: LogoProps) {
     <View className={getContainerClasses()}>
       {variant === 'main' ? (
         <Image
-          className="w-48 h-16 self-center"
+          style={getLogoStyles()}
           source={require('@/assets/images/logos/dabetai-main.png')} 
           resizeMode="contain"
         />
       ) : (
         <Image
-          className="w-24 h-16 self-center"
+          style={getLogoStyles()}
           source={require('@/assets/images/logos/brand-logo.png')} 
           resizeMode="contain"
         />
