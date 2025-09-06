@@ -100,15 +100,12 @@ export default function Login() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-
       <View className="flex-1 bg-[#f1f5f9]">
         {/* Header azul con título y flecha de regreso */}
         <Header
           title="Iniciar sesión"
-          showBackButton
+          variant="section"
           onBackPress={handleBack}
-          className="bg-[#2196F3]"
         />
 
         {/* Contenido principal */}
@@ -119,14 +116,14 @@ export default function Login() {
             <View className="items-center mb-2">
               <Image
                 source={require("@/assets/images/logos/dabetai-main.png")}
-                className="w-48 h-16 self-center"
+                style={{ height: 66 }}
                 resizeMode="contain"
               />
             </View>
 
             {/* Subtítulo */}
             <Body
-              className="text-gray-500 text-center text-base mb-8 px-12 font-normal"
+              className="text-gray-500 text-center mb-8 px-12"
             >
               Monitorea tu diabetes con inteligencia artificial
             </Body>

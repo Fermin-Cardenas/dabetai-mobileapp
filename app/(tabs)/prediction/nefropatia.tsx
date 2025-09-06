@@ -22,13 +22,6 @@ const Nefropatia = () => {
   const [showAllFactors, setShowAllFactors] = useState(true); // Estado para mostrar/ocultar factores
   const router = useRouter();
 
-  const handleNotifications = () => console.log('Abriendo notificaciones…');
-  const handleSettings = () => console.log('Abriendo configuración…');
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
   const handleComplicationPress = (complication: string) => {
     const routes: Record<string, string> = {
       'Nefropatía diabética': '/prediction/nefropatia',
@@ -47,10 +40,6 @@ const Nefropatia = () => {
     setShowAllFactors(!showAllFactors);
   };
 
-  const handleNavigation = (tab: string, route?: string) => {
-    setActiveTab(tab.toLowerCase());
-    if (route) router.push(route as any);
-  };
 
   // Datos específicos de nefropatía con valores/descripciones
   const nefropatiaFactors = [
@@ -69,14 +58,11 @@ const Nefropatia = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-
       <SafeAreaView className="flex-1 bg-slate-100">
         {/* Header con botón de regreso */}
         <Header
           title="Nefropatía diabética"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
 
         <ScrollView

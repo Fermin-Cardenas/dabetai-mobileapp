@@ -22,10 +22,6 @@ interface AlertConfig {
 const DeviceAlerts = () => {
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
   // Sistema
   const [systemAlerts, setSystemAlerts] = useState<AlertConfig[]>([
     {
@@ -73,14 +69,11 @@ const DeviceAlerts = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Alertas del dispositivo"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
         
         {/* Content */}
