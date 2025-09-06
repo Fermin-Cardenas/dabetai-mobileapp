@@ -1,8 +1,7 @@
 // src/features/onboarding/components/RadioOption.tsx
+import { Body, BodySmall } from '@/components/common/Typography';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Body } from '@/components/common/Typography';
+import { TouchableOpacity, View } from 'react-native';
 
 interface RadioOptionProps {
   label: string;
@@ -21,7 +20,7 @@ export const RadioOption: React.FC<RadioOptionProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`bg-white rounded-xl mb-3 ${
+      className={`bg-white rounded-xl ${
         isSelected ? 'border border-[#2196F3] bg-blue-50' : ''
       }`}
       onPress={() => onSelect(value)}
@@ -31,15 +30,15 @@ export const RadioOption: React.FC<RadioOptionProps> = ({
         {/* Ícono de información */}
         {showInfoIcon && (
           <View className="mr-3">
-            <View className="w-6 h-6 rounded-full border-2 border-[#666] justify-center items-center">
-              <Body className="text-[#666] text-sm font-bold">i</Body>
+            <View className="w-6 h-6 rounded-full border-2 border-gray-500 justify-center items-center">
+              <BodySmall className="text-gray-500 font-bold">i</BodySmall>
             </View>
           </View>
         )}
         
         {/* Texto de la opción */}
         <View className="flex-1">
-          <Body className="text-[#333] text-base font-medium">
+          <Body>
             {label}
           </Body>
         </View>
@@ -50,7 +49,7 @@ export const RadioOption: React.FC<RadioOptionProps> = ({
             isSelected ? 'border-[#2196F3]' : 'border-[#ddd]'
           }`}>
             {isSelected && (
-              <View className="w-3 h-3 rounded-full bg-[#2196F3]" />
+              <View className="w-3 h-3 rounded-full bg-primary-500" />
             )}
           </View>
         </View>
