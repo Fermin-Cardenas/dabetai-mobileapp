@@ -39,7 +39,7 @@ export const ButtonGroup = React.memo<ButtonGroupProps>(({
         break;
       case 'stack':
         baseClasses.pop(); // Remove space-x-4 for stack
-        baseClasses.push('flex-col', 'space-y-4');
+        baseClasses.push('flex-col', 'space-y-4', 'w-full');
         break;
     }
 

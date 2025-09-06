@@ -28,10 +28,6 @@ const Notifications = () => {
   const [activeTab, setActiveTab] = useState<'no-leidas' | 'leidas'>('no-leidas');
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
   const handleMarkAllAsRead = () => {
     // Implementar lógica para marcar todas como leídas
     console.log('Marcar todas como leídas...');
@@ -113,14 +109,12 @@ const Notifications = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-slate-100">
         {/* Header */}
         <Header
           title="Notificaciones"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
+          
         />
         
         <View className="flex-1">

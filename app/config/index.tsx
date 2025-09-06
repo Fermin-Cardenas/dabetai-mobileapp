@@ -2,26 +2,22 @@
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import {
-    ScrollView,
-    View,
+  ScrollView,
+  View,
 } from 'react-native';
 
 // Importar componentes core
+import { Body } from '@/components/common/Typography';
 import { Button } from '@/components/core/buttons';
 import { Header } from '@/components/core/navigation/Header';
-import { Body } from '@/components/common/Typography';
 
 // Importar componentes específicos para Config
 import {
-    ConfigSection
+  ConfigSection
 } from '@/features/configuration/components';
 
 const Configuration = () => {
   const router = useRouter();
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   // Definir las secciones del menú
   const menuSections = [
@@ -80,14 +76,11 @@ const Configuration = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Configuración"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant="section"
         />
         
         {/* Content */}

@@ -1,51 +1,47 @@
-import "../global.css";
-import { Stack, router, useSegments } from "expo-router";
+import { useAuthState } from '@/hooks/useAuthState';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
-import { CustomSplashScreen } from '@/components/common/CustomSplashScreen';
+import { useEffect, useState } from 'react';
+import "../global.css";
 
-// ✅ CAMBIA ESTA CONFIGURACIÓN
+// Prevenir que el splash nativo se oculte automáticamente
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
   const [isReady, setIsReady] = useState(false);
-  
-  // Variables temporales
-  const user = null;
-  const isLoading = true; // ← CAMBIA A true para forzar splash personalizado
-  const isOnboardingComplete = false;
-  
+  const { isLoggedIn, isLoading, hasCompletedOnboarding } = useAuthState();
+  const router = useRouter();
   const segments = useSegments();
 
   useEffect(() => {
-    // ✅ Oculta inmediatamente el splash de Expo
-    SplashScreen.hideAsync();
-    
-    // ✅ Simula carga para mostrar tu splash personalizado
-    const timer = setTimeout(() => {
-      console.log("⏰ Terminando carga personalizada");
+    if (isLoading || isReady) return;
+
+    const initApp = async () => {
+      await SplashScreen.hideAsync();
       setIsReady(true);
-    }, 3000); // 3 segundos de tu splash personalizado
 
-    return () => clearTimeout(timer);
-  }, []);
+      // Solo redirigir si estamos en una ruta que no corresponde al estado actual
+      const inAuthGroup = segments[0] === '(auth)';
+      const inPublicGroup = segments[0] === '(public)';
+      const inTabsGroup = segments[0] === '(tabs)';
 
-  useEffect(() => {
-    if (!isReady) return; // Solo navega cuando termine tu splash
+      if (isLoggedIn && !inTabsGroup) {
+        router.replace('/(tabs)/home');
+      } else if (!isLoggedIn && hasCompletedOnboarding && !inAuthGroup) {
+        router.replace('/(auth)/login');
+      } else if (!isLoggedIn && !hasCompletedOnboarding && !inPublicGroup) {
+        router.replace('/(public)/welcome');
+      }
+    };
 
-    console.log("✅ Navegando a home");
-    router.replace('/(public)/welcome');
-  }, [isReady]);
+    setTimeout(initApp, 100);
+  }, [isLoading, isLoggedIn, hasCompletedOnboarding, isReady, segments]);
 
-  // ✅ FUERZA el splash personalizado
-  if (!isReady) {
-    console.log("🖼️ Mostrando CustomSplashScreen");
-    return <CustomSplashScreen />;
-  }
+  // Mostrar splash nativo mientras no esté listo
+  if (!isReady) return null;
 
-  // App normal
   return (
     <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{ headerShown: false }}>

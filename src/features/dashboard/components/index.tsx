@@ -1,9 +1,7 @@
 // src/features/dashboard/components/index.tsx
 export { ActionCard } from './ActionCard';
 export { CategoryTabs } from './CategoryTabs';
-export { DashboardHeader } from './DashboardHeader';
 export { GlucoseCard } from './GlucoseCard';
-export { NavButton } from './NavButton';
 export { PeriodSelector } from './PeriodSelector';
 export { RecordChart } from './RecordChart';
 export { RecordsList } from './RecordsList';
@@ -35,3 +33,4 @@ export { default as RiskDescription } from './RiskDescription';
 // Nuevos componentes
 export { ComplicationsSection } from './ComplicationsSection';
 export { RecommendationsList } from './RecommendationsList';
+

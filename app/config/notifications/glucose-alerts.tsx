@@ -22,11 +22,6 @@ interface AlertConfig {
 }
 
 const GlucoseAlerts = () => {
-  const router = useRouter();
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   // Estados para las diferentes alertas
   const [criticalAlerts, setCriticalAlerts] = useState<AlertConfig[]>([
@@ -86,14 +81,11 @@ const GlucoseAlerts = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Alertas de glucosa"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
         
         {/* Content */}
