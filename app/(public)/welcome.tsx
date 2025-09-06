@@ -1,109 +1,100 @@
 // src/features/welcome/screens/WelcomeScreen.tsx
-import { H1, Caption } from '@/components/common/Typography';
-import { Button, ButtonGroup } from '@/components/core/buttons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Caption, H2 } from "@/components/common/Typography";
+import { Button, ButtonGroup } from "@/components/core/buttons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Image, View, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 
 export default function Welcome() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const handleRegister = async () => {
-        await AsyncStorage.clear();
-        router.push('/(auth)/register');
-    };
+  const handleRegister = async () => {
+    await AsyncStorage.clear();
+    router.push("/(auth)/register");
+  };
 
-    const handleLogin = async () => {
-        await AsyncStorage.clear();
-        router.push('/(auth)/login');
-    };
+  const handleLogin = async () => {
+    await AsyncStorage.clear();
+    router.push("/(auth)/login");
+  };
 
-    const handleTermsPress = () => {
-        router.push('/(public)/tyc');
-    };
+  const handleTermsPress = () => {
+    router.push("/(public)/tyc");
+  };
 
-    const handlePrivacyPress = () => {
-        router.push('/(public)/privacy');
-    };
+  const handlePrivacyPress = () => {
+    router.push("/(public)/privacy");
+  };
 
-    return (
-        <>
-            <Stack.Screen options={{ headerShown: false }} />
-            
-            {/* Contenedor principal */}
-            <View className="flex flex-col min-h-screen items-center justify-center gap-6 pt-6 pr-4 pb-6 pl-4 relative bg-gray-100">
-                
-                {/* Frame superior con logos */}
-                                        <View className="items-center mb-8">
-                            <Image
-                                className="w-48 h-16 mb-2"
-                                source={require('@/assets/images/logos/dabetai-main.png')}
-                                resizeMode="contain"
-                            />
-                        </View>
+  return (
+    <>
+      {/* Contenedor principal */}
+      <View className="flex flex-col min-h-screen items-center justify-center gap-6 pt-6 pr-4 pb-6 pl-4 relative">
+        {/* Frame superior con logos */}
+        <View className="items-center mb-8">
+          <Image
+            style={{ height: 66 }}
+            source={require("@/assets/images/logos/dabetai-main.png")}
+            resizeMode="contain"
+          />
+        </View>
 
-                        <Image
-                            className="w-16 h-12"
-                            source={require('@/assets/images/logos/brand-logo.png')}
-                            resizeMode="contain"
-                        />
+        <Image
+          style={{ height: 200 }}
+          source={require("@/assets/images/logos/brand-logo.png")}
+          resizeMode="contain"
+        />
 
-                {/* Frame inferior con contenido */}
-                <View className="flex justify-between flex-1 self-stretch w-full grow flex-col items-center relative">
-                    
-                    {/* Contenedor de título y botones */}
-                    <View className="flex justify-center gap-6 self-stretch w-full flex-col items-center relative">
-                        
-                        {/* Título principal */}
-                        <View className="w-[350px] h-[76px]">
-                            <H1 
-                                className="w-[350px] h-[76px] font-bold text-gray-700 text-center"
-                            >
-                                Monitorea tu diabetes con inteligencia artificial
-                            </H1>
-                        </View>
-                        
-                        {/* Grupo de botones */}
-                        <View className="self-stretch w-full">
-                            <ButtonGroup align="stack">
-                                <Button
-                                    title="Registrarse"
-                                    onPress={handleRegister}
-                                    variant="fill"
-                                    color="primary"
-                                />
-                                <Button
-                                    title="Iniciar sesión"
-                                    onPress={handleLogin}
-                                    variant="outline"
-                                    color="primary"
-                                />
-                            </ButtonGroup>
-                        </View>
-                    </View>
+        {/* Frame inferior con contenido */}
+        <View className="flex justify-between flex-1 self-stretch w-full grow flex-col items-center relative">
+          {/* Contenedor de título y botones */}
+          <View className="flex justify-center gap-6 self-stretch w-full flex-col items-center relative">
+            {/* Título principal */}
+            <H2 className="text-center">
+              Monitorea tu diabetes con inteligencia artificial
+            </H2>
 
-                    {/* Términos y condiciones */}
-                    <View className="relative self-stretch">
-                        <Caption className="text-gray-500 text-xs text-center font-semibold">
-                            <Caption className="text-gray-500">
-                                Continúa solo si estás de acuerdo con nuestros{' '}
-                            </Caption>
-                            <TouchableOpacity onPress={handleTermsPress}>
-                                <Caption className="text-blue-500 text-xs font-semibold">
-                                    Términos y condiciones
-                                </Caption>
-                            </TouchableOpacity>
-                            <Caption className="text-gray-500"> y nuestra </Caption>
-                            <TouchableOpacity onPress={handlePrivacyPress}>
-                                <Caption className="text-blue-500 text-xs font-semibold">
-                                    Política de privacidad
-                                </Caption>
-                            </TouchableOpacity>
-                        </Caption>
-                    </View>
-                </View>
+            {/* Grupo de botones */}
+            <View className="self-stretch w-full">
+              <ButtonGroup align="stack">
+                <Button
+                  title="Registrarse"
+                  onPress={handleRegister}
+                  variant="fill"
+                  color="primary"
+                />
+                <Button
+                  title="Iniciar sesión"
+                  onPress={handleLogin}
+                  variant="outline"
+                  color="primary"
+                />
+              </ButtonGroup>
             </View>
-        </>
-    );
+          </View>
+
+          {/* Términos y condiciones */}
+          <View className="relative self-stretch">
+            <Caption className="text-center">
+              <Caption className="text-gray-500">
+                Continúa solo si estás de acuerdo con nuestros{" "}
+              </Caption>
+              <TouchableOpacity onPress={handleTermsPress}>
+                <Caption className="text-blue-500">
+                  Términos y condiciones
+                </Caption>
+              </TouchableOpacity>
+              <Caption className="text-gray-500"> y nuestra </Caption>
+              <TouchableOpacity onPress={handlePrivacyPress}>
+                <Caption className="text-blue-500">
+                  Política de privacidad
+                </Caption>
+              </TouchableOpacity>
+            </Caption>
+          </View>
+        </View>
+      </View>
+    </>
+  );
 }

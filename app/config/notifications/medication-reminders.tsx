@@ -30,10 +30,6 @@ interface ReminderPreference {
 const MedicationReminders = () => {
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
   // Control general - reutilizando NotificationPreferencesSection
   const [generalControls, setGeneralControls] = useState<ReminderPreference[]>([
     {
@@ -73,14 +69,11 @@ const MedicationReminders = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Recordatorios de medicación"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
         
         {/* Content */}

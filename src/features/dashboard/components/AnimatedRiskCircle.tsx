@@ -78,7 +78,7 @@ export const AnimatedRiskCircle: React.FC<AnimatedRiskCircleProps> = ({
 
           {/* Círculo principal */}
           <View 
-            className="w-40 h-40 rounded-full border-4 justify-center items-center z-10 bg-gray-100 shadow-lg"
+            className="w-40 h-40 rounded-full border-4 justify-center items-center z-10 bg-gray-100 "
             style={{ 
               borderColor: riskColor,
             }}

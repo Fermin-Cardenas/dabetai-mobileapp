@@ -30,10 +30,6 @@ interface NotificationPreference {
 const NotificationSettings = () => {
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
   // Categorías de notificaciones
   const notificationCategories: NotificationCategory[] = [
     {
@@ -93,14 +89,11 @@ const NotificationSettings = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Notificaciones"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
         
         {/* Content */}

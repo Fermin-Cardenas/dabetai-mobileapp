@@ -76,7 +76,7 @@ export const GlucoseCard = ({
   };
 
   return (
-    <View className="bg-white rounded-3xl p-5 mb-4 shadow-sm border border-gray-300">
+    <View className="bg-white rounded-3xl p-5 border border-gray-300">
       <View className="flex-row justify-between items-center">
         {/* Valor de glucosa */}
         <View className="items-start">

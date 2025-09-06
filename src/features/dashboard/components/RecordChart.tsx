@@ -45,7 +45,7 @@ export const RecordChart: React.FC<RecordChartProps> = ({
 
   return (
     <View
-      className={`bg-white rounded-3xl pl-4 py-4 mb-6 shadow-sm border border-gray-300 flex-row ${className || ''}`}
+      className={`bg-white rounded-3xl pl-4 py-4 mb-6 border border-gray-300 flex-row ${className || ''}`}
     >
       {/* Eje Y - Etiqueta [Glucosa] */}
       <View

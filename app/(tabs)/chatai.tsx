@@ -1,46 +1,18 @@
 // app/(tabs)/chatai.tsx
-import { Stack, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    SafeAreaView,
-    View,
-} from 'react-native';
+import { Stack } from 'expo-router';
+import React, { useState } from 'react';
 
-// Importar componentes core
-import { DashboardHeader } from '@/features/dashboard/components/DashboardHeader';
-import { NavButton } from '@/features/dashboard/components/NavButton';
+// Importar layout del chat
+import { ChatLayout } from '@/components/layouts';
 
 // Importar componentes del chat
 import {
-    ChatInput,
-    ChatMessagesList
+  ChatInput,
+  ChatMessagesList
 } from '@/features/dashboard/components';
 
 const AIChat = () => {
   const [message, setMessage] = useState('');
-  const [activeTab, setActiveTab] = useState('ia chat');
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const router = useRouter();
-
-  // Listener para el teclado
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (e) => setKeyboardHeight(e.endCoordinates.height)
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => setKeyboardHeight(0)
-    );
-
-    return () => {
-      keyboardDidShowListener?.remove();
-      keyboardDidHideListener?.remove();
-    };
-  }, []);
 
   // Datos de mensajes
   const messages = [
@@ -85,91 +57,22 @@ const AIChat = () => {
     // Aquí se manejaría la navegación al enlace
   };
 
-  const handleNotifications = () => {
-    console.log('Abriendo notificaciones...');
-  };
-
-  const handleSettings = () => {
-    console.log('Abriendo configuración...');
-  };
-
-  const handleNavigation = (tab: string, route?: string) => {
-    setActiveTab(tab.toLowerCase());
-    if (route) {
-      router.push(route as any);
-    }
-  };
-
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
-      <SafeAreaView className="flex-1 bg-slate-50">
-        {/* Header */}
-        <DashboardHeader 
-          onNotificationPress={handleNotifications}
-          onSettingsPress={handleSettings}
+      <ChatLayout title="IA Chat" activeTab="ia-chat">
+        {/* Lista de mensajes */}
+        <ChatMessagesList 
+          messages={messages}
+          onLinkPress={handleLinkPress}
         />
 
-        {/* Chat Container */}
-        <View className="flex-1">
-          <KeyboardAvoidingView 
-            className="flex-1"
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
-          >
-            {/* Lista de mensajes */}
-            <ChatMessagesList 
-              messages={messages}
-              onLinkPress={handleLinkPress}
-            />
-
-            {/* Input de chat */}
-            <ChatInput 
-              message={message}
-              onMessageChange={setMessage}
-              onSend={handleSend}
-            />
-
-            {/* Spacer dinámico para Android - SOLO cuando el teclado está abierto */}
-            {Platform.OS === 'android' && keyboardHeight > 0 && (
-              <View className="h-14" />
-            )}
-          </KeyboardAvoidingView>
-        </View>
-
-        {/* Navegación inferior - SOLO visible cuando el teclado está cerrado */}
-        {keyboardHeight === 0 && (
-          <View 
-            className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
-          >
-            <NavButton
-                      title="Inicio"
-                      iconName="home"
-                      isActive={activeTab === 'inicio'}
-            onPress={() => handleNavigation('home', '/(tabs)/home')}
-                    />
-                    <NavButton
-                      title="Predicción"
-                      iconName="box"
-                      isActive={activeTab === 'predicción'}
-                      onPress={() => handleNavigation('predicción', '/(tabs)/retinopatia')}
-                    />
-                    <NavButton
-                      title="Historial"
-                      iconName="activity"
-                      isActive={activeTab === 'historial'}
-                      onPress={() => handleNavigation('historial', '/(tabs)/record')}
-                    />
-                    <NavButton
-                      title="IA Chat"
-                      iconName="codesandbox"
-                      isActive={activeTab === 'ia chat'}
-                      onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')}
-                    />
-          </View>
-        )}
-      </SafeAreaView>
+        {/* Input de chat */}
+        <ChatInput 
+          message={message}
+          onMessageChange={setMessage}
+          onSend={handleSend}
+        />
+      </ChatLayout>
     </>
   );
 };

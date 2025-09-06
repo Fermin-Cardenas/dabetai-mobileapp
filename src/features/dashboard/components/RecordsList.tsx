@@ -72,7 +72,7 @@ export const RecordsList = ({ title, records, className }: RecordsListProps) => 
         {title}
       </H2>
       
-      <View className="bg-white -mx-4 shadow-sm">
+      <View className="bg-white">
         {records.map((record, index) => (
           <RecordItem 
             key={record.id || index}

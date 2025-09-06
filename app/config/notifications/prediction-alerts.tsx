@@ -20,11 +20,6 @@ interface AlertConfig {
 }
 
 const PredictionAlerts = () => {
-  const router = useRouter();
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   // Control general
   const [generalControls, setGeneralControls] = useState<AlertConfig[]>([
@@ -92,14 +87,11 @@ const PredictionAlerts = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      
       <View className="flex-1 bg-[#F1F5F9]">
         {/* Header */}
         <Header
           title="Alertas de predicción"
-          showBackButton={true}
-          onBackPress={handleGoBack}
+          variant='section'
         />
         
         {/* Content */}

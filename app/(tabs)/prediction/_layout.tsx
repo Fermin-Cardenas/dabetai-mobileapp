@@ -29,7 +29,7 @@ export default function PredictionLayout() {
             <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                className="w-26 h-6"
+                style={{ width: 104, height: 24 }}
                 resizeMode="contain"
               />
             </View>
@@ -67,7 +67,7 @@ export default function PredictionLayout() {
             <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                className="w-26 h-6"
+                style={{ width: 104, height: 24 }}
                 resizeMode="contain"
               />
             </View>
@@ -103,7 +103,7 @@ export default function PredictionLayout() {
             <View className="flex-row items-center ml-1">
               <Image 
                 source={require('@/assets/images/logos/dabetai-compact.png')} 
-                className="w-26 h-6"
+                style={{ width: 104, height: 24 }}
                 resizeMode="contain"
               />
             </View>

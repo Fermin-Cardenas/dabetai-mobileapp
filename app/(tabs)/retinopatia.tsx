@@ -1,13 +1,11 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
 
 import { Body, H2 } from '@/components/common/Typography';
+import { AppLayout } from '@/components/layouts';
 import {
   ComplicationsList,
   ComplicationsSection,
-  DashboardHeader,
-  NavButton,
   RecommendationsSection,
   RiskLevelCard,
   TrendChart
@@ -62,13 +60,9 @@ const Retinopatia = () => {
   const [trendData, setTrendData] = useState<any[]>([]);
   const [complicationData, setComplicationData] = useState<any[]>([]);
   const [selectedRiskType, setSelectedRiskType] = useState('Retinopatía');
-  const [activeTab, setActiveTab] = useState('predicción');
   const [showAllFactors, setShowAllFactors] = useState(true);
   const [retinopatiaFactors, setRetinopatiaFactors] = useState<Factor[]>([]);
   const router = useRouter();
-
-  const handleNotifications = () => console.log('Abriendo notificaciones…');
-  const handleSettings = () => console.log('Abriendo configuración…');
 
   const fetchPrediction = async () => {
     try {
@@ -121,11 +115,6 @@ const Retinopatia = () => {
 
   const handleToggleFactors = () => setShowAllFactors(!showAllFactors);
 
-  const handleNavigation = (tab: string, route?: string) => {
-    setActiveTab(tab.toLowerCase());
-    if (route) router.push(route as any);
-  };
-
   // Recomendaciones de ejemplo
   const recommendations = [
     "Controla tu presión arterial regularmente.",
@@ -135,55 +124,44 @@ const Retinopatia = () => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-      <SafeAreaView className="flex-1 bg-slate-100">
-        <DashboardHeader onNotificationPress={handleNotifications} onSettingsPress={handleSettings} />
-        <ScrollView className="flex-1 px-4 pb-24" showsVerticalScrollIndicator={false}>
-          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">Tu nivel de riesgo de retinopatía diabética</H2>
+      <AppLayout activeTab="prediccion" backgroundColor="bg-slate-100">
+        <H2 className="text-gray-700 font-bold text-lg">Tu nivel de riesgo de retinopatía diabética</H2>
 
-          {nivelGeneral !== '' && (
-            <RiskLevelCard
-              riskLevel={nivelGeneral.toLowerCase() as 'bajo' | 'medio' | 'alto'}
-              lastUpdate={`Hoy, ${lastUpdate}`}
-              onUpdatePress={handleUpdatePrediction}
-            />
-          )}
-
-          <H2 className="text-gray-700 font-bold text-lg mt-1 mb-5">Tu riesgo por complicación</H2>
-          <ComplicationsList complications={complications} onComplicationPress={handleComplicationPress} />
-
-          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">Tendencia histórica de riesgo</H2>
-          <TrendChart data={trendData} selectedType={selectedRiskType} />
-
-          {retinopatiaFactors.length === 0 ? (
-            <Body className="text-center text-gray-500">Cargando factores…</Body>
-          ) : (
-            <ComplicationsSection
-              title="Factores que influyen en la retinopatía"
-              complications={retinopatiaFactors}
-              showAll={showAllFactors}
-              onToggleView={handleToggleFactors}
-              buttonText={showAllFactors ? "Ver menos" : "Ver más"}
-              onComplicationPress={handleComplicationPress}
-              showArrow={false}
-            />
-          )}
-
-          <RecommendationsSection
-            title="Recomendaciones para regular la retinopatía"
-            recommendations={recommendations}
-            onViewMore={handleViewMore}
-            buttonTitle="Ver más"
+        {nivelGeneral !== '' && (
+          <RiskLevelCard
+            riskLevel={nivelGeneral.toLowerCase() as 'bajo' | 'medio' | 'alto'}
+            lastUpdate={`Hoy, ${lastUpdate}`}
+            onUpdatePress={handleUpdatePrediction}
           />
-        </ScrollView>
+        )}
 
-        <View className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16">
-          <NavButton title="Inicio" iconName="home" isActive={activeTab === 'inicio'} onPress={() => handleNavigation('home', '/(tabs)/home')} />
-          <NavButton title="Predicción" iconName="box" isActive={activeTab === 'predicción'} onPress={() => handleNavigation('predicción', '/(tabs)/prediction')} />
-          <NavButton title="Historial" iconName="activity" isActive={activeTab === 'historial'} onPress={() => handleNavigation('historial', '/(tabs)/record')} />
-          <NavButton title="IA Chat" iconName="codesandbox" isActive={activeTab === 'ia chat'} onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')} />
-        </View>
-      </SafeAreaView>
+        <H2 className="text-gray-700 font-bold text-lg">Tu riesgo por complicación</H2>
+        <ComplicationsList complications={complications} onComplicationPress={handleComplicationPress} />
+
+        <H2 className="text-gray-700 font-bold text-lg">Tendencia histórica de riesgo</H2>
+        <TrendChart data={trendData} selectedType={selectedRiskType} />
+
+        {retinopatiaFactors.length === 0 ? (
+          <Body className="text-center text-gray-500">Cargando factores…</Body>
+        ) : (
+          <ComplicationsSection
+            title="Factores que influyen en la retinopatía"
+            complications={retinopatiaFactors}
+            showAll={showAllFactors}
+            onToggleView={handleToggleFactors}
+            buttonText={showAllFactors ? "Ver menos" : "Ver más"}
+            onComplicationPress={handleComplicationPress}
+            showArrow={false}
+          />
+        )}
+
+        <RecommendationsSection
+          title="Recomendaciones para regular la retinopatía"
+          recommendations={recommendations}
+          onViewMore={handleViewMore}
+          buttonTitle="Ver más"
+        />
+      </AppLayout>
     </>
   );
 };

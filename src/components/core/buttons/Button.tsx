@@ -123,14 +123,14 @@ export const Button = React.memo<ButtonProps>(
       if (variant === "fill") {
         // Fill variant always uses white text
         if (isDisabled) {
-          textClasses.push("text-white opacity-50");
+          textClasses.push("!text-gray-50 opacity-50");
         } else {
-          textClasses.push("text-white");
+          textClasses.push("!text-gray-50");
         }
       } else {
         // Outline variant uses color-matched text
         if (isDisabled) {
-          textClasses.push("text-gray-500 opacity-50");
+          textClasses.push("!text-gray-50 opacity-50");
         } else {
           switch (color) {
             case "primary":

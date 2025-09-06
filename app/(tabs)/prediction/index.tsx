@@ -1,22 +1,21 @@
 // app/(tabs)/prediction/index.tsx
 import { TrendChart } from '@/features/dashboard/components/TrendChart';
-import { Stack, useRouter } from 'expo-router';
+import { Stack } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 
 import {
   SafeAreaView,
-  ScrollView,
-  View
+  ScrollView
 } from 'react-native';
 
 // Importar componentes core
 import { H2 } from '@/components/common/Typography';
+import { NavigationBar } from '@/components/core/navigation';
+import { Header } from '@/components/core/navigation/Header';
 
 // Importar componentes del dashboard existentes
 import {
-  ComplicationsList,
-  DashboardHeader,
-  NavButton
+  ComplicationsList
 } from '@/features/dashboard/components';
 
 // Importar componentes específicos para Prediction
@@ -30,9 +29,6 @@ const Prediction = () => {
   const [trendData, setTrendData] = useState<any[]>([]);
   const [complicationData, setComplicationData] = useState<any[]>([]);
   const [selectedRiskType, setSelectedRiskType] = useState<string>('General');
-  const [activeTab, setActiveTab] = useState<string>('predicción');
-
-  const router = useRouter();
 
   const fetchPrediction = async () => {
     try {
@@ -59,12 +55,6 @@ const Prediction = () => {
   const handleNotifications = () => console.log('Abriendo notificaciones...');
   const handleSettings = () => console.log('Abriendo configuración...');
 
-  // Navegación de tabs
-  const handleNavigation = (tab: string, route?: string) => {
-    setActiveTab(tab.toLowerCase());
-    if (route) router.push(route as any);
-  };
-
   // Mapeo de complicaciones para el listado
   const complications = [
     { name: 'Nefropatía diabética', level: 'Bajo' as const, isHigh: false },
@@ -73,28 +63,16 @@ const Prediction = () => {
     { name: 'Pie diabético', level: 'Bajo' as const, isHigh: false }
   ];
 
-
   const handleComplicationPress = (complication: string) => {
-    const routes: Record<string, any> = {
-      'Nefropatía diabética': '/(tabs)/prediction/nefropatia',
-      'Retinopatía diabética': '/retinopatia',
-      'Neuropatía diabética': '/(tabs)/prediction/neuropatia',
-      'Pie diabético': '/(tabs)/prediction/pie-diabetico'
-    };
-    const route = routes[complication];
-    if (route) {
-      router.push(route as any);
-    }
+    console.log(`Navegando a detalle de: ${complication}`);
   };
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-
       <SafeAreaView className="flex-1 bg-slate-100">
-        <DashboardHeader
-          onNotificationPress={handleNotifications}
-          onSettingsPress={handleSettings}
+        <Header
+          title="Predicción"
+          variant="principal"
         />
 
         <ScrollView
@@ -132,34 +110,7 @@ const Prediction = () => {
           <TrendChart data={trendData} selectedType={selectedRiskType} />
         </ScrollView>
 
-        <View
-          className="bg-white border-t border-gray-200 flex-row shadow-lg self-center w-full max-w-md h-16"
-        >
-          <NavButton
-            title="Inicio"
-            iconName="home"
-            isActive={activeTab === 'inicio'}
-            onPress={() => handleNavigation('home', '/(tabs)/home')}
-          />
-          <NavButton
-            title="Predicción"
-            iconName="box"
-            isActive={activeTab === 'predicción'}
-            onPress={() => handleNavigation('predicción', '/(tabs)/prediction')}
-          />
-          <NavButton
-            title="Historial"
-            iconName="activity"
-            isActive={activeTab === 'historial'}
-            onPress={() => handleNavigation('historial', '/(tabs)/record')}
-          />
-          <NavButton
-            title="IA Chat"
-            iconName="codesandbox"
-            isActive={activeTab === 'ia chat'}
-            onPress={() => handleNavigation('ia chat', '/(tabs)/chatai')}
-          />
-        </View>
+        <NavigationBar activeTab="prediccion" />
       </SafeAreaView>
     </>
   );

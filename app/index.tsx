@@ -1,7 +1,6 @@
 import { Redirect } from 'expo-router';
 
 export default function IndexScreen() {
-  // Este archivo redirige automáticamente al layout principal
-  // El _layout.tsx se encarga de decidir a dónde ir
-  return <Redirect href="/(auth)/login" />;
+  // Redirigir a welcome por defecto - el _layout.tsx manejará la navegación según el estado de auth
+  return <Redirect href="/(public)/welcome" />;
 }
