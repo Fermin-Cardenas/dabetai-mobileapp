@@ -73,7 +73,7 @@ export const RiskLevelCard: React.FC<RiskLevelCardProps> = ({
 
 
   return (
-    <View className="py-4 mb-4 -mx-4 px-4" style={{ backgroundColor }}>
+    <View className="py-4 px-4" style={{ backgroundColor }}>
       <View className="flex-row items-center mb-5 px-2">
         <View className="mr-5">
           <RiskCircle riskLevel={riskLevel} size={150} showAnimation={true} />

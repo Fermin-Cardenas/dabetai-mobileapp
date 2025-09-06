@@ -24,7 +24,7 @@ export const PeriodSelector = ({
             key={period}
             className={`px-4 py-3 rounded-full flex-1 ${
               selectedPeriod === period 
-                ? 'bg-primary-500 shadow-md' 
+                ? 'bg-primary-500' 
                 : 'bg-transparent'
             }`}
             onPress={() => onPeriodChange(period)}

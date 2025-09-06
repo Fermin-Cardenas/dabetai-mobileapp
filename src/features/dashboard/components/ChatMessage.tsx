@@ -46,7 +46,7 @@ export const ChatMessage = ({ id, isAI, text, hasLink, onLinkPress }: ChatMessag
       {isAI && (
                 <View className="w-8 h-8 bg-blue-500 rounded-full mr-3 justify-center items-center overflow-hidden">
           <Image 
-            className="w-6 h-6"
+            style={{ width: 24, height: 24 }}
             source={require('@/assets/images/icons/chat-avatar.png')}
             resizeMode="contain"
           />
