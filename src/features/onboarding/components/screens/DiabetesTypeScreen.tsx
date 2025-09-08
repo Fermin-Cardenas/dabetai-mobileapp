@@ -38,13 +38,12 @@ export const DiabetesTypeScreen = () => {
   return (
     <OnboardingLayout
       title="¿Qué tipo de diabetes tienes?"
-      description="Esta información nos ayudará a personalizar tu experiencia"
       buttons={buttons}
       showHeader={stepConfig?.showHeader}
       showProgress={stepConfig?.showProgress}
       errorMessage={errors.diabetesType}
     >
-      <View className="flex-1 w-full gap-3">
+      <View className="flex-1 w-full justify-end gap-3">
         <RadioOption
           label="Diabetes Tipo 1"
           value="type1"
@@ -61,12 +60,6 @@ export const DiabetesTypeScreen = () => {
           label="Diabetes Gestacional"
           value="gestational"
           isSelected={data.diabetesType === 'gestational'}
-          onSelect={handleSelect}
-        />
-        <RadioOption
-          label="No lo sé"
-          value="unknown"
-          isSelected={data.diabetesType === 'unknown'}
           onSelect={handleSelect}
         />
       </View>

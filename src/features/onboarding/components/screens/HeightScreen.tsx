@@ -1,9 +1,9 @@
 // src/features/onboarding/components/HeightScreen.tsx
 import { Button } from '@/components/core/buttons';
+import { PickerField } from '@/components/core/inputs';
 import { OnboardingLayout } from '@/components/layouts';
 import React, { useEffect, useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
-import { HeightSelector } from '../ui/HeightSelector';
 
 export const HeightScreen = () => {
   const { 
@@ -50,13 +50,15 @@ export const HeightScreen = () => {
       buttons={buttons}
       showHeader={stepConfig?.showHeader}
       showProgress={stepConfig?.showProgress}
-      errorMessage={errors.height}
     >
-      <HeightSelector
+      <PickerField
+        variant="height"
         selectedHeight={selectedHeight}
         onHeightSelect={handleHeightSelect}
         minHeight={120}  // Rango médico razonable para adultos
         maxHeight={220}
+        state={errors.height ? 'error' : 'default'}
+        feedback={errors.height}
       />
     </OnboardingLayout>
   );

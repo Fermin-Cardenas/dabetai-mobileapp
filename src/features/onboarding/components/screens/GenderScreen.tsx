@@ -48,7 +48,7 @@ export const GenderScreen = () => {
       showProgress={stepConfig?.showProgress}
       errorMessage={errors.gender}
     >
-      <View className="flex-1 w-full justify-center gap-3">
+      <View className="flex-1 w-full justify-end gap-3">
         {genderOptions.map((option) => (
           <RadioOption
             key={option.id}

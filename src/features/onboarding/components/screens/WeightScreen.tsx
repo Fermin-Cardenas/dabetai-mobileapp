@@ -1,9 +1,9 @@
 // src/features/onboarding/components/WeightScreen.tsx
 import { Button } from '@/components/core/buttons';
+import { PickerField } from '@/components/core/inputs';
 import { OnboardingLayout } from '@/components/layouts';
 import React, { useEffect, useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
-import { WeightSelector } from '../ui/WeightSelector';
 
 export const WeightScreen = () => {
   const { 
@@ -63,15 +63,17 @@ export const WeightScreen = () => {
       buttons={buttons}
       showHeader={stepConfig?.showHeader}
       showProgress={stepConfig?.showProgress}
-      errorMessage={errors.weight}
     >
-      <WeightSelector
+      <PickerField
+        variant="weight"
         selectedKg={selectedKg}
         selectedGrams={selectedGrams}
         onKgSelect={setSelectedKg}
         onGramsSelect={setSelectedGrams}
         minKg={30}  // Rango médico razonable para adultos
         maxKg={200}
+        state={errors.weight ? 'error' : 'default'}
+        feedback={errors.weight}
       />
     </OnboardingLayout>
   );
