@@ -1,9 +1,9 @@
 // src/features/onboarding/components/DiagnosisYearScreen.tsx
 import { Button } from '@/components/core/buttons';
+import { PickerField } from '@/components/core/inputs';
 import { OnboardingLayout } from '@/components/layouts';
 import React, { useEffect, useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
-import { YearSelector } from '../ui/YearSelector';
 
 export const DiagnosisYearScreen = () => {
   const { 
@@ -51,14 +51,17 @@ export const DiagnosisYearScreen = () => {
       buttons={buttons}
       showHeader={stepConfig?.showHeader}
       showProgress={stepConfig?.showProgress}
-      errorMessage={errors.diagnosisYear}
     >
-      <YearSelector
+      <PickerField
+        variant="date"
+        columns="year-only"
         selectedYear={selectedYear}
         onYearSelect={handleYearSelect}
         startYear={1950}  // Rango histórico razonable
         endYear={currentYear}
-        initialScrollYear={2010}
+        initialYear={2010}
+        state={errors.diagnosisYear ? 'error' : 'default'}
+        feedback={errors.diagnosisYear}
       />
     </OnboardingLayout>
   );

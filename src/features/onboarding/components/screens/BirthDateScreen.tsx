@@ -1,9 +1,9 @@
 // src/features/onboarding/components/BirthDateScreen.tsx
 import { Button } from '@/components/core/buttons';
+import { PickerField } from '@/components/core/inputs';
 import { OnboardingLayout } from '@/components/layouts';
 import React, { useEffect, useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
-import { DateSelector } from '../ui/DateSelector';
 
 export const BirthDateScreen = () => {
   const { 
@@ -65,9 +65,9 @@ export const BirthDateScreen = () => {
       buttons={buttons}
       showHeader={stepConfig?.showHeader}
       showProgress={stepConfig?.showProgress}
-      errorMessage={errors.birthDate}
     >
-      <DateSelector
+      <PickerField
+        variant="date"
         selectedDay={selectedDay}
         selectedMonth={selectedMonth}
         selectedYear={selectedYear}
@@ -77,6 +77,8 @@ export const BirthDateScreen = () => {
         initialDay={initialDate.day}
         initialMonth={initialDate.month}
         initialYear={initialDate.year}
+        state={errors.birthDate ? 'error' : 'default'}
+        feedback={errors.birthDate}
       />
     </OnboardingLayout>
   );
