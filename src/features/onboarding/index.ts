@@ -20,11 +20,7 @@ export { WeightScreen } from './components/screens/WeightScreen';
 export { WelcomeScreen } from './components/screens/WelcomeScreen';
 
 // Components - UI
-export { DateSelector } from './components/ui/DateSelector';
-export { HeightSelector } from './components/ui/HeightSelector';
 export { RadioOption } from './components/ui/RadioOption';
-export { WeightSelector } from './components/ui/WeightSelector';
-export { YearSelector } from './components/ui/YearSelector';
 
 // Types
 export type {
