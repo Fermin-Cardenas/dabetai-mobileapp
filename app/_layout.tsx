@@ -1,3 +1,4 @@
+import { QUERY_CONFIG } from '@/config/environment';
 import { useAuthState } from '@/hooks/useAuthState';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack, useRouter, useSegments } from "expo-router";
@@ -9,7 +10,7 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient(QUERY_CONFIG));
   const [isReady, setIsReady] = useState(false);
   const { isLoggedIn, isLoading, hasCompletedOnboarding } = useAuthState();
   const router = useRouter();
