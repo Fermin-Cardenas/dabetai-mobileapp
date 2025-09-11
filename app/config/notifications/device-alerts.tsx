@@ -1,16 +1,9 @@
 // app/config/notifications/device-alerts.tsx
-import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-    ScrollView,
-    View,
-} from 'react-native';
 
 // Importar componentes core
-import { Header } from '@/components/core/navigation/Header';
-
-// Importar componentes reutilizables de notifications
-import { AlertSection } from '@/features/notifications/components';
+import { CardList } from '@/components/core/cards';
+import { AppLayout } from '@/components/layouts/AppLayout';
 
 interface AlertConfig {
   id: string;
@@ -20,7 +13,6 @@ interface AlertConfig {
 }
 
 const DeviceAlerts = () => {
-  const router = useRouter();
 
   // Sistema
   const [systemAlerts, setSystemAlerts] = useState<AlertConfig[]>([
@@ -68,35 +60,41 @@ const DeviceAlerts = () => {
   };
 
   return (
-    <>
-      <View className="flex-1 bg-[#F1F5F9]">
-        {/* Header */}
-        <Header
-          title="Alertas del dispositivo"
-          variant='section'
-        />
-        
-        {/* Content */}
-        <ScrollView 
-          className="flex-1 pb-8"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Sistema */}
-          <AlertSection
-            title="Sistema"
-            alerts={systemAlerts}
-            onAlertChange={handleSystemAlertChange}
-          />
+    <AppLayout
+      title="Alertas del dispositivo"
+      headerVariant="section"
+      activeTab="configuracion"
+      scrollable={true}
+      showNavigation={false}
+    >
+      {/* Sistema */}
+      <CardList
+        title="Sistema"
+        items={systemAlerts.map(alert => ({
+          id: alert.id,
+          type: 'button' as const,
+          title: alert.title,
+          subtitle: alert.subtitle,
+          buttonType: 'switch' as const,
+          value: alert.enabled
+        }))}
+        onItemValueChange={(itemId: string, value: boolean) => handleSystemAlertChange(itemId, value)}
+      />
 
-          {/* Dispositivo conectado */}
-          <AlertSection
-            title="Dispositivo conectado"
-            alerts={deviceAlerts}
-            onAlertChange={handleDeviceAlertChange}
-          />
-        </ScrollView>
-      </View>
-    </>
+      {/* Dispositivo conectado */}
+      <CardList
+        title="Dispositivo conectado"
+        items={deviceAlerts.map(alert => ({
+          id: alert.id,
+          type: 'button' as const,
+          title: alert.title,
+          subtitle: alert.subtitle,
+          buttonType: 'switch' as const,
+          value: alert.enabled
+        }))}
+        onItemValueChange={(itemId: string, value: boolean) => handleDeviceAlertChange(itemId, value)}
+      />
+    </AppLayout>
   );
 };
 

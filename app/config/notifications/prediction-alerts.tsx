@@ -1,16 +1,9 @@
 // app/config/notifications/prediction-alerts.tsx
-import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-    ScrollView,
-    View,
-} from 'react-native';
 
 // Importar componentes core
-import { Header } from '@/components/core/navigation/Header';
-
-// Importar componentes reutilizables de notifications
-import { AlertSection } from '@/features/notifications/components';
+import { CardList } from '@/components/core/cards';
+import { AppLayout } from '@/components/layouts/AppLayout';
 
 interface AlertConfig {
   id: string;
@@ -86,42 +79,55 @@ const PredictionAlerts = () => {
   };
 
   return (
-    <>
-      <View className="flex-1 bg-[#F1F5F9]">
-        {/* Header */}
-        <Header
-          title="Alertas de predicción"
-          variant='section'
-        />
-        
-        {/* Content */}
-        <ScrollView 
-          className="flex-1 pb-8"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Control general */}
-          <AlertSection
-            title="Control general"
-            alerts={generalControls}
-            onAlertChange={handleGeneralControlChange}
-          />
+    <AppLayout
+      title="Alertas de predicción"
+      headerVariant="section"
+      activeTab="configuracion"
+      scrollable={true}
+      showNavigation={false}
+    >
+      {/* Control general */}
+      <CardList
+        title="Control general"
+        items={generalControls.map(alert => ({
+          id: alert.id,
+          type: 'button' as const,
+          title: alert.title,
+          subtitle: alert.subtitle,
+          buttonType: 'switch' as const,
+          value: alert.enabled
+        }))}
+        onItemValueChange={(itemId, value) => handleGeneralControlChange(itemId, value)}
+      />
 
-          {/* Tipos de alerta */}
-          <AlertSection
-            title="Tipos de alerta"
-            alerts={alertTypes}
-            onAlertChange={handleAlertTypeChange}
-          />
+      {/* Tipos de alerta */}
+      <CardList
+        title="Tipos de alerta"
+        items={alertTypes.map(alert => ({
+          id: alert.id,
+          type: 'button' as const,
+          title: alert.title,
+          subtitle: alert.subtitle,
+          buttonType: 'switch' as const,
+          value: alert.enabled
+        }))}
+        onItemValueChange={(itemId, value) => handleAlertTypeChange(itemId, value)}
+      />
 
-          {/* Datos de predicción */}
-          <AlertSection
-            title="Datos de predicción"
-            alerts={dataAlerts}
-            onAlertChange={handleDataAlertChange}
-          />
-        </ScrollView>
-      </View>
-    </>
+      {/* Datos de predicción */}
+      <CardList
+        title="Datos de predicción"
+        items={dataAlerts.map(alert => ({
+          id: alert.id,
+          type: 'button' as const,
+          title: alert.title,
+          subtitle: alert.subtitle,
+          buttonType: 'switch' as const,
+          value: alert.enabled
+        }))}
+        onItemValueChange={(itemId, value) => handleDataAlertChange(itemId, value)}
+      />
+    </AppLayout>
   );
 };
 

@@ -1,19 +1,12 @@
 // app/config/notifications/medication-reminders.tsx
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-    ScrollView,
-    View,
-} from 'react-native';
 
 // Importar componentes core
-import { Header } from '@/components/core/navigation/Header';
+import { AppLayout } from '@/components/layouts/AppLayout';
 
-// Importar componentes reutilizables de notifications
-import {
-    NotificationCategorySection,
-    NotificationPreferencesSection
-} from '@/features/notifications/components';
+// Importar componente unificado
+import { CardList } from '@/components/core/cards';
 
 interface ReminderCategory {
   id: string;
@@ -68,35 +61,45 @@ const MedicationReminders = () => {
   };
 
   return (
-    <>
-      <View className="flex-1 bg-[#F1F5F9]">
-        {/* Header */}
-        <Header
-          title="Recordatorios de medicación"
-          variant='section'
-        />
-        
-        {/* Content */}
-        <ScrollView 
-          className="flex-1 pb-8"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Control general */}
-          <NotificationPreferencesSection
-            title="Control general"
-            preferences={generalControls}
-            onPreferenceChange={handleGeneralControlChange}
-          />
+    <AppLayout
+      title="Recordatorios de medicación"
+      headerVariant="section"
+      activeTab="configuracion"
+      scrollable={true}
+      showNavigation={false}
+    >
+      {/* Control general */}
+      <CardList
+        title="Control general"
+        items={generalControls.map(control => ({
+          id: control.id,
+          type: 'button' as const,
+          title: control.title,
+          buttonType: 'switch' as const,
+          value: control.enabled,
+          isLast: false
+        }))}
+        onItemValueChange={(id: string, value: boolean) => handleGeneralControlChange(id, value)}
+      />
 
-          {/* Tipos de recordatorio */}
-          <NotificationCategorySection
-            title="Tipos de recordatorio"
-            categories={reminderTypes}
-            onCategoryPress={handleReminderTypePress}
-          />
-        </ScrollView>
-      </View>
-    </>
+      {/* Tipos de recordatorio */}
+      <CardList
+        title="Tipos de recordatorio"
+        items={reminderTypes.map((type, index) => ({
+          id: type.id,
+          type: 'button' as const,
+          title: type.title,
+          buttonType: 'chevron' as const,
+          isLast: index === reminderTypes.length - 1
+        }))}
+        onItemPress={(item) => {
+          const category = reminderTypes.find(type => type.id === item.id);
+          if (category) {
+            handleReminderTypePress(category.route);
+          }
+        }}
+      />
+    </AppLayout>
   );
 };
 
