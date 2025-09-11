@@ -30,8 +30,8 @@ export const NavigationBar = ({
       layout: isRow 
         ? 'flex-row justify-stretch items-stretch' // Row layout with stretch
         : 'flex-col', // Column layout
-      background: 'bg-[#F8FAFC]', // Figma spec: #F8FAFC
-      border: 'border-[#CAD5E2]', // Figma spec: #CAD5E2
+      background: 'bg-gray-50', // Figma spec: #F8FAFC
+      border: 'border-gray-300', // Figma spec: #CAD5E2
       borderWidth: isRow ? 'border-t' : 'border-r',
       dimensions: isRow ? 'h-16' : 'w-[115px]', // Figma spec dimensions
       maxWidth: isRow ? 'max-w-md' : undefined,
