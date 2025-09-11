@@ -1,5 +1,5 @@
 // src/features/onboarding/components/RadioOption.tsx
-import { Body, BodySmall } from '@/components/common/Typography';
+import { Body, BodySmallBold } from '@/components/common/Typography';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
@@ -31,7 +31,7 @@ export const RadioOption: React.FC<RadioOptionProps> = ({
         {showInfoIcon && (
           <View className="mr-3">
             <View className="w-6 h-6 rounded-full border-2 border-gray-500 justify-center items-center">
-              <BodySmall className="text-gray-500 font-bold">i</BodySmall>
+              <BodySmallBold className="!text-gray-500">i</BodySmallBold>
             </View>
           </View>
         )}
