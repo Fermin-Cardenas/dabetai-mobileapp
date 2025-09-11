@@ -1,65 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import Feather from "@expo/vector-icons/Feather";
-
-import { H1, H2 } from "@/components/common/Typography";
+import { Icon } from "@/components/common/Icon";
+import { H2, Subtitle } from "@/components/common/Typography";
 import { Button } from "@/components/core/buttons";
 import { AppLayout } from "@/components/layouts";
 
 import {
-  ActionCard,
   GlucoseCard,
   RecordChart,
   RiskIndicator,
-  StatItem,
 } from "@/features/dashboard/components";
 
-const API_URL = "http://192.168.100.20:8000"; // Usar IP local real aquí
+// Importar componentes unificados de cards
+import { ComplexCard, SimpleCard } from "@/components/core/cards";
+import { useAuth, usePredictions } from "@/hooks";
 
 const Dashboard = () => {
-  const [patientData, setPatientData] = useState<any>(null);
-  const [glucoseData, setGlucoseData] = useState<
-    { time: number; value: number }[]
-  >([]);
-  const [nivelGeneral, setNivelGeneral] = useState("");
-  const [lastUpdate, setLastUpdate] = useState("");
+  // Obtener usuario actual de auth
+  const { currentUser } = useAuth();
+  const userId = currentUser?.id || "1"; // Fallback para desarrollo
+  
+  // Usar hook de predicciones con la nueva arquitectura
+  const { 
+    useGeneralPrediction,
+  } = usePredictions(userId);
 
-  useEffect(() => {
-    const fetchPrediction = async () => {
-      try {
-        const res = await fetch(`${API_URL}/retinopathy/predict/1`);
-        const json = await res.json();
+  // Obtener predicción general actual
+  const { 
+    data: generalPrediction,
+    refetch: refetchGeneral,
+  } = useGeneralPrediction();
 
-        setPatientData(json.patient_data);
-        setGlucoseData(json.tendencia);
-        setNivelGeneral(json.nivel_general);
-
-        const now = new Date();
-        const hora = now.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-        setLastUpdate(`Última actualización:\nHoy, ${hora}`);
-      } catch (e) {
-        console.error("Error al obtener datos de la API:", e);
-        setNivelGeneral("Error");
-      }
-    };
-
-    fetchPrediction();
-  }, []);
+  // Extraer datos de la predicción
+  const patientData = generalPrediction?.retinopathy?.patient_data || 
+                     generalPrediction?.nephropathy?.patient_data || 
+                     generalPrediction?.neuropathy?.patient_data || 
+                     generalPrediction?.diabeticFoot?.patient_data;
+  
+  const glucoseData = generalPrediction?.retinopathy?.tendencia || 
+                     generalPrediction?.nephropathy?.tendencia || [];
+  
+  const nivelGeneral = generalPrediction?.retinopathy?.nivel_general || 
+                      generalPrediction?.nephropathy?.nivel_general || 
+                      generalPrediction?.neuropathy?.nivel_general || 
+                      generalPrediction?.diabeticFoot?.nivel_general || "";
+  
+  // Generar última actualización
+  const lastUpdate = generalPrediction ? 
+    `Última actualización:\nHoy, ${new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })}` : "";
 
 
   return (
     <>
       <AppLayout activeTab="inicio">
-        <H1 className="text-gray-700 font-bold text-3xl">Hola, Christian</H1>
+        <H2>Hola, {currentUser?.nombre || "Usuario"}</H2>
 
         <GlucoseCard
-          value={patientData?.Glucose_Mean?.toFixed(1) || "--"}
+          value={patientData?.Glucose_Mean || 0}
           unit="mg/dL"
           trend="stable"
           time="Justo ahora"
@@ -67,59 +69,82 @@ const Dashboard = () => {
         />
 
         {/* Automatizar datos */}
-        <ActionCard
-          icon={<MaterialIcons name="sync" size={18} color="#6B7280" />}
+        <ComplexCard
           title="Automatiza tus datos"
+          showButtons={true}
+          variant="stroke"
+          buttons={[
+            {
+              title: "Conectar dispositivo",
+              variant: "fill",
+              onPress: () => console.log("Conectando dispositivo...")
+            }
+          ]}
           description="Conecta tu glucómetro o sensor para sincronizar mediciones."
-          buttonText="Conectar dispositivo"
-          onPress={() => console.log("Conectando dispositivo...")}
         />
 
         {/* Vincular médico */}
-        <ActionCard
-          icon={
-            <MaterialIcons name="local-hospital" size={18} color="#6B7280" />
-          }
+        <ComplexCard
           title="Informa a tu médico"
+          showButtons={true}
+          variant="stroke"
+          buttons={[
+            {
+              title: "Vincular médico",
+              variant: "fill",
+              onPress: () => console.log("Vinculando con médico...")
+            }
+          ]}
           description="Vincúlate con tu médico para monitorear tu diabetes con un profesional."
-          buttonText="Vincular médico"
-          onPress={() => console.log("Vinculando con médico...")}
         />
 
         {/* Tendencia 24h */}
-        <View className="bg-[#f1f5f9] rounded-2xl p-1">
-          <H2 className="text-gray-700 font-bold text-lg mb-5">
-            Tendencia de las últimas 24 hrs
-          </H2>
+        <View className="gap-4">
+          <Subtitle>Tendencia de las últimas 24 hrs</Subtitle>
 
-          <View className="flex-row justify-between mb-4">
-            <StatItem
-              icon={<Feather name="activity" size={24} color="#314158" />}
-              value={
-                patientData?.Time_In_Range_70_180
-                  ? `${patientData.Time_In_Range_70_180}%`
-                  : "--"
-              }
-              label="TIR"
-            />
-            <StatItem
-              icon={<Feather name="heart" size={24} color="#314158" />}
-              value={glucoseData?.length ? `${glucoseData.length}` : "--"}
-              label="Lecturas"
-            />
-          </View>
+          {/* Grid 2x2 de métricas */}
+          <View className="gap-4">
+            {/* Primera fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={
+                  <Icon name="activity" size={24} />
+                }
+                title={
+                  patientData?.Time_In_Range_70_180
+                    ? `${patientData.Time_In_Range_70_180}%`
+                    : "78%"
+                }
+                description="TIR"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={<Icon name="box" size={24} />}
+                title="6.5%"
+                description="HbA1c Est."
+                className="flex-1"
+              />
+            </View>
 
-          <View className="flex-row justify-between mb-4">
-            <StatItem
-              icon={<Feather name="box" size={24} color="#314158" />}
-              value="6.5%"
-              label="HbA1c Est."
-            />
-            <StatItem
-              icon={<Feather name="heart" size={24} color="#314158" />}
-              value={`${patientData?.Glucose_Mean || "--"}mg/dL`}
-              label="Promedio"
-            />
+            {/* Segunda fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={
+                  <Icon name="heart" size={24} />
+                }
+                title={glucoseData?.length ? `${glucoseData.length}` : "45"}
+                description="Lecturas"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={
+                  <Icon name="heart" size={24} />
+                }
+                title={`${patientData?.Glucose_Mean?.toFixed(0) || "135"}mg/dL`}
+                description="Promedio"
+                className="flex-1"
+              />
+            </View>
           </View>
 
           <RecordChart
@@ -132,13 +157,13 @@ const Dashboard = () => {
             title="Ver historial detallado"
             onPress={() => console.log("Historial")}
             variant="outline"
-            color="secondary"
+            color="primary"
           />
         </View>
 
-        <View className="bg-white rounded-2xl p-5 border border-gray-300">
-          <H2 className="text-gray-700 font-bold text-lg mb-5">Predicción</H2>
+        <Subtitle>Predicción</Subtitle>
 
+        <View className="bg-gray-50 rounded-2xl p-4 border border-gray-300">
           <RiskIndicator
             riskLevel={nivelGeneral.toLowerCase() as "bajo" | "medio" | "alto"}
             title={`Tu riesgo general de complicaciones es ${nivelGeneral.toLowerCase()}.`}
@@ -149,7 +174,7 @@ const Dashboard = () => {
             title="Ver análisis completo"
             onPress={() => console.log("Análisis")}
             variant="fill"
-            color="primary"
+            color="secondary"
           />
         </View>
       </AppLayout>
