@@ -30,12 +30,11 @@ Keep feature-specific components within their feature folders, not in global `sr
 
 ### Layout Components (`src/components/layouts/`)
 - **AppLayout**: Standard page wrapper with Header + NavigationBar + scrollable content
-- **ChatLayout**: For chat interfaces with custom styling
 - **OnboardingLayout**: For welcome/signup flows
 - Always use layouts for consistent spacing and navigation
 
 ### Core Components (`src/components/core/`)
-- **Typography**: `H1`, `H2`, `Body`, `Caption` from `@/components/common/Typography`
+- **Typography**: `Display`, `H1`, `H2`, `H3`, `Subtitle`, `Body`, `BodyBold`, `BodySmall`, `BodySmallBold`, `Caption`, `CaptionBold` from `@/components/common/Typography`
 - **Buttons**: Consistent variants (`primary`, `secondary`, `outline`)
 - **Inputs**: Custom hooks `useInputField`, `usePasswordInput` with validation
 - **Navigation**: `Header` (3 variants: section, principal, onboarding), `NavigationBar`
@@ -60,6 +59,16 @@ Keep feature-specific components within their feature folders, not in global `sr
 - Reference custom Tailwind config for project-specific colors
 - Risk level styling pattern: `'bajo'` → success colors, `'medio'` → warning colors, `'alto'` → danger colors
 - Check `tailwind.config.js` for available custom classes before adding new ones
+
+### Typography System Best Practices
+- **Use semantic components** instead of manual font styling: prefer `BodyBold` over `Body` with `font-bold`
+- **Available components**: `Display` (largest), `H1`, `H2`, `H3`, `Subtitle`, `Body`, `BodyBold`, `BodySmall`, `BodySmallBold`, `Caption`, `CaptionBold`
+- **DO NOT** add `font-bold` className to already bold variants (`BodyBold`, `BodySmallBold`, `CaptionBold`)
+- **DO NOT** manually change font sizes with Tailwind classes - use the appropriate semantic component
+- **DO** use className for spacing or other non-font properties
+- **DO** use the built-in `onPress` prop for clickable text instead of wrapping in TouchableOpacity
+- **Color changes**: Use `!` modifier to override default `text-gray-700`: `<Body className="!text-primary-500">`. Only override colors for specific semantic colors (warning, danger, success, gray-500)
+- **Hierarchy**: `Display` > `H1` > `H2` > `H3` > `Subtitle` > `Body` > `BodySmall` > `Caption`
 
 ## Key Development Patterns
 
