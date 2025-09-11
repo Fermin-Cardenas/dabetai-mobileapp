@@ -1,4 +1,5 @@
 // src/hooks/useAuthState.tsx
+import { ENV } from '@/config/environment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
@@ -20,8 +21,19 @@ export const useAuthState = () => {
   useEffect(() => {
     const checkAuthState = async () => {
       try {
+        // En modo desarrollador con bypass de auth, siempre estar logueado
+        if (ENV.DEVELOPER_MODE && ENV.BYPASS_AUTH) {
+          setAuthState({
+            isLoggedIn: true,
+            isLoading: false,
+            user: { id: 'dev-user', email: 'dev@dabetai.com', nombre: 'Developer' },
+            hasCompletedOnboarding: true,
+          });
+          return;
+        }
+
         const [token, userString, onboardingComplete] = await Promise.all([
-          AsyncStorage.getItem('token'),
+          AsyncStorage.getItem('authToken'),
           AsyncStorage.getItem('user'),
           AsyncStorage.getItem('onboardingComplete'),
         ]);
