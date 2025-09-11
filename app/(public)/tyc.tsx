@@ -1,9 +1,7 @@
 // app/(public)/tyc.tsx
 import { Body, BodySmallBold } from "@/components/common/Typography";
-import { Header } from "@/components/core/navigation/Header";
-import { Stack, useRouter } from "expo-router";
+import { AppLayout } from "@/components/layouts/AppLayout";
 import React from "react";
-import { ScrollView, View } from "react-native";
 
 export default function TermsScreen() {
 
@@ -28,32 +26,23 @@ export default function TermsScreen() {
   ];
 
   return (
-    <>
-      <View className="flex-1 bg-[#f1f5f9]">
-        {/* Header con botón de regreso */}
-        <Header
-          title="Términos y condiciones"
-          variant="section"
-        />
+    <AppLayout
+      title="Términos y condiciones"
+      headerVariant="section"
+      showNavigation={false}
+      scrollable={true}
+    >
+      {/* Última actualización */}
+      <BodySmallBold>
+        Última actualización: 14/08/2024
+      </BodySmallBold>
 
-        {/* Content */}
-        <ScrollView
-          className="flex-1 bg-[#f1f5f9] px-5 pt-4 pb-10"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Última actualización */}
-          <BodySmallBold className="mb-5">
-            Última actualización: 14/08/2024
-          </BodySmallBold>
-
-          {/* Contenido de términos */}
-          {termsContent.map((item) => (
-            <Body key={item.id} className="leading-6 mb-5 text-justify">
-              {item.id}. {item.text}
-            </Body>
-          ))}
-        </ScrollView>
-      </View>
-    </>
+      {/* Contenido de términos */}
+      {termsContent.map((item) => (
+        <Body key={item.id} className="leading-6 text-justify">
+          {item.id}. {item.text}
+        </Body>
+      ))}
+    </AppLayout>
   );
 }
