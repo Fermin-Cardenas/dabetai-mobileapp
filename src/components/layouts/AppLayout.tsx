@@ -1,8 +1,8 @@
 // src/components/layouts/AppLayout.tsx
-import { Header } from '@/components/core/navigation/Header';
-import { NavigationBar } from '@/components/core/navigation/NavigationBar';
-import React, { ReactNode } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Header } from "@/components/core/navigation/Header";
+import { NavigationBar } from "@/components/core/navigation/NavigationBar";
+import React, { ReactNode } from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
 
 interface AppLayoutProps {
   /** Content to be rendered in the main area */
@@ -10,7 +10,7 @@ interface AppLayoutProps {
   /** Header title - optional */
   title?: string;
   /** Header variant */
-  headerVariant?: 'section' | 'principal' | 'onboarding';
+  headerVariant?: "section" | "principal" | "onboarding";
   /** Active tab for navigation bar */
   activeTab?: string;
   /** Whether to show header - defaults to true */
@@ -30,25 +30,34 @@ interface AppLayoutProps {
 export const AppLayout = ({
   children,
   title,
-  headerVariant = 'principal',
-  activeTab = 'inicio',
+  headerVariant = "principal",
+  activeTab = "inicio",
   showHeader = true,
   showNavigation = true,
   scrollable = true,
   onBackPress,
-  className = '',
-  backgroundColor = 'bg-[#f1f5f9]'
+  className = "",
+  backgroundColor = "bg-gray-100",
 }: AppLayoutProps) => {
   const ContentContainer = scrollable ? ScrollView : View;
-  
-  const contentProps = scrollable 
-    ? { 
-        className: 'flex-1',
-        contentContainerStyle: { paddingBottom: showNavigation ? 80 : 24 } // Extra padding for navigation bar
+
+  const contentProps = scrollable
+    ? {
+        className: "flex-1",
+        contentContainerStyle: { paddingBottom: showNavigation ? 65 : 0 }, // Extra padding for navigation bar
       }
-    : { 
-        className: 'flex-1' 
+    : {
+        className: "flex-1",
+        style: { paddingBottom: showNavigation ? 65 : 0 }, // También aplicar padding cuando no es scrollable
       };
+
+  const mainContentClasses = [
+    "flex-1", // ¡LA CORRECCIÓN MÁS IMPORTANTE!
+    scrollable ? "px-4 py-6 gap-6" : "px-4 py-2 gap-6", // Solo aplicar padding si es scrollable
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <SafeAreaView className={`flex-1 ${backgroundColor}`}>
@@ -63,15 +72,11 @@ export const AppLayout = ({
 
       {/* Main Content Area */}
       <ContentContainer {...contentProps}>
-        <View className={`px-4 py-6 gap-6 ${className}`}>
-          {children}
-        </View>
+        <View className={mainContentClasses}>{children}</View>
       </ContentContainer>
 
       {/* Navigation Bar */}
-      {showNavigation && (
-        <NavigationBar activeTab={activeTab} />
-      )}
+      {showNavigation && <NavigationBar activeTab={activeTab} />}
     </SafeAreaView>
   );
 };
