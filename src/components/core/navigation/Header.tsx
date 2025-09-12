@@ -93,8 +93,8 @@ export const Header = ({
           <View className="flex-row justify-between items-center">
             {/* Logo - Figma spec: 104x24px */}
             <Image
-              source={require('@/assets/images/logos/dabetai-compact.png')}
-              style={{ width: 104, height: 24 }}
+              source={require('@/assets/images/logos/dabetai-isotipo-compact.png')}
+              style={{ height: 24 }}
               resizeMode="contain"
             />
             

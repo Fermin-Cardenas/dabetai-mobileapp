@@ -1,17 +1,6 @@
 import { Stack, useRouter } from "expo-router";
 
 export default function HomeLayout() {
-  const router = useRouter();
-
-  // ✅ COMENTADO: Funciones de settings y notifications
-  // const handleSettings = () => {
-  //   router.push('/Config/Settings'); // Cambia por la ruta que necesites
-  // };
-
-  // const handleNotifications = () => {
-  //   router.push('/Notify/Notification'); // Cambia por la ruta que necesites
-  // };
-
   return (
     <Stack>
       <Stack.Screen
@@ -22,7 +11,7 @@ export default function HomeLayout() {
       />
       
       <Stack.Screen
-        name="retinopatia"
+        name="prediction"
         options={{
           headerShown: false,  // ← Deshabilitar header para prediction
         }}
