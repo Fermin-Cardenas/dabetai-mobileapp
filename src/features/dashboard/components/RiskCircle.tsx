@@ -1,122 +1,84 @@
 // src/features/dashboard/components/RiskCircle.tsx
-import { Body } from '@/components/common/Typography';
-import React, { useEffect, useRef } from 'react';
-import { Animated, View } from 'react-native';
+import { Body, Caption, Display, H1, H2 } from "@/components/common/Typography";
+import React from "react";
+import { View } from "react-native";
+
+// Types
+type RiskLevel = "bajo" | "medio" | "alto";
 
 interface RiskCircleProps {
-  riskLevel: 'bajo' | 'medio' | 'alto';
-  size?: number;
-  showAnimation?: boolean;
+  riskLevel: RiskLevel;
+  size?: "sm" | "md" | "lg";
 }
+
+// Theme configuration using Tailwind classes
+const RISK_CIRCLE_THEME: Record<
+  RiskLevel,
+  {
+    borderColor: string;
+    textColor: string;
+  }
+> = {
+  bajo: {
+    borderColor: "border-success-500",
+    textColor: "!text-success-500",
+  },
+  medio: {
+    borderColor: "border-warning-500",
+    textColor: "!text-warning-500",
+  },
+  alto: {
+    borderColor: "border-danger-500",
+    textColor: "!text-danger-500",
+  },
+};
+
+// Size variants using Tailwind classes
+const SIZE_VARIANTS = {
+  sm: {
+    container: "w-24 h-24",
+    border: "border-4",
+    mainText: "text-lg",
+    labelText: "text-xs",
+  },
+  md: {
+    container: "w-32 h-32",
+    border: "border-4",
+    mainText: "text-2xl",
+    labelText: "text-xs",
+  },
+  lg: {
+    container: "w-36 h-36",
+    border: "border-[5px]",
+    mainText: "text-4xl",
+    labelText: "text-xs",
+  },
+};
 
 export const RiskCircle: React.FC<RiskCircleProps> = ({
   riskLevel,
-  size = 150,
-  showAnimation = true
+  size = "lg",
 }) => {
-  const glowAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (!showAnimation) return;
-
-    const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(glowAnim, {
-          toValue: 1,
-          duration: 1500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 0,
-          duration: 1500,
-          useNativeDriver: true,
-        }),
-      ])
-    );
-
-    animation.start();
-    return () => animation.stop();
-  }, [showAnimation]);
-
-  const getRiskColor = () => {
-    switch (riskLevel) {
-      case 'bajo': return '#10B981';   // Verde
-      case 'medio': return '#F59E0B';  // Amarillo
-      case 'alto': return '#EF4444';   // Rojo
-      default: return '#10B981';
-    }
-  };
-
-  const riskColor = getRiskColor();
-  const glowSize1 = size + 10;
-  const glowSize2 = size + 25;
+  // Get theme configuration for current risk level
+  const theme = RISK_CIRCLE_THEME[riskLevel];
+  const sizeConfig = SIZE_VARIANTS[size];
 
   return (
-    <View className="relative justify-center items-center">
-      {showAnimation && (
-        <>
-          <Animated.View 
-            className="absolute rounded-full border"
-            style={{
-              width: glowSize1,
-              height: glowSize1,
-              borderColor: riskColor,
-              opacity: glowAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0.1, 0.35],
-              }),
-              transform: [
-                {
-                  scale: glowAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, 1.15],
-                  }),
-                }
-              ],
-            }}
-          />
-          
-          <Animated.View 
-            className="absolute rounded-full border"
-            style={{
-              width: glowSize2,
-              height: glowSize2,
-              borderColor: riskColor,
-              opacity: glowAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0.05, 0.2],
-              }),
-              transform: [
-                {
-                  scale: glowAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1.1, 1.25],
-                  }),
-                }
-              ],
-            }}
-          />
-        </>
-      )}
-
+    <View className="justify-center items-center">
+      {/* Main Circle */}
       <View
-        className="rounded-full bg-transparent justify-center items-center z-10"
-        style={{ 
-          width: size, 
-          height: size, 
-          borderColor: riskColor,
-          borderWidth: 6 
-        }}
+        className={`
+          rounded-full justify-center items-center
+          ${sizeConfig.container}
+          ${sizeConfig.border}
+          ${theme.borderColor}
+        `}
       >
-        <Body className="font-normal mb-1 text-gray-400 text-base">
-          Nivel
-        </Body>
-        <Body className={`font-bold capitalize text-2xl ${riskLevel === 'bajo' ? 'text-success-500' : riskLevel === 'medio' ? 'text-warning-500' : 'text-danger-500'}`}>
+        <Caption className="!text-gray-500">Nivel</Caption>
+        <H2 className={`${sizeConfig.mainText} ${theme.textColor} capitalize`}>
           {riskLevel}
-        </Body>
-        <Body className="font-normal mt-1 text-gray-400 text-base">
-          Estimado
-        </Body>
+        </H2>
+        <Caption className="text-gray-500">Estimado</Caption>
       </View>
     </View>
   );

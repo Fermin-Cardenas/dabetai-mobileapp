@@ -1,9 +1,8 @@
 // src/features/dashboard/components/GlucoseCard.tsx
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Feather from '@expo/vector-icons/Feather';
 import React, { useEffect, useRef } from 'react';
 import { Animated, View } from 'react-native';
 
+import { Icon } from '@/components/common/Icon';
 import { BodySmall, Caption, H1 } from '@/components/common/Typography';
 
 interface GlucoseCardProps {
@@ -67,24 +66,26 @@ export const GlucoseCard = ({
   const getTrendIcon = () => {
     switch (trend) {
       case 'up':
-        return <Feather name="arrow-up" size={18} color="#00C950" />; // success-500
+        return <Icon name="arrow-up" size={18} className='text-success-500' />; // success-500
       case 'down':
-        return <Feather name="arrow-down" size={18} color="#FB2C36" />; // danger-500
+        return <Icon name="arrow-down" size={18} className='text-danger-500' />; // danger-500
+      case 'stable':
+        return <Icon name="arrow-right" size={18} className='text-success-500' />; // success-500
       default:
-        return <Feather name="arrow-right" size={18} color="#00C950" />; // success-500
+        return null;
     }
   };
 
   return (
-    <View className="bg-white rounded-3xl p-5 border border-gray-300">
+    <View className="bg-gray-50 rounded-3xl p-5 border border-gray-300">
       <View className="flex-row justify-between items-center">
         {/* Valor de glucosa */}
         <View className="items-start">
           <View className="flex-row items-center mb-1">
-            <H1 className="text-secondary-500 font-bold text-3xl mr-2">{value}</H1>
+            <H1 className="!text-secondary-500 mr-2">{value}</H1>
             {getTrendIcon()}
           </View>
-          <BodySmall className="text-gray-500 font-medium">{unit}</BodySmall>
+          <BodySmall className="!text-gray-500">{unit}</BodySmall>
         </View>
         
         {/* Información central */}
@@ -104,7 +105,7 @@ export const GlucoseCard = ({
             }}
           />
           <View className="w-12 h-12 bg-secondary-500 rounded-full justify-center items-center z-10">
-            <AntDesign name="pluscircleo" size={16} color="white" />
+            <Icon name="plus-circle" size={16} className='text-white' />
           </View>
         </View>
       </View>
