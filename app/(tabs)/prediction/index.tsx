@@ -1,118 +1,134 @@
-// app/(tabs)/prediction/index.tsx
-import { TrendChart } from '@/features/dashboard/components/TrendChart';
-import { Stack } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 
+import { Subtitle } from "@/components/common/Typography";
+import { SelectField } from "@/components/core/inputs";
+import { AppLayout } from "@/components/layouts";
 import {
-  SafeAreaView,
-  ScrollView
-} from 'react-native';
+  RiskLevelCard,
+  TrendChart,
+} from "@/features/dashboard/components";
 
-// Importar componentes core
-import { H2 } from '@/components/common/Typography';
-import { NavigationBar } from '@/components/core/navigation';
-import { Header } from '@/components/core/navigation/Header';
-
-// Importar componentes del dashboard existentes
+// Importar componentes unificados de cards
+import { CardList } from "@/components/core/cards";
+import { ENV } from "@/config/environment";
+import { useAuth, usePredictions } from "@/hooks";
 import {
-  ComplicationsList
-} from '@/features/dashboard/components';
-
-// Importar componentes específicos para Prediction
-import {
-  RiskLevelCard
-} from '@/features/dashboard/components';
+  getMockLastUpdate,
+  mockComplications,
+  mockGeneralPrediction
+} from "@/mocks";
 
 const Prediction = () => {
-  const [nivelGeneral, setNivelGeneral] = useState<string>('');
-  const [lastUpdate, setLastUpdate] = useState<string>('');
-  const [trendData, setTrendData] = useState<any[]>([]);
-  const [complicationData, setComplicationData] = useState<any[]>([]);
-  const [selectedRiskType, setSelectedRiskType] = useState<string>('General');
+  const [selectedRiskType] = useState("General");
+  const router = useRouter();
+  
+  // Obtener usuario actual de auth
+  const { currentUser } = useAuth();
+  const userId = currentUser?.id || "1"; // Fallback para desarrollo
+  
+  // Usar hook de predicciones con la nueva arquitectura
+  const { 
+    useGeneralPrediction,
+    predictGeneral,
+    isPredictingGeneral,
+  } = usePredictions(userId);
 
-  const fetchPrediction = async () => {
-    try {
-      const res = await fetch('http://192.168.100.20:8000/retinopathy/predict/1');
-      const json = await res.json();
+  // Obtener predicción general actual
+  const { 
+    data: generalPrediction,
+    isLoading,
+    error,
+    refetch: refreshPrediction,
+  } = useGeneralPrediction();
 
-      setNivelGeneral(json.nivel_general);
-      setLastUpdate(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-      setTrendData(json.tendencia || []);
-      setComplicationData(json.complicaciones || []);
-    } catch (error) {
-      console.error('Error al obtener predicción:', error);
+  // Definir complications originales para producción
+  const complications = [
+    { name: "Nefropatía diabética", level: "Bajo" as const, isHigh: false },
+    { name: "Retinopatía diabética", level: "Bajo" as const, isHigh: false },
+    { name: "Neuropatía diabética", level: "Alto" as const, isHigh: true },
+    { name: "Pie diabético", level: "Bajo" as const, isHigh: false },
+  ];
+
+  // Usar datos mock en modo desarrollador o datos reales en producción
+  const currentPrediction = ENV.DEVELOPER_MODE ? mockGeneralPrediction : generalPrediction;
+  const currentComplications = ENV.DEVELOPER_MODE ? mockComplications : complications;
+
+  // Extraer datos de la predicción general (tomamos retinopathy como referencia)
+  const retinopathyData = currentPrediction?.retinopathy;
+  const nivelGeneral = retinopathyData?.nivel_general || "";
+  const lastUpdate = ENV.DEVELOPER_MODE ? 
+    getMockLastUpdate() :
+    retinopathyData ? 
+      `Hoy, ${new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}` : "";
+  const trendData = retinopathyData?.tendencia || [];
+
+  const handleUpdatePrediction = () => {
+    // Usar nueva función de predicción
+    predictGeneral();
+  };
+
+  const handleComplicationPress = (complication: string) => {
+    const routes: Record<string, any> = {
+      "Nefropatía diabética": "/(tabs)/prediction/nefropatia",
+      "Retinopatía diabética": "/(tabs)/prediction/retinopatia", 
+      "Neuropatía diabética": "/(tabs)/prediction/neuropatia",
+      "Pie diabético": "/(tabs)/prediction/pie-diabetico",
+    };
+    const route = routes[complication];
+    if (route) {
+      router.push(route as any);
     }
   };
 
-  useEffect(() => {
-    fetchPrediction();
-  }, []);
-
-  const handleUpdatePrediction = () => {
-    fetchPrediction();
-  };
-
-  const handleNotifications = () => console.log('Abriendo notificaciones...');
-  const handleSettings = () => console.log('Abriendo configuración...');
-
-  // Mapeo de complicaciones para el listado
-  const complications = [
-    { name: 'Nefropatía diabética', level: 'Bajo' as const, isHigh: false },
-    { name: 'Retinopatía diabética', level: 'Bajo' as const, isHigh: false },
-    { name: 'Neuropatía diabética', level: 'Alto' as const, isHigh: true },
-    { name: 'Pie diabético', level: 'Bajo' as const, isHigh: false }
-  ];
-
-  const handleComplicationPress = (complication: string) => {
-    console.log(`Navegando a detalle de: ${complication}`);
-  };
-
   return (
-    <>
-      <SafeAreaView className="flex-1 bg-slate-100">
-        <Header
-          title="Predicción"
-          variant="principal"
+    <AppLayout activeTab="prediccion">
+      
+      <Subtitle>
+        Tu nivel de riesgo general
+      </Subtitle>
+
+      {(nivelGeneral !== "" || ENV.DEVELOPER_MODE) && (
+        <RiskLevelCard
+          riskLevel={nivelGeneral as "bajo" | "medio" | "alto"}
+          lastUpdate={lastUpdate}
+          onUpdatePress={handleUpdatePrediction}
+          showUpdateButton={true}
+          showLastUpdate={true}
         />
+      )}
 
-        <ScrollView
-          className="flex-1 px-4 pb-24"
-          showsVerticalScrollIndicator={false}
-        >
-          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">
-            Tu nivel de riesgo general
-          </H2>
+      <CardList
+        title="Tu riesgo por complicación"
+        items={currentComplications.map((comp, index) => ({
+          id: `comp-${index}`,
+          type: 'info' as const,
+          title: comp.name,
+          caption: comp.level,
+          showButton: true,
+          state: 'info' as const
+        }))}
+        onItemPress={(item) => {
+          handleComplicationPress(item.title);
+        }}
+      />
 
-          {nivelGeneral !== '' && (
-            <RiskLevelCard
-              riskLevel={nivelGeneral.toLowerCase() as 'bajo' | 'medio' | 'alto'}
-              lastUpdate={`Hoy, ${lastUpdate}`}
-              onUpdatePress={handleUpdatePrediction}
-            />
-          )}
+      <Subtitle>
+        Tendencia histórica de riesgo
+      </Subtitle>
 
-          <H2 className="text-gray-700 font-bold text-lg mt-1 mb-5">
-            Tu riesgo por complicación
-          </H2>
-          <ComplicationsList
-            complications={complications}
-            onComplicationPress={handleComplicationPress}
-          />
+      <SelectField
+        label=""
+        value={selectedRiskType}
+        onPress={() => {}}
+        placeholder="Seleccionar tipo de riesgo"
+      />
 
-          <H2 className="text-gray-700 font-bold text-lg mt-6 mb-5">
-            Tendencia histórica de riesgo
-          </H2>
-          {/* <DropdownSelector
-            selectedValue={selectedRiskType}
-            onPress={() => }
-            placeholder="Seleccionar tipo de riesgo"
-          /> */}
-          <TrendChart data={trendData} selectedType={selectedRiskType} />
-        </ScrollView>
-
-        <NavigationBar activeTab="prediccion" />
-      </SafeAreaView>
-    </>
+      <TrendChart data={trendData} selectedType={selectedRiskType} />
+    </AppLayout>
   );
 };
 
