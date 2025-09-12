@@ -36,6 +36,20 @@ export interface InputFieldProps {
   className?: string;
   /** Ref to the TextInput component */
   inputRef?: React.RefObject<TextInput>;
+  /** Enable multiline input */
+  multiline?: boolean;
+  /** Number of lines to show initially */
+  numberOfLines?: number;
+  /** Minimum number of lines (for dynamic growth) */
+  minLines?: number;
+  /** Maximum number of lines (for dynamic growth) */
+  maxLines?: number;
+  /** Maximum length of text */
+  maxLength?: number;
+  /** Return key type */
+  returnKeyType?: 'default' | 'go' | 'google' | 'join' | 'next' | 'route' | 'search' | 'send' | 'yahoo' | 'done' | 'emergency-call';
+  /** Callback when return key is pressed */
+  onSubmitEditing?: () => void;
 }
 
 export type InputState = 'default' | 'disabled' | 'focus' | 'error' | 'valid';

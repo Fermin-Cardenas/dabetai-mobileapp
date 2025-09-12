@@ -1,5 +1,5 @@
 // src/components/core/inputs/PickerField.tsx
-import { Body, H3, Subtitle } from '@/components/common/Typography';
+import { Body, Subtitle } from '@/components/common/Typography';
 import React, { useEffect, useRef } from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -281,11 +281,11 @@ const DatePickerContent: React.FC<DatePickerProps & { styles: any }> = (props) =
                 {/* Item - Solo visual, no clickeable */}
                 <View className="flex-1 items-center justify-center">
                   {isSelected ? (
-                    <H3 className={`${styles.selectedColor} font-semibold`}>
+                    <Subtitle className={`${styles.selectedColor}`}>
                       {renderItem(item)}
-                    </H3>
+                    </Subtitle>
                   ) : (
-                    <Subtitle className="text-gray-500">
+                    <Subtitle className="!text-gray-500">
                       {renderItem(item)}
                     </Subtitle>
                   )}
@@ -364,11 +364,11 @@ const DatePickerContent: React.FC<DatePickerProps & { styles: any }> = (props) =
               {/* Año - Solo visual, no clickeable */}
               <View className="flex-1 items-center justify-center w-full">
                 {selectedYear === year ? (
-                  <H3 className={`text-center ${styles.selectedColor} font-semibold`}>
+                  <Subtitle className={`text-center ${styles.selectedColor}`}>
                     {year}
-                  </H3>
+                  </Subtitle>
                 ) : (
-                  <Subtitle className="text-center text-gray-500">
+                  <Subtitle className="text-center !text-gray-500">
                     {year}
                   </Subtitle>
                 )}
@@ -518,11 +518,11 @@ const HeightPickerContent: React.FC<HeightPickerProps & { styles: any }> = ({
             {/* Texto de estatura - Solo visual, no clickeable */}
             <View className="flex-1 items-center justify-center w-full">
               {selectedHeight === height ? (
-                <H3 className={`text-center ${styles.selectedColor} font-semibold`}>
+                <Subtitle className={`text-center ${styles.selectedColor}`}>
                   {height} cm
-                </H3>
+                </Subtitle>
               ) : (
-                <Subtitle className="text-center text-gray-500">
+                <Subtitle className="text-center !text-gray-500">
                   {height} cm
                 </Subtitle>
               )}
@@ -668,19 +668,19 @@ const WeightPickerContent: React.FC<WeightPickerProps & { styles: any }> = ({
                   <View className="flex-row items-center gap-2">
                     {isSelected ? (
                       <>
-                        <H3 className={`font-semibold ${styles.selectedColor}`}>
+                        <Subtitle className={`${styles.selectedColor}`}>
                           {unit === 'g' && item === 0 ? '000' : item}
-                        </H3>
-                        <H3 className={styles.selectedColor}>
+                        </Subtitle>
+                        <Subtitle className={styles.selectedColor}>
                           {unit}
-                        </H3>
+                        </Subtitle>
                       </>
                     ) : (
                       <>
-                        <Subtitle className="text-gray-500">
+                        <Subtitle className="!text-gray-500">
                           {unit === 'g' && item === 0 ? '000' : item}
                         </Subtitle>
-                        <Subtitle className="text-gray-500">
+                        <Subtitle className="!text-gray-500">
                           {unit}
                         </Subtitle>
                       </>

@@ -1,6 +1,6 @@
 // src/components/core/inputs/InputField.tsx
+import { Icon } from '@/components/common/Icon';
 import { Body, BodySmall } from '@/components/common/Typography';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { TextInput, TouchableOpacity, View } from 'react-native';
 import { InputFieldProps, InputState } from './types';
@@ -22,9 +22,19 @@ export const InputField = ({
   onFocus,
   onBlur,
   className,
-  inputRef
+  inputRef,
+  multiline = false,
+  numberOfLines = 1,
+  minLines,
+  maxLines,
+  maxLength,
+  returnKeyType = 'default',
+  onSubmitEditing
 }: InputFieldProps) => {
   const [isFocused, setIsFocused] = React.useState(false);
+
+  // Definimos la altura de línea aproximada
+  const LINE_HEIGHT = 20;
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -126,6 +136,16 @@ export const InputField = ({
           editable={!disabled}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          multiline={multiline}
+          numberOfLines={multiline && minLines ? minLines : undefined}
+          maxLength={maxLength}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+          style={{
+            textAlignVertical: 'top',
+            minHeight: multiline && minLines ? minLines * LINE_HEIGHT : undefined,
+            maxHeight: multiline && maxLines ? maxLines * LINE_HEIGHT : undefined,
+          }}
         />
         
         {/* Password Toggle Icon */}
@@ -135,7 +155,7 @@ export const InputField = ({
             disabled={disabled}
             className="w-4 h-4 justify-center items-center"
           >
-            <MaterialCommunityIcons 
+            <Icon 
               name={secureTextEntry ? "eye-off" : "eye"} 
               size={16} 
               color={getIconColor()}

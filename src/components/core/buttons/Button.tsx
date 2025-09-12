@@ -77,7 +77,7 @@ export const Button = React.memo<ButtonProps>(
           switch (color) {
             case "primary":
               baseClasses.push(
-                "border-primary-500 active:border-primary-700 active:bg-primary-50"
+                "border-primary-700 active:border-primary-900 active:bg-primary-50"
               );
               break;
             case "secondary":
@@ -134,19 +134,42 @@ export const Button = React.memo<ButtonProps>(
         } else {
           switch (color) {
             case "primary":
-              textClasses.push("text-primary-500 active:text-primary-700");
+              textClasses.push("text-primary-700 active:text-primary-900");
               break;
             case "secondary":
               textClasses.push("text-secondary-500 active:text-secondary-700");
               break;
             case "danger":
-              textClasses.push("text-danger-500 active:text-danger-800");
+              textClasses.push("!text-danger-500 active:text-danger-800");
               break;
           }
         }
       }
 
       return textClasses.join(" ");
+    };
+
+    // Get icon color based on variant and color
+    const getIconColor = () => {
+      if (variant === "fill") {
+        return "#ffffff"; // White for filled buttons
+      } else {
+        // Outline variant uses color-matched icon
+        if (isDisabled) {
+          return "#6b7280"; // gray-500
+        } else {
+          switch (color) {
+            case "primary":
+              return "#1d4ed8"; // primary-700
+            case "secondary":
+              return "#7c3aed"; // secondary-500
+            case "danger":
+              return "#dc2626"; // danger-500
+            default:
+              return "#1d4ed8";
+          }
+        }
+      }
     };
 
     // Content rendering
@@ -156,6 +179,12 @@ export const Button = React.memo<ButtonProps>(
       }
 
       if (iconPosition === "only") {
+        // Para iconos únicos, asegurar que hereden el color del botón
+        if (React.isValidElement(icon)) {
+          return React.cloneElement(icon as React.ReactElement<any>, {
+            color: getIconColor(),
+          });
+        }
         return icon;
       }
 
@@ -165,10 +194,17 @@ export const Button = React.memo<ButtonProps>(
         </BodyBold>
       ) : null;
 
+      // Para iconos con texto, también aplicar el color correcto
+      const iconWithColor = React.isValidElement(icon) 
+        ? React.cloneElement(icon as React.ReactElement<any>, {
+            color: getIconColor(),
+          })
+        : icon;
+
       if (iconPosition === "left") {
         return (
           <>
-            {icon}
+            {iconWithColor}
             {textElement}
           </>
         );
@@ -178,7 +214,7 @@ export const Button = React.memo<ButtonProps>(
         return (
           <>
             {textElement}
-            {icon}
+            {iconWithColor}
           </>
         );
       }
