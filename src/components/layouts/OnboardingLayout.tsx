@@ -71,12 +71,12 @@ export const OnboardingLayout = ({
 
         {/* Sección Superior: Título y Descripción */}
         <View className="flex-col items-center px-0 gap-6 w-full max-w-sm">
-          <H2 className="text-gray-700 font-bold text-3xl leading-10 text-center">
+          <H2 className="leading-10 text-center">
             {title}
           </H2>
           
           {description && (
-            <Body className="text-gray-700 text-base leading-5 text-center">
+            <Body className="leading-5 text-center">
               {description}
             </Body>
           )}
