@@ -19,12 +19,12 @@ interface EnvironmentConfig {
  * Configuración de entorno de la aplicación
  */
 export const ENV: EnvironmentConfig = {
-  NODE_ENV: process.env.NODE_ENV as 'development' | 'production' | 'test' || 'development',
-  AUTH_API_URL: process.env.AUTH_API_URL || 'http://localhost:8080',
-  PREDICTION_API_URL: process.env.PREDICTION_API_URL || 'http://192.168.100.20:8000',
-  API_TIMEOUT: parseInt(process.env.API_TIMEOUT || '10000', 10),
-  DEVELOPER_MODE: process.env.NODE_ENV === 'development',
-  BYPASS_AUTH: process.env.BYPASS_AUTH === 'true' || process.env.NODE_ENV === 'development',
+  NODE_ENV: process.env.EXPO_PUBLIC_NODE_ENV as 'development' | 'production' | 'test' || 'development',
+  AUTH_API_URL: process.env.EXPO_PUBLIC_AUTH_API_URL || 'http://localhost:8080',
+  PREDICTION_API_URL: process.env.EXPO_PUBLIC_PREDICTION_API_URL || 'http://192.168.100.20:8000',
+  API_TIMEOUT: parseInt(process.env.EXPO_PUBLIC_API_TIMEOUT || '10000', 10),
+  DEVELOPER_MODE: process.env.EXPO_PUBLIC_NODE_ENV === 'development',
+  BYPASS_AUTH: process.env.EXPO_PUBLIC_BYPASS_AUTH === 'true' || process.env.EXPO_PUBLIC_NODE_ENV === 'development',
 };
 
 /**
