@@ -1,9 +1,7 @@
 // app/(public)/privacy.tsx
 import { Body, BodySmallBold } from "@/components/common/Typography";
-import { Header } from "@/components/core/navigation/Header";
-import { Stack, useRouter } from "expo-router";
+import { AppLayout } from "@/components/layouts/AppLayout";
 import React from "react";
-import { ScrollView, View } from "react-native";
 
 export default function PrivacyScreen() {
   // Contenido de política de privacidad
@@ -27,29 +25,23 @@ export default function PrivacyScreen() {
   ];
 
   return (
-    <>
-      <View className="flex-1">
-        {/* Header con botón de regreso */}
-        <Header title="Política de privacidad" variant="section" />
+    <AppLayout
+      title="Política de privacidad"
+      headerVariant="section"
+      showNavigation={false}
+      scrollable={true}
+    >
+      {/* Última actualización */}
+      <BodySmallBold>
+        Última actualización: 14/08/2024
+      </BodySmallBold>
 
-        {/* Content */}
-        <ScrollView
-          className="flex-1 bg-slate-100 px-5 pt-4 pb-10"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Última actualización */}
-          <BodySmallBold className="mb-5">
-            Última actualización: 14/08/2024
-          </BodySmallBold>
-
-          {/* Contenido de privacidad */}
-          {privacyContent.map((item) => (
-            <Body key={item.id} className="leading-6 mb-5 text-justify">
-              {item.id}. {item.text}
-            </Body>
-          ))}
-        </ScrollView>
-      </View>
-    </>
+      {/* Contenido de privacidad */}
+      {privacyContent.map((item) => (
+        <Body key={item.id} className="leading-6 text-justify">
+          {item.id}. {item.text}
+        </Body>
+      ))}
+    </AppLayout>
   );
 }

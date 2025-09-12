@@ -1,20 +1,12 @@
 // app/config/index.tsx
-import { Stack, useRouter } from 'expo-router';
-import React from 'react';
-import {
-  ScrollView,
-  View,
-} from 'react-native';
+import { useRouter } from "expo-router";
+import React from "react";
 
 // Importar componentes core
-import { Body } from '@/components/common/Typography';
-import { Button } from '@/components/core/buttons';
-import { Header } from '@/components/core/navigation/Header';
-
-// Importar componentes específicos para Config
-import {
-  ConfigSection
-} from '@/features/configuration/components';
+import { Caption } from "@/components/common/Typography";
+import { Button } from "@/components/core/buttons";
+import { CardList } from "@/components/core/cards";
+import { AppLayout } from "@/components/layouts/AppLayout";
 
 const Configuration = () => {
   const router = useRouter();
@@ -22,50 +14,123 @@ const Configuration = () => {
   // Definir las secciones del menú
   const menuSections = [
     {
-      id: 'account',
-      title: 'Mi cuenta',
+      id: "account",
+      title: "Mi cuenta",
       items: [
-        { title: 'Detalles de la cuenta', route: '/config/account-details' },
-        { title: 'Notificaciones', route: '/config/notifications' }
-      ]
+        { 
+          id: "account-details",
+          type: "button" as const,
+          title: "Detalles de la cuenta", 
+          buttonType: "chevron" as const,
+          route: "/config/account-details" 
+        },
+        { 
+          id: "notifications",
+          type: "button" as const,
+          title: "Notificaciones", 
+          buttonType: "chevron" as const,
+          route: "/config/notifications" 
+        },
+      ],
     },
     {
-      id: 'health',
-      title: 'Mi salud y tratamiento',
+      id: "health",
+      title: "Mi salud y tratamiento",
       items: [
-        { title: 'Información médica', route: '/config/medical-info' },
-        { title: 'Mi medicación habitual', route: '/config/medication' },
-        { title: 'Mi médico', route: '/config/doctor' }
-      ]
+        { 
+          id: "medical-info",
+          type: "button" as const,
+          title: "Información médica", 
+          buttonType: "chevron" as const,
+          route: "/config/medical-info" 
+        },
+        { 
+          id: "medication",
+          type: "button" as const,
+          title: "Mi medicación habitual", 
+          buttonType: "chevron" as const,
+          route: "/config/medication" 
+        },
+        { 
+          id: "doctor",
+          type: "button" as const,
+          title: "Mi médico", 
+          buttonType: "chevron" as const,
+          route: "/config/doctor" 
+        },
+      ],
     },
     {
-      id: 'devices',
-      title: 'Dispositivos y aplicaciones',
+      id: "devices",
+      title: "Dispositivos y aplicaciones",
       items: [
-        { title: 'Gestionar mis dispositivos', route: '/config/devices' },
-        { title: 'Gestionar mis aplicaciones', route: '/config/applications' }
-      ]
+        { 
+          id: "devices",
+          type: "button" as const,
+          title: "Gestionar mis dispositivos", 
+          buttonType: "chevron" as const,
+          route: "/config/devices" 
+        },
+        { 
+          id: "applications",
+          type: "button" as const,
+          title: "Gestionar mis aplicaciones", 
+          buttonType: "chevron" as const,
+          route: "/config/applications" 
+        },
+      ],
     },
     {
-      id: 'support',
-      title: 'Soporte y ayuda',
+      id: "support",
+      title: "Soporte y ayuda",
       items: [
-        { title: 'Preguntas frecuentes', route: '/config/faq' },
-        { title: 'Contactar soporte', route: '/config/support' }
-      ]
+        { 
+          id: "faq",
+          type: "button" as const,
+          title: "Preguntas frecuentes", 
+          buttonType: "chevron" as const,
+          route: "/config/faq" 
+        },
+        { 
+          id: "support",
+          type: "button" as const,
+          title: "Contactar soporte", 
+          buttonType: "chevron" as const,
+          route: "/config/support" 
+        },
+      ],
     },
     {
-      id: 'legal',
-      title: 'Legal',
+      id: "legal",
+      title: "Legal",
       items: [
-        { title: 'Términos y condiciones', route: '/(public)/tyc' },
-        { title: 'Política de privacidad', route: '/(public)/privacy' }
-      ]
-    }
+        { 
+          id: "tyc",
+          type: "button" as const,
+          title: "Términos y condiciones", 
+          buttonType: "chevron" as const,
+          route: "/(public)/tyc" 
+        },
+        { 
+          id: "privacy",
+          type: "button" as const,
+          title: "Política de privacidad", 
+          buttonType: "chevron" as const,
+          route: "/(public)/privacy" 
+        },
+      ],
+    },
   ];
 
-  const handleMenuPress = (route: string) => {
-    router.push(route as any);
+  const handleMenuPress = (item: any) => {
+    router.push(item.route as any);
+  };
+
+  const handleLogout = () => {
+    // Implementar lógica de cerrar sesión
+    console.log('Cerrar sesión...');
+    // Aquí iría la lógica para limpiar tokens, AsyncStorage, etc.
+    router.push('/(public)/welcome' as any);
   };
 
   const handleDeleteAccount = () => {
@@ -75,48 +140,36 @@ const Configuration = () => {
   };
 
   return (
-    <>
-      <View className="flex-1 bg-[#F1F5F9]">
-        {/* Header */}
-        <Header
-          title="Configuración"
-          variant="section"
+    <AppLayout
+      title="Configuración"
+      headerVariant="section"
+      activeTab="configuracion"
+      scrollable={true}
+      showNavigation={false}
+    >
+      {/* Secciones del menú */}
+      {menuSections.map((section) => (
+        <CardList
+          key={section.id}
+          title={section.title}
+          items={section.items}
+          onItemPress={handleMenuPress}
         />
-        
-        {/* Content */}
-        <ScrollView 
-          className="flex-1 pb-8"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Secciones del menú */}
-          {menuSections.map((section) => (
-            <ConfigSection
-              key={section.id}
-              title={section.title}
-              items={section.items}
-              onItemPress={handleMenuPress}
-            />
-          ))}
+      ))}
 
-          {/* Botón de eliminar cuenta */}
-          <View className="px-4 pt-5 pb-5">
-            <Button
-              title="Eliminar cuenta"
-              onPress={handleDeleteAccount}
-              variant="outline"
-              color="danger"
-            />
-          </View>
+        {/* Botón de cerrar sesión - Acción más común */}
+        <Button
+          title="Cerrar sesión"
+          onPress={handleLogout}
+          variant="outline"
+          color="secondary"
+        />
 
-          {/* Footer */}
-          <View className="px-4 pb-7 pt-4 items-center">
-            <Body className="text-[#62748E] text-base font-normal text-center">
-              © 2025 dabetai. Todos los derechos reservados.
-            </Body>
-          </View>
-        </ScrollView>
-      </View>
-    </>
+      {/* Footer */}
+        <Caption className="!text-gray-500 text-center">
+          © 2025 dabetai. Todos los derechos reservados.
+        </Caption>
+    </AppLayout>
   );
 };
 

@@ -1,19 +1,12 @@
-// app/notify.tsx
-import { Stack, useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import {
-    ScrollView,
-    View,
-} from 'react-native';
+// app/config/notifications/index.tsx
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 
 // Importar componentes core
-import { Header } from '@/components/core/navigation/Header';
+import { AppLayout } from "@/components/layouts/AppLayout";
 
-// Importar componentes específicos para Notifications Settings
-import {
-    NotificationCategorySection,
-    NotificationPreferencesSection
-} from '@/features/notifications/components';
+// Importar componente unificado
+import { CardList } from '@/components/core/cards';
 
 interface NotificationCategory {
   id: string;
@@ -33,44 +26,44 @@ const NotificationSettings = () => {
   // Categorías de notificaciones
   const notificationCategories: NotificationCategory[] = [
     {
-      id: 'glucose_alerts',
-      title: 'Alertas de glucosa',
-      route: '/config/notifications/glucose-alerts'
+      id: "glucose_alerts",
+      title: "Alertas de glucosa",
+      route: "/config/notifications/glucose-alerts",
     },
     {
-      id: 'medication_reminders',
-      title: 'Recordatorios de medicación',
-      route: '/config/notifications/medication-reminders'
+      id: "medication_reminders",
+      title: "Recordatorios de medicación",
+      route: "/config/notifications/medication-reminders",
     },
     {
-      id: 'data_reminders',
-      title: 'Recordatorio de registro de datos',
-      route: '/config/notifications/data-reminders'
+      id: "data_reminders",
+      title: "Recordatorio de registro de datos",
+      route: "/config/notifications/data-reminders",
     },
     {
-      id: 'prediction_alerts',
-      title: 'Alertas de predicción',
-      route: '/config/notifications/prediction-alerts'
+      id: "prediction_alerts",
+      title: "Alertas de predicción",
+      route: "/config/notifications/prediction-alerts",
     },
     {
-      id: 'device_alerts',
-      title: 'Alertas del dispositivo',
-      route: '/config/notifications/device-alerts'
-    }
+      id: "device_alerts",
+      title: "Alertas del dispositivo",
+      route: "/config/notifications/device-alerts",
+    },
   ];
 
   // Preferencias generales
   const [preferences, setPreferences] = useState<NotificationPreference[]>([
     {
-      id: 'sound',
-      title: 'Sonido de las notificaciones',
-      enabled: true
+      id: "sound",
+      title: "Sonido de las notificaciones",
+      enabled: true,
     },
     {
-      id: 'vibration',
-      title: 'Vibración en las notificaciones',
-      enabled: true
-    }
+      id: "vibration",
+      title: "Vibración en las notificaciones",
+      enabled: true,
+    },
   ]);
 
   const handleCategoryPress = (route: string) => {
@@ -78,45 +71,53 @@ const NotificationSettings = () => {
   };
 
   const handlePreferenceChange = (preferenceId: string, newValue: boolean) => {
-    setPreferences(prev => 
-      prev.map(pref => 
-        pref.id === preferenceId 
-          ? { ...pref, enabled: newValue }
-          : pref
+    setPreferences((prev) =>
+      prev.map((pref) =>
+        pref.id === preferenceId ? { ...pref, enabled: newValue } : pref
       )
     );
   };
 
   return (
-    <>
-      <View className="flex-1 bg-[#F1F5F9]">
-        {/* Header */}
-        <Header
-          title="Notificaciones"
-          variant='section'
-        />
-        
-        {/* Content */}
-        <ScrollView 
-          className="flex-1 pb-8"
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Categorías de notificaciones */}
-          <NotificationCategorySection
-            title="Categorías de notificaciones"
-            categories={notificationCategories}
-            onCategoryPress={handleCategoryPress}
-          />
+    <AppLayout
+      title="Notificaciones"
+      headerVariant="section"
+      activeTab="configuracion"
+      scrollable={true}
+      showNavigation={false}
+    >
+      {/* Categorías de notificaciones */}
+      <CardList
+        title="Categorías de notificaciones"
+        items={notificationCategories.map((category, index) => ({
+          id: category.id,
+          type: 'button' as const,
+          title: category.title,
+          buttonType: 'chevron' as const,
+          isLast: index === notificationCategories.length - 1
+        }))}
+        onItemPress={(item) => {
+          const category = notificationCategories.find(cat => cat.id === item.id);
+          if (category) {
+            handleCategoryPress(category.route);
+          }
+        }}
+      />
 
-          {/* Preferencias generales */}
-          <NotificationPreferencesSection
-            title="Preferencias generales"
-            preferences={preferences}
-            onPreferenceChange={handlePreferenceChange}
-          />
-        </ScrollView>
-      </View>
-    </>
+      {/* Preferencias generales */}
+      <CardList
+        title="Preferencias generales"
+        items={preferences.map((preference, index) => ({
+          id: preference.id,
+          type: 'button' as const,
+          title: preference.title,
+          buttonType: 'switch' as const,
+          value: preference.enabled,
+          isLast: index === preferences.length - 1
+        }))}
+        onItemValueChange={(id: string, value: boolean) => handlePreferenceChange(id, value)}
+      />
+    </AppLayout>
   );
 };
 

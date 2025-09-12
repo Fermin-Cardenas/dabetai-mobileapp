@@ -1,146 +1,171 @@
 // app/(tabs)/record.tsx
-import Feather from '@expo/vector-icons/Feather';
-import { Stack } from 'expo-router';
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, { useState } from "react";
+import { View } from "react-native";
 
 // Importar layout
-import { AppLayout } from '@/components/layouts';
+import { AppLayout } from "@/components/layouts";
 
 // Importar componentes core
-import { H2 } from '@/components/common/Typography';
+import { Icon } from "@/components/common/Icon";
+import { Subtitle } from "@/components/common/Typography";
 
 // Importar componentes del record
-import {
-  CategoryTabs,
-  PeriodSelector,
-  RecordChart,
-  RecordsList,
-  StatItem
-} from '@/features/dashboard/components';
+import { RecordChart } from "@/features/dashboard/components";
+
+// Importar componentes unificados de cards
+import { CardList, SimpleCard } from "@/components/core/cards";
+
+// Importar SegmentedControl y TabsControl directamente
+import { SegmentedControl, TabsControl } from "@/components/core/navigation";
 
 const Record = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState('Hoy');
-  const [selectedCategory, setSelectedCategory] = useState('Glucosa');
+  const [selectedPeriod, setSelectedPeriod] = useState("Hoy");
+  const [selectedCategory, setSelectedCategory] = useState("Glucosa");
 
   const recordsData = [
     {
-      id: '1',
-      value: '185 mg/dL **Post-desayuno**',
-      date: '8:00 AM, Mayo 19, 2024',
-      onPress: () => console.log('Record 1 pressed')
+      id: "1",
+      title: "185 mg/dL Post-desayuno",
+      subtitle: "8:00 AM, Mayo 19, 2024",
+      icon: "glucose" as const,
+      type: "click" as const,
     },
     {
-      id: '2',
-      value: 'Desayuno 80g **Carbs**',
-      date: '7:30 AM, Mayo 19, 2024',
-      onPress: () => console.log('Record 2 pressed')
+      id: "2",
+      title: "Desayuno 80g Carbs",
+      subtitle: "7:30 AM, Mayo 19, 2024",
+      icon: "box" as const,
+      type: "click" as const,
     },
     {
-      id: '3',
-      value: 'Insulina Rápida **8**',
-      date: '7:30 AM, Mayo 19, 2024',
-      onPress: () => console.log('Record 3 pressed')
+      id: "3",
+      title: "Insulina Rápida 8",
+      subtitle: "7:30 AM, Mayo 19, 2024",
+      icon: "insulin" as const,
+      type: "click" as const,
     },
   ];
 
   const handleNotifications = () => {
-    console.log('Abriendo notificaciones...');
+    console.log("Abriendo notificaciones...");
   };
 
   const handleSettings = () => {
-    console.log('Abriendo configuración...');
+    console.log("Abriendo configuración...");
   };
 
   return (
     <>
       <AppLayout title="Historial" activeTab="historial">
         {/* Selector de período */}
-        <PeriodSelector
-          periods={['Hoy', '1 semana', '1 mes', '3 meses']}
-          selectedPeriod={selectedPeriod}
-          onPeriodChange={setSelectedPeriod}
+        <SegmentedControl
+          scrollable={true}
+          options={["Hoy", "1 semana", "1 mes", "3 meses"]}
+          selectedIndex={["Hoy", "1 semana", "1 mes", "3 meses"].indexOf(
+            selectedPeriod
+          )}
+          onSelectionChange={(index) => {
+            setSelectedPeriod(["Hoy", "1 semana", "1 mes", "3 meses"][index]);
+          }}
         />
 
         {/* Tabs de categorías */}
-        <CategoryTabs
-          categories={['Glucosa', 'Comidas', 'Actividad']}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+        <TabsControl
+          options={["Glucosa", "Comidas", "Actividad"]}
+          selectedIndex={["Glucosa", "Comidas", "Actividad"].indexOf(
+            selectedCategory
+          )}
+          onSelectionChange={(index) => {
+            setSelectedCategory(["Glucosa", "Comidas", "Actividad"][index]);
+          }}
         />
 
         {/* Gráfico */}
         <RecordChart
-          xAxisLabels={['0', '50', '100', '150', '200', '250', '300', '350']}
+          xAxisLabels={["0", "50", "100", "150", "200", "250", "300", "350"]}
           xAxisTitle="t (min)"
         />
 
-        <View className="rounded-2xl p-1">
-          <H2 className="text-gray-700 font-bold text-lg mb-5">
-            Estadísticas clave ({selectedPeriod})
-          </H2>
+        <View className="gap-4">
+          <Subtitle>Estadísticas clave ({selectedPeriod})</Subtitle>
 
-          {/* Fila 1 */}
-          <View className="flex-row justify-between mb-4">
-            <StatItem
-              icon={<Feather name="activity" size={24} color="#314158" />}
-              value="78%"
-              label="TIR"
-            />
-            <StatItem
-              icon={<Feather name="heart" size={24} color="#314158" />}
-              value="45"
-              label="Lecturas"
-            />
-          </View>
+          {/* Grid 2x2 de métricas - estilo Figma */}
+          <View className="gap-4">
+            {/* Primera fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={<Icon name="activity" size={24} />}
+                title="78%"
+                description="TIR"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={<Icon name="box" size={24} />}
+                title="6.5%"
+                description="HbA1c Est."
+                className="flex-1"
+              />
+            </View>
 
-          {/* Fila 2 */}
-          <View className="flex-row justify-between mb-4">
-            <StatItem
-              icon={<Feather name="box" size={24} color="#314158" />}
-              value="6.5%"
-              label="HbA1c Est."
-            />
-            <StatItem
-              icon={<Feather name="hexagon" size={24} color="#314158" />}
-              value="135mg/dL"
-              label="Promedio"
-            />
-          </View>
+            {/* Segunda fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={<Icon name="heart" size={24} />}
+                title="45"
+                description="Lecturas"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={<Icon name="hexagon" size={24} />}
+                title="135mg/dL"
+                description="Promedio"
+                className="flex-1"
+              />
+            </View>
 
-          {/* Fila 3 */}
-          <View className="flex-row justify-between mb-4">
-            <StatItem
-              icon={<Feather name="box" size={24} color="#314158" />}
-              value="4.1/día"
-              label="Promedio"
-            />
-            <StatItem
-              icon={<Feather name="heart" size={24} color="#314158" />}
-              value="32mg/dL"
-              label="Desv. Est."
-            />
-          </View>
+            {/* Tercera fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={<Icon name="box" size={24} />}
+                title="4.1/día"
+                description="Frecuencia"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={<Icon name="heart" size={24} />}
+                title="32mg/dL"
+                description="Desv. Est."
+                className="flex-1"
+              />
+            </View>
 
-          {/* Fila 4 */}
-          <View className="flex-row justify-between mb-2">
-            <StatItem
-              icon={<Feather name="hexagon" size={24} color="#314158" />}
-              value="135mg/dL"
-              label="Promedio"
-            />
-            <StatItem
-              icon={<Feather name="box" size={24} color="#314158" />}
-              value="4.1/día"
-              label="Promedio"
-            />
+            {/* Cuarta fila */}
+            <View className="flex-row justify-between gap-4">
+              <SimpleCard
+                icon={<Icon name="activity" size={24} />}
+                title="78%"
+                description="TIR"
+                className="flex-1"
+              />
+              <SimpleCard
+                icon={<Icon name="box" size={24} />}
+                title="6.5%"
+                description="HbA1c Est."
+                className="flex-1"
+              />
+            </View>
           </View>
         </View>
 
         {/* Lista de registros */}
-        <RecordsList
+        <CardList
           title="Registros del período"
-          records={recordsData}
+          items={recordsData.map(record => ({
+            ...record,
+            type: 'button' as const,
+            buttonType: record.type
+          }))}
+          onItemPress={(item) => console.log("Record pressed:", item.id)}
         />
       </AppLayout>
     </>
